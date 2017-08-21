@@ -19,7 +19,7 @@
     <meta class="foundation-mq-topbar">
 
     <link rel="stylesheet" href="css/respond.css">
-	
+    
 </head>
 <body>
     
@@ -37,11 +37,9 @@
                 </ul>
                 <section class="top-bar-section">
                     <ul class="right">
-                        <li class="active"><a href="/index"><i class="fa fa-home fa-lg"></i></a></li>
-                        <li><a href="/addcategory">Category</a></li>
-                        <li><a href="/addexpense">Expense</a></li>
-                        <li><a href="/adduser">User</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li class="active"><a href="index.html"><i class="fa fa-home fa-lg"></i></a></li>
+                        
+                        
                     </ul>
                 </section>
             </nav>
@@ -49,9 +47,43 @@
     </div>
         <!-- Featured Section -->
         <div class="row contentdiv">
-            <div class="small-12 columns">
-				<br><br><br><br><br><br><br><br>
-                <h1><center>Welcome to Expense Tracker</center></h1>
+        <div class="small-12 columns">
+            <br/><h2><center>Welcome to Expense Tracker</center></h2><br/>
+            <br/><h2><center>Sign In </center></h2><br/>
+        </div>
+        <div class="small-12 columns">
+               <form ng-app="myApp" ng-controller="validateCtrl" 
+name="myForm" novalidate>
+
+<table align="center" width="50%">
+<tr>
+<th>Username:</th>
+<td><input type="email" name="email" placeholder="enter username" ng-model="email" required></td>
+<td><span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+<span ng-show="myForm.email.$error.required">Email is required.</span>
+<span ng-show="myForm.email.$error.email">Invalid email address.</span>
+</span></td>
+</tr>
+
+<tr>
+<th>Password:</th>
+<td><input type="password" name="user" placeholder="enter password" ng-model="user" required>
+<span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+<span ng-show="myForm.user.$error.required">Password is required.</span>
+</span></td>
+</tr>
+
+<tr>
+<td colspan="2" style="text-align:center" align="center"><input type="submit" value="LOGIN"
+ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||  
+myForm.email.$dirty && myForm.email.$invalid">
+</td>
+</tr>
+
+<tr><td colspan="2" style="text-align:center" align="center"><a href="Forgot.html">Forgot Password?</a></td>
+</tr>
+</table>
+</form>
             </div>
         </div>
         <div class="footer">
@@ -79,11 +111,17 @@
             </div>
         </div>
         
-		<script src="js/jquery-1.8.3.js"></script>
+        <script src="js/jquery-1.8.3.js"></script>
         <script src="js/foundation.min.js"></script>
-         <script src="js/angular.min.js"></script>
+        <script src="js/angular.min.js"></script>
         <script>
             $(document).foundation();
         </script>
+        <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+   
+});
+</script>
 </body>
 </html>

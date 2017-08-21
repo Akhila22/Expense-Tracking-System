@@ -8,7 +8,7 @@ var path = require('path'),
 var connection = mysql.createConnection({
   host : 'localhost',
   user : 'root',
-  password : '',
+  password : '1234',
   database : 'expensetracking'
 });
 
@@ -53,6 +53,15 @@ app.get('/login',function(req,resp){
 
 app.get('/addcategory',function(req,resp){
     resp.sendFile(__dirname+"/addcategory.html");
+  });
+app.get('/adminlogin',function(req,resp){
+    resp.sendFile(__dirname+"/admin_login.html");
+  });
+app.get('/userlogin',function(req,resp){
+    resp.sendFile(__dirname+"/user_login.html");
+  });
+app.get('/view_report',function(req,resp){
+    resp.sendFile(__dirname+"/report.html");
   });
 app.get('/addexpense',function(req,resp){
     resp.sendFile(__dirname+"/addexpense.html");
