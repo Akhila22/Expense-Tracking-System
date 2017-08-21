@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMG Netting Tool</title>
+    <meta name="description" content="BMG">
+    <meta name="keywords" content="BMG Netting">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/modernizr.js"></script>
+    <meta class="foundation-data-attribute-namespace">
+    <meta class="foundation-mq-xxlarge">
+    <meta class="foundation-mq-xlarge">
+    <meta class="foundation-mq-large">
+    <meta class="foundation-mq-medium">
+    <meta class="foundation-mq-small">
+    <meta class="foundation-mq-topbar">
+
+    <link rel="stylesheet" href="css/respond.css">
+    
+</head>
+<body>
+    
+    <div class="header">
+        <div class="row">
+            <nav class="top-bar foundation-bar" data-topbar>
+
+                <ul class="title-area">
+                    <li class="name">
+                        <span>
+                            <h1><b><a href="index.html"><img src="images/CA_White_transparent_logo.png" width="50" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;EXPENSE TRACKER</a></b></h1>
+                        </span>
+                    </li>
+                    <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+                </ul>
+                <section class="top-bar-section">
+                    <ul class="right">
+                        <li class="active"><a href="index.html"><i class="fa fa-home fa-lg"></i></a></li>
+                        <li><a href="addcategory.html">Category</a></li>
+                        <li><a href="addexpense.html">Expense</a></li>
+                        <li><a href="adduser.html">User</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        
+                    </ul>
+                </section>
+            </nav>
+        </div>
+    </div>
+        <!-- Featured Section -->
+        <div class="row contentdiv">
+        <div class="small-12 columns">
+            <br/><h3><center>Add Expense</center></h3><br/>
+        </div>
+        <div class="small-12 columns">
+<form ng-app="myApp" ng-controller="validateCtrl" 
+name="myForm" novalidate>
+<table align="center" width="75%">
+<tr>
+<th><b>Fiscal Year:</b></th>
+ <td><select id="list" ng-model="FYear"  placeholder="enter Fiscal year" ng-selected="">
+ <option value="" disabled selected>Select Fiscal year</option>
+    <option value="2015">2015</option>
+    <option value="2016">2016</option>
+    <option value="2017">2017</option>
+  </select>
+</td>
+<td><span style="color:red" ng-show="myForm.FYear.$dirty && myForm.FYear.$invalid">
+<span ng-show="myForm.FYear.$error.required">Fiscal year is required.</span>
+</span>
+</td>
+</tr>
+<tr>
+<th><b>Category:</b></th>
+
+<td><div ng-switch="FYear">
+  <div ng-switch-when="2015">
+   
+   <select ng-model="cat2k15" >
+    <option value="" disabled selected>Select your category</option>
+    <option value="training">Training</option>
+    <option value="travel">Travel</option>
+    <option value="stationary">Stationary</option>
+  </select>
+    </div>
+  <div ng-switch-when="2016">
+
+ <select ng-model="cat2k16" >
+ <option value="" disabled selected>Select your category</option>
+    <option value="training">Training</option>
+    <option value="adjunct R&R">Adjunct </option>
+    <option value="stationary">Stationary</option>
+  </select>
+  </div>
+   <div ng-switch-when="2017">
+  
+   <select ng-model="cat2k17" >
+   <option value="" disabled selected>Select your category</option>
+    <option value="training">Training</option>
+    <option value="travel">Travel</option>
+    <option value="stationary">Stationary</option>
+  </select>
+  </div>
+</div>
+
+</td></tr>
+<tr>
+<th>
+<b>Vendor Name:</b>
+</th>
+<td>
+<input type="text" name="vendor" placeholder="enter vendor name" ng-model="vendor" required>
+</td>
+<td><span style="color:red" ng-show="myForm.vendor.$dirty && myForm.vendor.$invalid">
+<span ng-show="myForm.vendor.$error.required">Vendor is required.</span>
+</span>
+</td>
+</tr>
+<th><b>Date:</b></th>
+<td><input type="date" name="date" placeholder="enter the date" ng-model="date" required></td>
+<td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
+<span ng-show="myForm.date.$error.required">Date is required.</span>
+</span></td>
+</tr>
+
+<tr><th><b>Description:</b></th>
+<td><textarea rows="3" width="7" name="desc" placeholder="description of purchases" ng-model="desc"></textarea></td></tr>
+
+<tr>
+<th><b>Amount:</b></th>
+<td><input type="number" name="amount" ng-model="amount" placeholder="Amount in RS" required></td>
+<td><span style="color:red" ng-show="myForm.date.$dirty &&myForm.amount.$invalid">
+<span ng-show="myForm.amount.$error.required">Fiscal Year is required.</span>
+</span>
+</td>
+<tr><td colspan="2" style="text-align:center" align="center">
+<input type="checkbox" ng-model="fin">Routed through procurement system</input>
+</td></tr>
+<tr><td colspan="2" style="text-align:center" align="center">
+<input type="checkbox" ng-model="fin">Invoice submitted to finance department</input>
+</td></tr>
+<tr><td colspan="2" style="text-align:center" align="center">
+<input type="submit" value="Add"
+ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
+myForm.email.$dirty && myForm.email.$invalid">
+</td></tr></table>
+</form>
+
+
+
+
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <p class="pad1">&copy; 2015 BMG Netting Tool. All rights reserved.</p>
+                        </div>
+                        <div class="small-12 medium-6 columns">
+                            <ul class="inline-list right pad1">
+                                <li><a href="#"><i class="fa fa-rss fa-2x"></i></a></li>
+                                <li><a href="https://www.facebook.com/CATechnologies"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                <li><a href="http://twitter.com/CAInc"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                <li><a href="https://plus.google.com/+CATechnologies"><i class="fa fa-google-plus fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns">
+                            <p class="text-right">&nbsp;x</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="js/jquery-1.8.3.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+        <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+   
+});
+</script>
+</body>
+</html>
