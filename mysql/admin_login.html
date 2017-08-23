@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="css/respond.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-    
+
     </head>
     <body ng-app="myApp" ng-controller="admincontroller">
         <div class="header">
@@ -43,7 +43,7 @@
                             <li><a href="#!exp">Expense</a></li>
                             <li><a href="#!user">User</a></li>
                             <li><a href="/logout">Logout</a></li>
-                            
+
                         </ul>
                     </section>
                 </nav>
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </div>
-            
+
         <script src="js/jquery-1.8.3.js"></script>
         <script src="js/foundation.min.js"></script>
         <script>
@@ -115,21 +115,8 @@
                        $scope.years = response.data;
           		});
             });
-            // app.controller('expcontroller', function($scope) {
-            //     $scope.selectFun = function(){
-            //         if($scope.FYear==2015) {
-            //             $scope.names = ["Training", "stationary", ""]; 
-            //         }
-            //         else if($scope.FYear==2016){
-            //             $scope.names = ["Emi", "Tobi", "Lin"];
-            //         }
-            //         else if($scope.FYear==2017){
-            //             $scope.names = ["E", "To", "L"];
-            //         }
-            //     }
-            // });
             app.controller('usercontroller', function($scope) {
-           
+
             });
             app.controller('admincontroller', function($scope) {
                 // $scope.message="Welcome Admin";
@@ -138,12 +125,10 @@
             app.controller('validateCtrl', function($scope) {
             });
             app.controller('expcontroller', function($scope,$http) {
-   
                 $http.get('/financialYear')
-                         .then(function(response){
-                                $scope.years = response.data;
-                   });
-                   
+                .then(function(response){
+                    $scope.years = response.data;
+                });
                 $scope.selectFun = function(){
                     console.log($scope.FYear);
                     var data = {year : $scope.FYear};
@@ -152,28 +137,47 @@
                          $scope.names = response.data;
                     });
                 }
-
-
-                    /*$scope.addexp=function(){
-                        console.log($scope.date);
-                        console.log('before calling ' + $scope.category);
-                        $http({
-                            url : "/expenses",
-                            method : "post",
-                            data : {
-                                category_id: $scope.category,
-                                vendor_name: $scope.vendor,
-                                date: $scope.date,
-                                description: $scope.desc,
-                                amount: $scope.amount
-                            }
-                        }).then(function(response){
-                            console.log("successful");
-                        },function(response){
-                            console.log(response.data);
-                        });
-                    }*/
-                });
+                // $scope.addexp = function(){
+                //   var data = {
+                //     category: $scope.category,
+                //     vendor: $scope.vendor,
+                //     date: $scope.date,
+                //     description: $scope.desc,
+                //     amount: $scope.amount
+                //   }
+                //   console.log(JSON.stringify(data));
+                //   //$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+                //   $http.post("/expenses",data)
+                //   .then(function(response){
+                //     console.log("successful");
+                //   },function(response){
+                //     console.log("failure");
+                //   });
+                // }
+                $scope.addexp=function(){
+                    console.log($scope.date);
+                    console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/expenses",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            category: $scope.category,
+                            vendor: $scope.vendor,
+                            date: $scope.date,
+                            description: $scope.desc,
+                            amount: $scope.amount
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+              });
         </script>
     </body>
 </html>
