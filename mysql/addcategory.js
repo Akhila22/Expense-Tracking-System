@@ -3,7 +3,7 @@
 exports.addcategory= function(req, res) {
                 var category_name = req.body.category;
                 var initial_budget = req.body.budget;
-                var financial_year = req.body.fyyear;
+                var financial_year = req.body.year;
                 var Q1 = req.body.q1;
                 var Q2= req.body.q2;
                 var Q3 = req.body.q3;

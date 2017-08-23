@@ -109,8 +109,11 @@
                     controller: 'usercontroller'
                 });
             });
-            app.controller('catcontroller', function($scope) {
-           
+            app.controller('catcontroller', function($scope,$http) {
+            	$http.get('/financialYear')
+                .then(function(response){
+                       $scope.years = response.data;
+          		});
             });
             // app.controller('expcontroller', function($scope) {
             //     $scope.selectFun = function(){

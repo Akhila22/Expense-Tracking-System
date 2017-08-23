@@ -54,7 +54,9 @@ name="myForm" action="/category" novalidate>
 </tr>
 <tr>
 <th colspan="2"><b>Fiscal Year:</b></th>
-<td><input type="text" name="fyyear" placeholder="enter fiscal year" ng-model="fyyear" required></td>
+<td><select name="year" placeholder="enter year">
+       <option ng-repeat="year in years" value={{year.financial_year}}>{{year.financial_year}}</option></select>
+</td>
 <td><span style="color:red" ng-show="myForm.fyyear.$dirty && myForm.fyyear.$invalid">
 <span ng-show="myForm.fyyear.$error.required">Fiscal Year is required.</span>
 </span>
@@ -115,7 +117,7 @@ myForm.email.$dirty && myForm.email.$invalid">
         </script>
         <script>
 var app = angular.module('myApp', []);
-    app.controller('catcontroller', function($scope) {
+    app.controller('catcontroller', function($scope,$http) {
         $scope.msg = "testing";
     });
 </script>
