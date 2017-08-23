@@ -27,7 +27,7 @@ exports.getFinYears = function(req,res){
                     console.log('Error in the query');
              }
              else{
-                    console.log(rows);
+                   // console.log(rows);
                     res.send(rows);
              }
        })

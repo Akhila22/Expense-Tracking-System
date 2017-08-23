@@ -1,4 +1,5 @@
 express = require('express');
+
 app = express();
 mysql = require('mysql');
 path = require('path'),
@@ -38,7 +39,7 @@ app.get('/',function(req,res){
 
 app.route('/newuser')
 .post(function(req, res){
-	console.log(req.body);
+	//console.log(req.body);
 	var email = req.body.email;
 	var password = req.body.user;
 	var userrole = req.body.userrole;
@@ -76,13 +77,14 @@ app.route('/authenticate')
 });
 
 app.post('/budget',function(req,res){
-	console.log("welcome to budget");
+	//console.log("welcome to budget");
 	budget.addbudget(req,res);
+  
 });
 
 app.post('/category',function(req,res){
-	console.log("welcome to category");
-	console.log("server " + req.body.category_name);
+	//console.log("welcome to category");
+	//console.log("server " + req.body.category_name);
 	category.addcategory(req,res);
 });
 
@@ -92,7 +94,7 @@ app.get('/getcategory',function(req,res){
 });
 
 app.post('/expenses',function(req,res){
-  console.log("welcome to expenses");
+  //console.log("welcome to expenses");
   //console.log("server " + req.body.category_name);
   expense.addExp(req,res);
 });
@@ -162,7 +164,7 @@ app.get('/login',function(req,res){
 	 // console.log("if loop");
 	  res.sendFile(__dirname + "/login.html")
 	} else {
-	  console.log("Already logged in");
+	  //console.log("Already logged in");
 	 if( req.session.role_id ==1)
 	        	res.redirect('/adminLogin');
 	 if( req.session.role_id ==2)
@@ -171,7 +173,7 @@ app.get('/login',function(req,res){
 });
 
 app.get('/financialYear',function(req,res){
-       console.log("Financial Years");
+     //  console.log("Financial Years");
        finYear.getFinYears(req,res);
        //res.redirect('/login');
 });

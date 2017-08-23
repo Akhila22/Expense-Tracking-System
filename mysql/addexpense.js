@@ -28,13 +28,13 @@
 // });
 
 exports.addExp = function(req, res) {
-                console.log("warning " + req.body.category);
+               //console.log("warning " + req.body.category);
 
                 var temp = Object.keys(req.body);
-                console.log("temp " + temp);
+              //  console.log("temp " + temp);
                 var json = JSON.parse(temp)
-                console.log(json);
-                console.log("temp.category " + json.category);
+              //  console.log(json);
+               // console.log("temp.category " + json.category);
 
 
                 var category_id = json.category;
@@ -44,7 +44,7 @@ exports.addExp = function(req, res) {
                 var amount = json.amount;
                 //var cid;
                 var vid;
-                console.log(req.body);
+              //  console.log(req.body);
 
                 // connection.query(sql, function(error,rows,fields){
                 //                if(!!error){
@@ -53,12 +53,12 @@ exports.addExp = function(req, res) {
                 //                else
                 //                {
                 //                  cid=rows[0].category_id;
-                                 console.log(vendorname);
+                               //  console.log(vendorname);
                                  var sql2 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
-                                 console.log(sql2);
+                                // console.log(sql2);
                                  connection.query(sql2, function(error,rows,fields){
                                  if(!!error){
-                                  console.log(sql2);
+                                //  console.log(sql2);
                                               console.log('Error in the query');
                                  }
                                  else
@@ -67,7 +67,7 @@ exports.addExp = function(req, res) {
                                     if(typeof rows[0] == "undefined"){
 
                                       var sql3="insert into vendor(vendor_name) values('"+vendorname+"');";
-                                      console.log(sql3);
+                                     // console.log(sql3);
 
                                       connection.query(sql3, function(error,rows,fields){
                                       if(!!error){
@@ -76,7 +76,7 @@ exports.addExp = function(req, res) {
                                       else{
                                       var sql4 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
                                         connection.query(sql4, function(error,rows1,fields){
-                                        console.log(sql4);
+                                       // console.log(sql4);
                                           if(!!error){
                                             console.log('Error in the query');
                                           }
@@ -87,7 +87,7 @@ exports.addExp = function(req, res) {
 
                                     connection.query(sql5, function(error,rows,fields){
                                     if(!!error){
-                                      console.log(sql1);
+                                     // console.log(sql1);
                                       console.log('Error in the query');
                                     }
                                     else
@@ -111,7 +111,7 @@ exports.addExp = function(req, res) {
 
                                     connection.query(sql1, function(error,rows,fields){
                                     if(!!error){
-                                      console.log(sql1);
+                                     // console.log(sql1);
                                       console.log('Error in the query');
                                     }
                                     else

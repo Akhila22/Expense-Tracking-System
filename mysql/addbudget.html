@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    
     <script src="js/modernizr.js"></script>
     <meta class="foundation-data-attribute-namespace">
     <meta class="foundation-mq-xxlarge">
@@ -37,11 +38,11 @@
         <div class="small-12 columns">
 
 
-<form ng-app="myApp" action="/budget" ng-controller="validateCtrl" method="post" name="myForm" novalidate> 
+<form ng-app="myApp" ng-controller="validateCtrl" method="post" name="myForm" novalidate> 
 <table align="center" width="50%">
 <tr>
 <th><b>Financial Year:</b></th>
-<td><input type="text" name="year" placeholder="enter year" ng-model="year" required></td>
+<td><input type="text" name="year" placeholder="enter year(ex:FY17)" ng-model="year" required></td>
 <td><span style="color:red" ng-show="myForm.year.$dirty && myForm.year.$invalid">
 <span ng-show="myForm.year.$error.required">Fiscal Year is required.</span>
 </span>
@@ -65,8 +66,7 @@
 
 
 <tr><td colspan="3" style="text-align:center" align="center">
-<input type="submit"
-ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
+<input type="submit" value="ADD" ng-click="addbud()" ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
 myForm.email.$dirty && myForm.email.$invalid">
 </td></tr></table>
 

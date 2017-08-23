@@ -33,7 +33,7 @@
         </div>
         <div class="small-12 columns">
 <form ng-controller="catcontroller" method="post" 
-name="myForm" action="/category" novalidate>
+name="myForm" novalidate>
 <table align="center" width="75%">
 <tr>
 
@@ -54,7 +54,7 @@ name="myForm" action="/category" novalidate>
 </tr>
 <tr>
 <th colspan="2"><b>Fiscal Year:</b></th>
-<td><select name="year" placeholder="enter year">
+<td><select name="year" placeholder="enter year" ng-model="year">
        <option ng-repeat="year in years" value={{year.financial_year}}>{{year.financial_year}}</option></select>
 </td>
 <td><span style="color:red" ng-show="myForm.fyyear.$dirty && myForm.fyyear.$invalid">
@@ -99,8 +99,7 @@ name="myForm" action="/category" novalidate>
 </span>
 </td></tr>
 <tr><td colspan="4" style="text-align:center" align="center">
-<input type="submit" value="ADD"
-ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
+<input type="submit" value="ADD" ng-click="addcat()" ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
 myForm.email.$dirty && myForm.email.$invalid">
 </td></tr></table>
 

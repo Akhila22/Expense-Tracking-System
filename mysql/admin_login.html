@@ -114,6 +114,38 @@
                 .then(function(response){
                        $scope.years = response.data;
           		});
+
+                $scope.addcat=function(){
+                    //console.log($scope.date);
+                   // console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/category",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            category: $scope.category,
+                            budget: $scope.budget,
+                            year: $scope.year,
+                             date: $scope.date,
+                            q1: $scope.q1,
+                            q2: $scope.q2,
+                            q3: $scope.q3,
+                            q4: $scope.q4
+                           
+                            
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+
+
+
             });
             app.controller('usercontroller', function($scope) {
 
@@ -122,7 +154,30 @@
                 // $scope.message="Welcome Admin";
                 window.location.href = '#!/alog';
             });
-            app.controller('validateCtrl', function($scope) {
+            app.controller('validateCtrl', function($scope,$http) {
+                 $scope.addbud=function(){
+                    //console.log($scope.date);
+                    //console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/budget",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            year: $scope.year,
+                           
+                            date: $scope.date,
+                            
+                            budget: $scope.budget
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
             });
             app.controller('expcontroller', function($scope,$http) {
                 $http.get('/financialYear')

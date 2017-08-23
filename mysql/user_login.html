@@ -126,13 +126,11 @@
                 // $scope.message="Welcome User";
                 window.location.href = '#!/ulog';
             });
-            app.controller('expcontroller', function($scope,$http) {
-   
+           app.controller('expcontroller', function($scope,$http) {
                 $http.get('/financialYear')
-                         .then(function(response){
-                                $scope.years = response.data;
-                   });
-                   
+                .then(function(response){
+                    $scope.years = response.data;
+                });
                 $scope.selectFun = function(){
                     console.log($scope.FYear);
                     var data = {year : $scope.FYear};
@@ -141,28 +139,47 @@
                          $scope.names = response.data;
                     });
                 }
-
-
-                    $scope.addexp=function(){
-                        console.log($scope.date);
-                        console.log('before calling ' + $scope.category);
-                        $http({
-                            url : "/expenses",
-                            method : "post",
-                            data : {
-                                category_name: $scope.category,
-                                vendor_name: $scope.vendor,
-                                date: $scope.date,
-                                description: $scope.desc,
-                                amount: $scope.amount
-                            }
-                        }).then(function(response){
-                            console.log("successful");
-                        },function(response){
-                            console.log(response.data);
-                        });
-                    }
-            });
+                // $scope.addexp = function(){
+                //   var data = {
+                //     category: $scope.category,
+                //     vendor: $scope.vendor,
+                //     date: $scope.date,
+                //     description: $scope.desc,
+                //     amount: $scope.amount
+                //   }
+                //   console.log(JSON.stringify(data));
+                //   //$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+                //   $http.post("/expenses",data)
+                //   .then(function(response){
+                //     console.log("successful");
+                //   },function(response){
+                //     console.log("failure");
+                //   });
+                // }
+                $scope.addexp=function(){
+                    console.log($scope.date);
+                    console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/expenses",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            category: $scope.category,
+                            vendor: $scope.vendor,
+                            date: $scope.date,
+                            description: $scope.desc,
+                            amount: $scope.amount
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+              });
         </script>
 </body>
 </html>
