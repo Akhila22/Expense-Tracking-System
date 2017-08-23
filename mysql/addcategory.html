@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMG Netting Tool</title>
+    <meta name="description" content="BMG">
+    <meta name="keywords" content="BMG Netting">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/modernizr.js"></script>
+    <meta class="foundation-data-attribute-namespace">
+    <meta class="foundation-mq-xxlarge">
+    <meta class="foundation-mq-xlarge">
+    <meta class="foundation-mq-large">
+    <meta class="foundation-mq-medium">
+    <meta class="foundation-mq-small">
+    <meta class="foundation-mq-topbar">
+        <script src="js/angular.min.js"></script>
+
+    <link rel="stylesheet" href="css/respond.css">
+     <script src="js/jquery-1.8.3.js"></script>
+        <script src="js/foundation.min.js"></script>
+</head>
+<body>
+    
+    
+        <!-- Featured Section -->
+        <div class="row contentdiv">
+        <div class="small-12 columns">
+            <br/><h3><center>Add Category</center></h3><br/>
+        </div>
+        <div class="small-12 columns">
+<form ng-controller="catcontroller" method="post" 
+name="myForm" action="/category" novalidate>
+<table align="center" width="75%">
+<tr>
+
+<th colspan="2"><b>Category Name:</b></th>
+<td><input type="text" name="category" placeholder="enter category name" ng-model="category" required></td>
+<td><span style="color:red" ng-show="myForm.category.$dirty && myForm.category.$invalid">
+<span ng-show="myForm.category.$error.required">Category is required.</span>
+</span>
+</td>
+</tr>
+<tr>
+<th colspan="2"><b>Initial Budget:</b></th>
+<td><input type="number" name="budget" placeholder="enter budget" ng-model="budget" required></td>
+<td><span style="color:red" ng-show="myForm.budget.$dirty && myForm.budget.$invalid">
+<span ng-show="myForm.budget.$error.required">Budget is required.</span>
+</span>
+</td>
+</tr>
+<tr>
+<th colspan="2"><b>Fiscal Year:</b></th>
+<td><input type="text" name="fyyear" placeholder="enter fiscal year" ng-model="fyyear" required></td>
+<td><span style="color:red" ng-show="myForm.fyyear.$dirty && myForm.fyyear.$invalid">
+<span ng-show="myForm.fyyear.$error.required">Fiscal Year is required.</span>
+</span>
+</td>
+</tr>
+<tr><th colspan="2"><b>Date:</b></th>
+<td><input type="date" name="date" placeholder="enter the date" ng-model="date" required></td>
+<td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
+<span ng-show="myForm.date.$error.required">Date is required.</span>
+</span></td>
+</tr>
+
+<tr>
+<td>
+<b>Q1:</b>
+<input type="text" name="q1" ng-model="q1" placeholder="    %" required>
+<span style="color:red" ng-show="myForm.q1.$dirty && myForm.q1.$invalid">
+<span ng-show="myForm.q1.$error.required">Q1 cannot be empty.</span>
+</span>
+</td>
+<td>
+<b>Q2:</b>
+<input type="text" name="q2" placeholder="    %" ng-model="q2" required>
+<span style="color:red" ng-show="myForm.q2.$dirty && myForm.q2.$invalid">
+<span ng-show="myForm.q1.$error.required">Q2 cannot be empty.</span>
+</span>
+</td>
+<td>
+<b>Q3:</b>
+<input type="text" name="q3" placeholder="    %" ng-model="q3" required>
+<span style="color:red" ng-show="myForm.q3.$dirty && myForm.q3.$invalid">
+<span ng-show="myForm.q3.$error.required">Q3 cannot be empty.</span>
+</span>
+</td>
+<td>
+<b>Q4:</b>
+<input type="text" name="q4" placeholder="    %" ng-model="q4" required>
+<span style="color:red" ng-show="myForm.q4.$dirty && myForm.q4.$invalid">
+<span ng-show="myForm.q4.$error.required">Q4 cannot be empty.</span>
+</span>
+</td></tr>
+<tr><td colspan="4" style="text-align:center" align="center">
+<input type="submit" value="ADD"
+ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
+myForm.email.$dirty && myForm.email.$invalid">
+</td></tr></table>
+
+
+</form>
+
+            </div>
+        </div>
+        
+        
+       
+        <script>
+            $(document).foundation();
+        </script>
+        <script>
+var app = angular.module('myApp', []);
+    app.controller('catcontroller', function($scope) {
+        $scope.msg = "testing";
+    });
+</script>
+</body>
+</html>

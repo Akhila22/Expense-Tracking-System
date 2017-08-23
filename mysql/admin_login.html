@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CA Expense Tracker</title>
+        <meta name="description" content="BMG">
+        <meta name="keywords" content="BMG Netting">
+        <link rel="stylesheet" href="css/foundation.css">
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <script src="js/modernizr.js"></script>
+        <meta class="foundation-data-attribute-namespace">
+        <meta class="foundation-mq-xxlarge">
+        <meta class="foundation-mq-xlarge">
+        <meta class="foundation-mq-large">
+        <meta class="foundation-mq-medium">
+        <meta class="foundation-mq-small">
+        <meta class="foundation-mq-topbar">
+
+        <link rel="stylesheet" href="css/respond.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+    
+    </head>
+    <body ng-app="myApp" ng-controller="admincontroller">
+        <div class="header">
+            <div class="row">
+                <nav class="top-bar foundation-bar" data-topbar>
+                    <ul class="title-area">
+                        <li class="name">
+                            <span>
+                                <h1><b><a href="#!alog"><img src="images/CA_White_transparent_logo.png" width="50" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;EXPENSE TRACKER</a></b></h1>
+                            </span>
+                        </li>
+                        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+                    </ul>
+                    <section class="top-bar-section">
+                        <ul class="right">
+                            <li class="active"><a href="#!alog"><i class="fa fa-home fa-lg"></i></a></li>
+                            <li><a href="#!bud">Budget</a></li>
+                            <li><a href="#!cat">Category</a></li>
+                            <li><a href="#!exp">Expense</a></li>
+                            <li><a href="#!user">User</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                            
+                        </ul>
+                    </section>
+                </nav>
+            </div>
+        </div>
+        <!-- Featured Section -->
+        <div class="row contentdiv">
+            <div class="small-12 columns" >
+                <div ng-view></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <p class="pad1">&copy; 2015 BMG Netting Tool. All rights reserved.</p>
+                        </div>
+                        <div class="small-12 medium-6 columns">
+                            <ul class="inline-list right pad1">
+                                <li><a href="#"><i class="fa fa-rss fa-2x"></i></a></li>
+                                <li><a href="https://www.facebook.com/CATechnologies"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                <li><a href="http://twitter.com/CAInc"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                <li><a href="https://plus.google.com/+CATechnologies"><i class="fa fa-google-plus fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="small-12 columns">
+                            <p class="text-right">&nbsp;x</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <script src="js/jquery-1.8.3.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+        <script>
+            var app = angular.module("myApp", ["ngRoute"]);
+            app.config(function($routeProvider) {
+                $routeProvider
+                .when("/alog", {
+                    templateUrl : "/adminHome",
+                })
+                .when("/cat", {
+                    templateUrl : "/addcategory",
+                    controller: 'catcontroller'
+                })
+                .when("/exp", {
+                    templateUrl : "/addexpense",
+                    controller: 'expcontroller'
+                })
+                .when("/bud", {
+                    templateUrl : "/addbudget",
+                    controller: 'validateCtrl'
+                })
+                .when("/user", {
+                    templateUrl : "/adduser",
+                    controller: 'usercontroller'
+                });
+            });
+            app.controller('catcontroller', function($scope) {
+           
+            });
+            // app.controller('expcontroller', function($scope) {
+            //     $scope.selectFun = function(){
+            //         if($scope.FYear==2015) {
+            //             $scope.names = ["Training", "stationary", ""]; 
+            //         }
+            //         else if($scope.FYear==2016){
+            //             $scope.names = ["Emi", "Tobi", "Lin"];
+            //         }
+            //         else if($scope.FYear==2017){
+            //             $scope.names = ["E", "To", "L"];
+            //         }
+            //     }
+            // });
+            app.controller('usercontroller', function($scope) {
+           
+            });
+            app.controller('admincontroller', function($scope) {
+                // $scope.message="Welcome Admin";
+                window.location.href = '#!/alog';
+            });
+            app.controller('validateCtrl', function($scope) {
+            });
+            app.controller('expcontroller', function($scope,$http) {
+   
+                $http.get('/financialYear')
+                         .then(function(response){
+                                $scope.years = response.data;
+                   });
+                   
+                $scope.selectFun = function(){
+                    console.log($scope.FYear);
+                    var data = {year : $scope.FYear};
+                    var url = '/getcategory?year='+$scope.FYear;
+                   $http.get(url).then(function(response){
+                         $scope.names = response.data;
+                    });
+                }
+
+
+                    /*$scope.addexp=function(){
+                        console.log($scope.date);
+                        console.log('before calling ' + $scope.category);
+                        $http({
+                            url : "/expenses",
+                            method : "post",
+                            data : {
+                                category_id: $scope.category,
+                                vendor_name: $scope.vendor,
+                                date: $scope.date,
+                                description: $scope.desc,
+                                amount: $scope.amount
+                            }
+                        }).then(function(response){
+                            console.log("successful");
+                        },function(response){
+                            console.log(response.data);
+                        });
+                    }*/
+                });
+        </script>
+    </body>
+</html>

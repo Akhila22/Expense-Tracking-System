@@ -1,0 +1,11 @@
+{
+  "name": "mysqlApplication",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.13.4",
+    "express-session": "^1.15.5",
+    "mysql": "^2.10.2",
+    "url": "^0.11.0"
+  }
+}
