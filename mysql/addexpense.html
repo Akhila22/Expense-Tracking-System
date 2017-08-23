@@ -25,15 +25,14 @@
         <script src="js/foundation.min.js"></script>
          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-    
+
 </head>
 <body>
-    
-   
+
+
         <!-- Featured Section -->
         <div class="row contentdiv">
         <div class="small-12 columns">
-            <br><br><br><br><br><br><br><br>
             <h3><center>Add Expense</center></h3>
         </div>
         <div class="small-12 columns">
@@ -106,7 +105,7 @@ name="myForm" method="post" action="/expenses" novalidate>
 </td></tr>
 <tr><td colspan="2" style="text-align:center" align="center">
 <input type="submit" value="Add" ng-click="addexp()"
-ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
+ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||
 myForm.email.$dirty && myForm.email.$invalid">
 </td></tr></table>
 </form>
@@ -115,7 +114,7 @@ myForm.email.$dirty && myForm.email.$invalid">
 
             </div>
         </div>
-        
+
         <script>
             $(document).foundation();
         </script>
@@ -126,6 +125,6 @@ var app = angular.module('myApp', []);
     });
 
 </script>
-        
+
 </body>
 </html>
