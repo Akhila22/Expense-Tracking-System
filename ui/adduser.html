@@ -54,7 +54,7 @@
             <br/><h3><center>Add User</center></h3><br/>
         </div>
         <div class="small-12 columns">
-<form ng-app="myApp" ng-controller="validateCtrl" 
+<form ng-app="myApp" action="/authenticate" ng-controller="validateCtrl" method="post" 
 name="myForm" novalidate>
 <table align="center" width="50%">
 <tr>
@@ -79,8 +79,8 @@ name="myForm" novalidate>
 <tr>
 <th>
 User Type:</th>
-<td><input type="radio" ng-model="myVar" style="text-align:center" align="center" value="admin">Admin</td>
-<td><input type="radio" ng-model="myVar" style="text-align:center" align="center" value="user">User</td>
+<td><input type="radio" name="userrole" ng-model="myVar" style="text-align:center" align="center" value="1">Admin</td>
+<td><input type="radio" name="userrole" ng-model="myVar" style="text-align:center" align="center" value="2">User</td>
 </tr>
 
 <tr>
