@@ -30,7 +30,7 @@
             <br/><h3><center>Add User</center></h3><br/>
         </div>
         <div class="small-12 columns">
-<form ng-app="myApp" action="/newuser" ng-controller="usercontroller" method="post" 
+<form ng-app="myApp" ng-controller="usercontroller" method="post" 
 name="myForm" novalidate>
 <table align="center" width="50%">
 <tr>
@@ -55,13 +55,13 @@ name="myForm" novalidate>
 <tr>
 <th>
 User Type:</th>
-<td><input type="radio" name="userrole" ng-model="myVar" style="text-align:center" align="center" value="1">Admin</td>
-<td><input type="radio" name="userrole" ng-model="myVar" style="text-align:center" align="center" value="2">User</td>
+<td><input type="radio" name="userrole" ng-model="userrole" style="text-align:center" align="center" value="1">Admin</td>
+<td><input type="radio" name="userrole" ng-model="userrole" style="text-align:center" align="center" value="2">User</td>
 </tr>
 
 <tr>
 <td colspan="3" style="text-align:center" align="center">
-<input type="submit" value="ADD"
+<input type="submit" value="ADD" ng-click="addus()"
 ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||  
 myForm.email.$dirty && myForm.email.$invalid">
 </td></tr></table>

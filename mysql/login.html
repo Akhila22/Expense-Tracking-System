@@ -23,7 +23,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
     
 </head>
-<body ng-app="myApp" ng-controller="logincontroller">
+<body >
     
     <div class="header">
         <div class="row">
@@ -53,7 +53,7 @@
             <br/><h3><center>Login Form</center></h3><br/>
         </div>
         <div class="small-12 columns">
-               <form name="myForm" method="post" action="/authenticate" novalidate>
+               <form name="myForm" method="post"  ng-app="myApp" ng-controller="logincontroller" novalidate>
 
 <table align="center" width="50%">
 <tr>
@@ -74,7 +74,7 @@
 </tr>
 
 <tr>
-<td colspan="2" style="text-align:center" align="center"><input type="submit" value="LOGIN"
+<td colspan="2" style="text-align:center" align="center"><input type="submit" value="LOGIN" ng-click="submit()"
 ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||  
 myForm.email.$dirty && myForm.email.$invalid">
 </td>
@@ -118,10 +118,53 @@ myForm.email.$dirty && myForm.email.$invalid">
             $(document).foundation();
         </script>
         <script>
-var app = angular.module('myApp', []);
-app.controller('logincontroller', function($scope) {
-   
-});
+            var app = angular.module("myApp", ["ngRoute"]);
+
+             app.config(function($routeProvider) {
+                $routeProvider
+                .when("/adminLogin", {
+                    templateUrl : "/adminLogin"
+                })
+                .when("/userLogin", {
+                    templateUrl : "/userLogin"
+                    
+                });
+                
+            });
+
+
+            app.controller('logincontroller', function($scope,$http,$location) {
+
+                     $scope.submit=function(){
+                    console.log($scope.email);
+                   // console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/log",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            email: $scope.email,
+                            user: $scope.user   
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                        console.log(response.data);
+                        if(response.data){
+                            window.location.href="/login";
+                        }
+                        else{
+                            alert('invalid username and password');
+                        }
+                    },function(response){
+                        console.log(response.data);
+                    });
+                }
+
+               
+            });
 </script>
 </body>
 </html>

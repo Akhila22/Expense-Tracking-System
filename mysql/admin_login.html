@@ -112,6 +112,7 @@
             app.controller('catcontroller', function($scope,$http) {
             	$http.get('/financialYear')
                 .then(function(response){
+
                        $scope.years = response.data;
           		});
 
@@ -140,14 +141,36 @@
                     }).then(function(response){
                         console.log("successful");
                     },function(response){
-                        console.log("response.data");
+                        console.log(response.data);
                     });
                 }
 
 
 
             });
-            app.controller('usercontroller', function($scope) {
+            app.controller('usercontroller', function($scope,$http) {
+
+                     $scope.addus=function(){
+                    
+                    $http({
+                        url : "/newuser",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            email: $scope.email,
+                            user: $scope.user,
+                            userrole: $scope.userrole
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+
 
             });
             app.controller('admincontroller', function($scope) {

@@ -1,5 +1,5 @@
 express = require('express');
-
+trycatch = require('trycatch');
 app = express();
 mysql = require('mysql');
 path = require('path'),
@@ -12,6 +12,9 @@ var budget=require('./addbudget.js');
 var category=require('./addcategory.js');
 var finYear = require('./getfinancialyears.js');
 var expense = require('./addexpense.js');
+var newuser=require('./adduser.js');
+var login=require('./login.js');
+
 
 connection = mysql.createConnection({
   host : 'localhost',
@@ -37,43 +40,40 @@ app.get('/',function(req,res){
 	res.send("Welcome!!");
 });
 
-app.route('/newuser')
-.post(function(req, res){
-	//console.log(req.body);
-	var email = req.body.email;
-	var password = req.body.user;
-	var userrole = req.body.userrole;
-    var sql = "insert into user(username,password,role_id) values('"+ email +"','"+ password +"',"+ userrole +")";
-   // console.log(sql);
-    connection.query(sql, function(error,rows,fields){
-      if(!!error){
-        console.log('Error in the query');
-      }else{
-        console.log('Inserted Successfully');
-      }
-    });
-});
-
-app.route('/authenticate')
-   .post(function(req, res){
-    var email = req.body.email;
-    var password = req.body.user;
-    var sql = "select role_id,user_id,username from user where username = '"+ email +"' and password = '"+ password +"'";
-   // console.log(sql);
-    connection.query(sql, function(error,rows,fields){
-      if(!!error){
-        console.log('Error in the query');
-      }else{
+// app.route('/authenticate')
+//    .post(function(req, res){
+//     var email = req.body.email;
+//     var password = req.body.user;
+//     var sql = "select role_id,user_id,username,password from user";
+//    // console.log(sql);
+//     connection.query(sql, function(error,rows,fields){
+//       if(!!error){
+//         console.log('Error in the query');
+//       }else{
        
-        req.session.user_id = rows[0].user_id;
-        req.session.role_id = rows[0].role_id;
+//         req.session.user_id = rows[0].user_id;
+//         req.session.role_id = rows[0].role_id;
+//         req.session.username= rows[0].username;
+//         //req.session.password=rows[0].password;
+//         if(email==req.session.username && password==rows[0].password){
 
-        if( req.session.role_id ==1)
-        	res.redirect('/adminLogin');
-        if( req.session.role_id ==2)
-        	res.redirect('/userLogin');
-      }
-    });
+//         if( req.session.role_id ==1)
+//         	res.redirect('/adminLogin');
+//         if( req.session.role_id ==2)
+//         	res.redirect('/userLogin');
+//       }
+//       else{
+//         res.send(true);
+//         console.log("Invalid username or password");
+//       }
+//       }
+//     });
+// });
+
+app.post('/log',function(req,res){
+  console.log("welcome to login");
+  login.loginFun(req,res);
+  
 });
 
 app.post('/budget',function(req,res){
@@ -81,6 +81,13 @@ app.post('/budget',function(req,res){
 	budget.addbudget(req,res);
   
 });
+app.post('/newuser',function(req,res){
+  //console.log("welcome to budget");
+  newuser.addnewuser(req,res);
+  
+});
+
+
 
 app.post('/category',function(req,res){
 	//console.log("welcome to category");
