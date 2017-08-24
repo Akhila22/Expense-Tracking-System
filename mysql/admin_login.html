@@ -42,7 +42,10 @@
                             <li><a href="#!cat">Category</a></li>
                             <li><a href="#!exp">Expense</a></li>
                             <li><a href="#!user">User</a></li>
+                            <li><a href="#!rep">Reports</a></li>
+                            <li><a href="#!chgpwd">Change Password</a></li> 
                             <li><a href="/logout">Logout</a></li>
+
 
                         </ul>
                     </section>
@@ -96,6 +99,10 @@
                     templateUrl : "/addcategory",
                     controller: 'catcontroller'
                 })
+                .when("/chgpwd", {
+                    templateUrl : "/changepwd",
+                    controller : 'passcontroller'
+                }) 
                 .when("/exp", {
                     templateUrl : "/addexpense",
                     controller: 'expcontroller'
@@ -104,11 +111,71 @@
                     templateUrl : "/addbudget",
                     controller: 'validateCtrl'
                 })
+                .when("/rep", {
+                    templateUrl : "/newreport",
+                    controller: 'reportcontroller'
+                })
                 .when("/user", {
                     templateUrl : "/adduser",
                     controller: 'usercontroller'
                 });
             });
+
+
+
+            app.controller('reportcontroller', function($scope,$http) {
+              
+            // $scope.addreport = function(){
+            //       console.log($scope.date);
+            //         var data = {
+            //             date1 : $scope.date1,
+            //             date2 : $scope.date2
+            //         };
+            //         $http.post('/report',data).then(function(response) {
+            //             console.log(response.data.cname);
+            //             $scope.cname = response.data.cname;
+            //             $scope.fy = response.data.fy;
+            //             $scope.ib = response.data.ib;
+            //             $scope.rb = response.data.rb;
+            //             $scope.q1 = response.data.q1;
+            //             $scope.q2 = response.data.q2;
+            //             $scope.q3 = response.data.q3;
+            //             $scope.q4 = response.data.q4;
+
+            //         });
+            //     }
+                    $scope.addreport=function(){
+                        $http({
+                            url:"/report",
+                            method: "POST",
+                            dataType:'json',
+                            data:{
+                                date1 : $scope.date1,
+                                date2 : $scope.date2
+                            },
+                             headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+
+                        }).then(function(response){
+                            console.log(response.data.cname);
+                            $scope.cname = response.data.cname;
+                            $scope.fy = response.data.fy;
+                            $scope.ib = response.data.ib;
+                            $scope.rb = response.data.rb;
+                            $scope.q1 = response.data.q1;
+                            $scope.q2 = response.data.q2;
+                            $scope.q3 = response.data.q3;
+                            $scope.q4 = response.data.q4;
+                        },function(response){
+                        console.log(response.data);
+                    });
+                    }
+                    
+            });
+
+
+
             app.controller('catcontroller', function($scope,$http) {
             	$http.get('/financialYear')
                 .then(function(response){
@@ -173,6 +240,34 @@
 
 
             });
+
+            app.controller('passcontroller', function($scope,$http,$window) {
+                $scope.validate = function(myForm){
+                    var val1 = $scope.newpwd;
+                    var val2 = $scope.confpwd;
+                    myForm.confpwd.$setValidity('passwordVerify', val1 === val2);
+                }
+                $scope.pwdCheck = function(){
+                    $http({
+                        url: "/checkPwd",
+                        method: "PUT",
+                        dataType: "json",
+                        data:{
+                            password : $scope.oldpwd,
+                            newpassword : $scope.newpwd
+                        },
+                        headers:{
+                            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                            //$window.alert(response.data);
+                            alert(response.data);
+                        },function(response){
+                            console.log("response.data");
+                    });
+                }
+            });
+
             app.controller('admincontroller', function($scope) {
                 // $scope.message="Welcome Admin";
                 window.location.href = '#!/alog';

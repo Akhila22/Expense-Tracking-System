@@ -42,7 +42,9 @@
                         <li class="active"><a href="#!ulog"><i class="fa fa-home fa-lg"></i></a></li>
                         <li><a  href="#!rep">Reports</a></li>
                         <li><a href="#!exp">Expense</a></li>
+                        <li><a href="#!chgpwd">Change Password</a></li> 
                         <li><a href="/logout">Logout</a></li>
+                        
                         
                     </ul>
                 </section>
@@ -96,6 +98,10 @@
                 .when("/ulog", {
                     templateUrl : "/userHome"
                 })
+                .when("/chgpwd", {
+                    templateUrl : "/changepwd",
+                    controller : 'passcontroller'
+                }) 
                 .when("/rep", {
                     templateUrl : "/rep",
                     controller: 'repcontroller'
@@ -125,6 +131,33 @@
             app.controller('ulogcontroller', function($scope) {
                 // $scope.message="Welcome User";
                 window.location.href = '#!/ulog';
+            });
+
+            app.controller('passcontroller', function($scope,$http,$window) {
+                $scope.validate = function(myForm){
+                    var val1 = $scope.newpwd;
+                    var val2 = $scope.confpwd;
+                    myForm.confpwd.$setValidity('passwordVerify', val1 === val2);
+                }
+                $scope.pwdCheck = function(){
+                    $http({
+                        url: "/checkPwd",
+                        method: "PUT",
+                        dataType: "json",
+                        data:{
+                            password : $scope.oldpwd,
+                            newpassword : $scope.newpwd
+                        },
+                        headers:{
+                            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                            //$window.alert(response.data);
+                            alert(response.data);
+                        },function(response){
+                            console.log("response.data");
+                    });
+                }
             });
            app.controller('expcontroller', function($scope,$http) {
                 $http.get('/financialYear')

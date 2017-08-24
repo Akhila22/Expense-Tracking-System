@@ -13,8 +13,10 @@ var category=require('./addcategory.js');
 var finYear = require('./getfinancialyears.js');
 var expense = require('./addexpense.js');
 var newuser=require('./adduser.js');
-var login=require('./login.js');
-
+var login=require('./login.js'); 
+var validatepwd = require('./validatepwd.js'); 
+var report=require('./report.js');
+ 
 
 connection = mysql.createConnection({
   host : 'localhost',
@@ -81,13 +83,28 @@ app.post('/budget',function(req,res){
 	budget.addbudget(req,res);
   
 });
+app.post('/report',function(req,res){
+  //console.log("welcome to budget");
+  report.addrep(req,res);
+  
+});
 app.post('/newuser',function(req,res){
   //console.log("welcome to budget");
   newuser.addnewuser(req,res);
   
 });
 
+app.put('/checkPwd',function(req,res){
+  //console.log("welcome to budget");
+  validatepwd.validatePassword(req,res);
+  
+}); 
 
+app.get('/changepwd',function(req,res){
+ 
+      res.sendFile(__dirname+"/change_password.html");
+    
+}); 
 
 app.post('/category',function(req,res){
 	//console.log("welcome to category");
@@ -118,6 +135,10 @@ app.get('/addcategory',function(req,res){
     	res.sendFile(__dirname+"/addcategory.html");
     else
     	res.redirect('/logout');
+ });
+
+app.get('/newreport',function(req,res){
+      res.sendFile(__dirname+"/report.html");
  });
 
 app.get('/addbudget',function(req,res){

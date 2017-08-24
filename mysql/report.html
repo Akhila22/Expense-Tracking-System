@@ -19,28 +19,129 @@
     <meta class="foundation-mq-topbar">
 
     <link rel="stylesheet" href="css/respond.css">
-    <script src="js/jquery-1.8.3.js"></script>
-        <script src="js/foundation.min.js"></script>
-         <script src="js/angular.min.js"></script>
-        <script>
-            $(document).foundation();
-        </script>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+	
 </head>
-<body n>
+<body>
     
     
-<form ng-app="myApp" ng-controller="repcontroller" >
         <!-- Featured Section -->
         <div class="row contentdiv">
             <div class="small-12 columns">
-                <br><br><br><br><br><br><br><br>
-                <h1><center>THIS IS REPORTS PAGE(any changes make it to report.html)</center></h1>
+				
+                <h4><center>Welcome to Reports page</center></h4>
+                <form  ng-app="myApp" method="post" ng-controller="reportcontroller"  name="myForm" novalidate> 
+                <table align="center" width="100%">
+
+
+
+<tr>
+<th><b>From Date:</b></th>
+<td><input type="date" name="date1" ng-model="date1" placeholder="dd/mm/yyyy" required></td> <td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid"> <span ng-show="myForm.date.$error.required">Date is required.</span> </span> 
+</td>
+
+
+<th><b>To Date:</b></th>
+<td><input type="date" name="date2" ng-model="date2" placeholder="dd/mm/yyyy" required></td> <td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid"> <span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span> </span> 
+</td>
+
+
+<td colspan="3" style="text-align:center" align="center"> <input type="submit" ng-click="addreport()" ng-disabled ="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid"> 
+</td></tr></table>
+<table align="center" width="10%" border="1" style="float: left;">
+  <tr>
+  <th>Category_Name</th>
+  </tr>
+  
+  <tr ng-repeat ="x in cname track by $index"><td>{{x}}</td></tr>
+
+</table>
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Fiscal_Year</th>
+  </tr>
+  
+  <tr ng-repeat ="x in fy track by $index"><td>{{x}}</td></tr>
+
+</table>
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Total_Intial_Budget</th>
+  </tr>
+  
+  <tr ng-repeat ="x in ib track by $index"><td>{{x}}</td></tr>
+
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Q1</th>
+  </tr>
+  
+  <tr ng-repeat ="x in q1 track by $index"><td>{{x}}</td></tr>
+
+</table>
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Q2</th>
+  </tr>
+  
+  <tr ng-repeat ="x in q2 track by $index"><td>{{x}}</td></tr>
+
+</table>
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Q3</th>
+  </tr>
+  
+  <tr ng-repeat ="x in q3 track by $index"><td>{{x}}</td></tr>
+
+</table>
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Q4</th>
+  </tr>
+  
+  <tr ng-repeat ="x in q4 track by $index"><td>{{x}}</td></tr>
+
+</table>
+<table align="center" width="10%" border="1" style="float: left;"><tr>
+  <th>Remaining_Budget</th>
+  </tr>
+  
+  <tr ng-repeat ="x in rb track by $index"><td>{{x}}</td></tr>
+
+</table>
+ 
+
+</form>
             </div>
         </div>
-        </form>
        
-        
-        
+		<script src="js/jquery-1.8.3.js"></script>
+        <script src="js/foundation.min.js"></script>
+         <script src="js/angular.min.js"></script>
+        <script>
+          var app = angular.module('myApp', []);
+
+          app.controller('reportcontroller', function($scope,$http) {
+            
+          // $scope.report = function(){
+          //       console.log($scope.date);
+          //         var data = {
+          //             date1 : $scope.date1,
+          //             date2 : $scope.date2
+          //         };
+          //         $http.post('http://localhost:1337/report',data).then(function(response) {
+          //             console.log(response.data.cname);
+          //             $scope.cname = response.data.cname;
+          //             $scope.fy = response.data.fy;
+          //             $scope.ib = response.data.ib;
+          //             $scope.rb = response.data.rb;
+          //             $scope.q1 = response.data.q1;
+          //             $scope.q2 = response.data.q2;
+          //             $scope.q3 = response.data.q3;
+          //             $scope.q4 = response.data.q4;
+
+          //         });
+          //     }
+                  
+          });
+</script>
+
 </body>
+
 </html>

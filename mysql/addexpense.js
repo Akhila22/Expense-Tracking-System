@@ -44,16 +44,13 @@ exports.addExp = function(req, res) {
                 var amount = json.amount;
                 //var cid;
                 var vid;
-              //  console.log(req.body);
 
-                // connection.query(sql, function(error,rows,fields){
-                //                if(!!error){
-                //                               console.log('Error in the query');
-                //                }
-                //                else
-                //                {
-                //                  cid=rows[0].category_id;
-                               //  console.log(vendorname);
+               // var catbudsql="select "
+
+
+
+
+              
                                  var sql2 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
                                 // console.log(sql2);
                                  connection.query(sql2, function(error,rows,fields){
