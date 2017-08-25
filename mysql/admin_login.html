@@ -182,6 +182,33 @@
 
                        $scope.years = response.data;
           		});
+            	
+            	$scope.dateRange=function(fyyear){
+            		console.log(fyyear);
+            		var yearSplit = fyyear.split("Y");
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
+            	}
+
+            	$scope.checkQ = function(myForm){
+            		var q1 = parseInt($scope.q1);
+            		var q2 = parseInt($scope.q2);
+            		var q3 = parseInt($scope.q3);
+            		var q4 = parseInt($scope.q4);
+            		var budget = $scope.budget;
+            		var total = q1+q2+q3+q4;
+            		console.log(total);
+            		console.log(budget);
+            		myForm.q1.$setValidity('budgetVerify',budget === total);
+            		//console.log("f1:"+f1);
+            		myForm.q2.$setValidity('budgetVerify',budget === total);
+            		myForm.q3.$setValidity('budgetVerify',budget === total);
+            		myForm.q4.$setValidity('budgetVerify',budget === total);
+            			
+            	}
 
                 $scope.addcat=function(){
                     //console.log($scope.date);
@@ -302,8 +329,17 @@
                 .then(function(response){
                     $scope.years = response.data;
                 });
+                
+                
                 $scope.selectFun = function(){
                     console.log($scope.FYear);
+                    var yearSplit = $scope.FYear.split("Y");
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
+
                     var data = {year : $scope.FYear};
                     var url = '/getcategory?year='+$scope.FYear;
                    $http.get(url).then(function(response){
