@@ -166,6 +166,12 @@
                 });
                 $scope.selectFun = function(){
                     console.log($scope.FYear);
+                    var yearSplit = $scope.FYear.split("Y");
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
                     var data = {year : $scope.FYear};
                     var url = '/getcategory?year='+$scope.FYear;
                    $http.get(url).then(function(response){
