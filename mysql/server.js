@@ -8,16 +8,6 @@ bodyParser = require('body-parser'),
 port = 1337;
 url = require('url');
 
-var budget=require('./addbudget.js');
-var category=require('./addcategory.js');
-var finYear = require('./getfinancialyears.js');
-var expense = require('./addexpense.js');
-var newuser=require('./adduser.js');
-var login=require('./login.js'); 
-var validatepwd = require('./validatepwd.js'); 
-var report=require('./report.js');
- 
-
 connection = mysql.createConnection({
   host : 'localhost',
   user : 'root',
@@ -38,6 +28,16 @@ app.use(session({secret: "Shh, its a secret!"}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var budget=require('./addbudget.js');
+var category=require('./addcategory.js');
+var finYear = require('./getfinancialyears.js');
+var expense = require('./addexpense.js');
+var newuser=require('./adduser.js');
+var login=require('./login.js');
+var validatepwd = require('./validatepwd.js');
+var report=require('./report.js');
+var getExpenses = require('./getexpenses.js')
+
 app.get('/',function(req,res){
 	res.send("Welcome!!");
 });
@@ -52,7 +52,7 @@ app.get('/',function(req,res){
 //       if(!!error){
 //         console.log('Error in the query');
 //       }else{
-       
+
 //         req.session.user_id = rows[0].user_id;
 //         req.session.role_id = rows[0].role_id;
 //         req.session.username= rows[0].username;
@@ -75,36 +75,36 @@ app.get('/',function(req,res){
 app.post('/log',function(req,res){
   console.log("welcome to login");
   login.loginFun(req,res);
-  
+
 });
 
 app.post('/budget',function(req,res){
 	//console.log("welcome to budget");
 	budget.addbudget(req,res);
-  
+
 });
 app.post('/report',function(req,res){
   //console.log("welcome to budget");
   report.addrep(req,res);
-  
+
 });
 app.post('/newuser',function(req,res){
   //console.log("welcome to budget");
   newuser.addnewuser(req,res);
-  
+
 });
 
 app.put('/checkPwd',function(req,res){
   //console.log("welcome to budget");
   validatepwd.validatePassword(req,res);
-  
-}); 
+
+});
 
 app.get('/changepwd',function(req,res){
- 
+
       res.sendFile(__dirname+"/change_password.html");
-    
-}); 
+
+});
 
 app.post('/category',function(req,res){
 	//console.log("welcome to category");
@@ -147,13 +147,13 @@ app.get('/addbudget',function(req,res){
     else
     	res.redirect('/logout');
  });
- 
+
 app.get('/adduser',function(req,res){
 	if(req.session.role_id==1)
     	res.sendFile(__dirname+"/adduser.html");
     else
     	res.redirect('/logout');
-    
+
 });
 app.get('/logout',function(req,res){
 	req.session.destroy();
@@ -165,7 +165,7 @@ app.get('/adminLogin',function(req,res){
     	res.sendFile(__dirname+"/admin_login.html");
     else
     	res.redirect('/logout');
-    
+
  });
 app.get('/adminHome',function(req,res){
   if(req.session.role_id==1)
