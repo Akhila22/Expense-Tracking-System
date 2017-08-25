@@ -11,12 +11,36 @@ app.route('/getexpenses')
               "e.category_id = c.category_id and e.vendor_id = v.vendor_id " +
               "and e.user_id = ?";
     console.log('Get Expense Query: \n' + sql);
-    connection.query(sql,[req.session.user_id], function(error,rows,fields){
+    connection.query(sql, [req.session.user_id], function(error,rows,fields){
       if(!!error){
         throw new Error('Error in the query ' + error);
       }else{
         res.send(rows);
       }
+    });
+  },function(err){
+    console.log(err.stack);
+    res.send(false);
+  });
+});
+
+app.route('/delexpense')
+.post(function(req, res){
+  var param = JSON.parse(Object.keys(req.body));
+  console.log(param);
+  var expense_id = param.expenseId;
+  trycatch(function(){
+    if(!req.session.user_id){
+      throw new Error("User not logged in");
+    }
+    var sql = "delete from expenses where expense_id = ?";
+    console.log('Delete Expense Query: \n' + sql);
+    connection.query(sql, [expense_id], function(error,result){
+      if(!!error){
+        throw new Error('Error in the query ' + error);
+      }
+      console.log("Number of records deleted: " + result.affectedRows);
+      res.send(true);
     });
   },function(err){
     console.log(err.stack);
