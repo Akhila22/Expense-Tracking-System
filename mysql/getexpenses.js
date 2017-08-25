@@ -26,13 +26,13 @@ app.route('/getexpenses')
 
 app.route('/delexpense')
 .post(function(req, res){
-  var param = JSON.parse(Object.keys(req.body));
-  console.log(param);
-  var expense_id = param.expenseId;
   trycatch(function(){
     if(!req.session.user_id){
       throw new Error("User not logged in");
     }
+    var param = JSON.parse(Object.keys(req.body));
+    console.log(param);
+    var expense_id = param.expenseId;
     var sql = "delete from expenses where expense_id = ?";
     console.log('Delete Expense Query: \n' + sql);
     connection.query(sql, [expense_id], function(error,result){
