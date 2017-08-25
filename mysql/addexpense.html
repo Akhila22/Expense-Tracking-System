@@ -79,7 +79,7 @@
   </td>
   </tr>
   <tr><th><b>Date:</b></th>
-  <td><input type="date" placeholder="enter the date" ng-model="date" name="date" required></td>
+  <td><input type="date" min={{min}} max={{max}} placeholder="enter the date" ng-model="date" name="date" required></td>
   <td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
   <span ng-show="myForm.date.$error.required">Date is required.</span>
   </span></td>

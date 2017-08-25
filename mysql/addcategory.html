@@ -54,7 +54,7 @@ name="myForm" novalidate>
 </tr>
 <tr>
 <th colspan="2"><b>Fiscal Year:</b></th>
-<td><select name="year" placeholder="enter year" ng-model="year">
+<td><select name="year" placeholder="enter year" ng-model="year" ng-change="dateRange(year)">
        <option ng-repeat="year in years" value={{year.financial_year}}>{{year.financial_year}}</option></select>
 </td>
 <td><span style="color:red" ng-show="myForm.fyyear.$dirty && myForm.fyyear.$invalid">
@@ -63,7 +63,7 @@ name="myForm" novalidate>
 </td>
 </tr>
 <tr><th colspan="2"><b>Date:</b></th>
-<td><input type="date" name="date" placeholder="enter the date" ng-model="date" required></td>
+<td><input type="date" name="date" min={{min}} max={{max}} placeholder="enter the date" ng-model="date" required></td>
 <td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
 <span ng-show="myForm.date.$error.required">Date is required.</span>
 </span></td>
@@ -72,32 +72,45 @@ name="myForm" novalidate>
 <tr>
 <td>
 <b>Q1:</b>
-<input type="text" name="q1" ng-model="q1" placeholder="    %" required>
+<input type="text" name="q1" ng-model="q1" placeholder="Q1 amount" required ng-change="checkQ(myForm)">
 <span style="color:red" ng-show="myForm.q1.$dirty && myForm.q1.$invalid">
 <span ng-show="myForm.q1.$error.required">Q1 cannot be empty.</span>
+<span ng-show="myForm.q1.$error.budgetVerify"></span>
 </span>
 </td>
 <td>
 <b>Q2:</b>
-<input type="text" name="q2" placeholder="    %" ng-model="q2" required>
+<input type="text" name="q2" ng-model="q2" placeholder="Q2 amount" required ng-change="checkQ(myForm)">
 <span style="color:red" ng-show="myForm.q2.$dirty && myForm.q2.$invalid">
 <span ng-show="myForm.q1.$error.required">Q2 cannot be empty.</span>
+<span ng-show="myForm.q2.$error.budgetVerify"></span>
 </span>
 </td>
 <td>
 <b>Q3:</b>
-<input type="text" name="q3" placeholder="    %" ng-model="q3" required>
+<input type="text" name="q3" ng-model="q3" placeholder="Q3 amount" required ng-change="checkQ(myForm)">
 <span style="color:red" ng-show="myForm.q3.$dirty && myForm.q3.$invalid">
 <span ng-show="myForm.q3.$error.required">Q3 cannot be empty.</span>
+<span ng-show="myForm.q3.$error.budgetVerify"></span>
 </span>
 </td>
 <td>
 <b>Q4:</b>
-<input type="text" name="q4" placeholder="    %" ng-model="q4" required>
+<input type="text" name="q4" ng-model="q4" placeholder="Q4 amount" required ng-change="checkQ(myForm)">
 <span style="color:red" ng-show="myForm.q4.$dirty && myForm.q4.$invalid">
 <span ng-show="myForm.q4.$error.required">Q4 cannot be empty.</span>
+<span ng-show="myForm.q4.$error.budgetVerify"></span>
 </span>
 </td></tr>
+
+<tr>
+<td></td>
+<td colspan='2'>
+<center><span style="color:red" ng-show="myForm.q4.$error.budgetVerify">Quarter division should sum up to category budget!</span></center>
+</td>
+<td></td>
+</tr>
+
 <tr><td colspan="4" style="text-align:center" align="center">
 <input type="submit" value="ADD" ng-click="addcat()" ng-disabled="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid ||  
 myForm.email.$dirty && myForm.email.$invalid">
