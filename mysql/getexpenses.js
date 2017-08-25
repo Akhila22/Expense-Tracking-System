@@ -1,5 +1,4 @@
-app.route('/getexpenses')
-.get(function(req, res){
+exports.getExpenseTbl = function(req, res){
   trycatch(function(){
     console.log(req.session.user_id);
     if(!req.session.user_id){
@@ -22,10 +21,9 @@ app.route('/getexpenses')
     console.log(err.stack);
     res.send(false);
   });
-});
+};
 
-app.route('/delexpense')
-.post(function(req, res){
+exports.delExpenseTbl = function(req, res){
   trycatch(function(){
     if(!req.session.user_id){
       throw new Error("User not logged in");
@@ -46,4 +44,4 @@ app.route('/delexpense')
     console.log(err.stack);
     res.send(false);
   });
-});
+};

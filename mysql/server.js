@@ -106,6 +106,20 @@ app.get('/changepwd',function(req,res){
 
 });
 
+app.get('/getexptbl',function(req,res){
+
+    res.sendFile(__dirname+"/expensetable.html");
+
+});
+
+app.get('/getexpenses',function(req,res){
+	getExpenses.getExpenseTbl(req,res);
+});
+
+app.post('/delexpense',function(req,res){
+	getExpenses.delExpenseTbl(req,res);
+});
+
 app.post('/category',function(req,res){
 	//console.log("welcome to category");
 	//console.log("server " + req.body.category_name);

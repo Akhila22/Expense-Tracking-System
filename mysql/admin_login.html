@@ -44,6 +44,7 @@
                             <li><a href="#!user">User</a></li>
                             <li><a href="#!rep">Reports</a></li>
                             <li><a href="#!chgpwd">Change Password</a></li> 
+                            <li><a href="#!expTbl">View Expenses</a></li>
                             <li><a href="/logout">Logout</a></li>
 
 
@@ -118,6 +119,10 @@
                 .when("/user", {
                     templateUrl : "/adduser",
                     controller: 'usercontroller'
+                })
+                .when("/expTbl",{
+                	templateUrl : "/getexptbl",
+                	controller : 'exptblcontroller'
                 });
             });
 
@@ -174,7 +179,32 @@
                     
             });
 
-
+			app.controller('exptblcontroller', function($scope,$http){
+				$http.get('/getexpenses')
+				.then(function(response){
+					$scope.expenses = response.data;
+				});
+				
+				$scope.deleteExp = function(id){
+					console.log(id);
+					$http({
+                        url : "/delexpense",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                        	expenseId : id
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                    },function(response){
+                        console.log(response.data);
+                    });
+				}
+			});
+			
 
             app.controller('catcontroller', function($scope,$http) {
             	$http.get('/financialYear')

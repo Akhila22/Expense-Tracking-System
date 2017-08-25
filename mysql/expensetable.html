@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA Expense Tracking System</title>
+    <meta name="description" content="BMG">
+    <meta name="keywords" content="BMG Netting">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/modernizr.js"></script>
+    <meta class="foundation-data-attribute-namespace">
+    <meta class="foundation-mq-xxlarge">
+    <meta class="foundation-mq-xlarge">
+    <meta class="foundation-mq-large">
+    <meta class="foundation-mq-medium">
+    <meta class="foundation-mq-small">
+    <meta class="foundation-mq-topbar">
+        <script src="js/angular.min.js"></script>
+
+    <link rel="stylesheet" href="css/respond.css">
+     <script src="js/jquery-1.8.3.js"></script>
+        <script src="js/foundation.min.js"></script>
+</head>
+<body>
+    
+    
+        <!-- Featured Section -->
+        <div class="row contentdiv">
+        <div class="small-12 columns">
+            <br/><h3><center>Add Category</center></h3><br/>
+        </div>
+        <div class="small-12 columns">
+<form ng-controller="catcontroller" method="post" 
+name="myForm" novalidate>
+<table align="center" width="75%">
+<tr>
+	<th>Date</th>
+	<th>Category Name</th>
+	<th>Vendor Name</th>
+	<th>Description</th>
+	<th>Amount</th>
+</tr>
+<tr ng-repeat="expense in expenses">
+
+	<td>{{expense.date | date:"MM/dd/yyyy"}}</td>
+	<td>{{expense.category_name}}</td>
+	<td>{{expense.vendor_name}}</td>
+	<td>{{expense.description}}</td>
+	<td>{{expense.amount}}</td>
+	<td><button ng-click="deleteExp(expense.expense_id)">Delete</button></td>
+</tr>
+</table>
+
+
+</form>
+
+            </div>
+        </div>
+        
+        
+       
+        <script>
+            $(document).foundation();
+        </script>
+        <script>
+var app = angular.module('myApp', []);
+    app.controller('exptblcontroller', function($scope,$http) {
+        $scope.msg = "testing";
+    });
+</script>
+</body>
+</html>
