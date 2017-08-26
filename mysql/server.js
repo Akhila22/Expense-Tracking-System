@@ -7,6 +7,10 @@ session = require('express-session'),
 bodyParser = require('body-parser'),
 port = 1337;
 url = require('url');
+nodemailer = require('nodemailer');
+server = require('./start');
+mail='';
+
 
 connection = mysql.createConnection({
   host : 'localhost',
@@ -42,6 +46,28 @@ var login=require('./login.js');
 var validatepwd = require('./validatepwd.js');
 var report=require('./report.js');
 var getExpenses = require('./getexpenses.js')
+var mailer = require('./mailer.js');
+var start = require('./start');
+var updatepasswd = require('./updatepasswd.js');
+
+
+app.get('/forgotpass',function(req,res){
+   res.sendFile(__dirname+"/forgotpass.html");
+   
+});
+
+app.get('/email',function(req,res){
+   // res.redirect('/login');  
+     res.setHeader("Content-Type", "text/html")
+
+  var url_parts = url.parse(req.url,true);
+ // console.log('url ' + url_parts);
+  var query = url_parts.query;
+    mail = req.query.recoveryemail;
+mailer.sendmail(req,res); 
+return res.sendFile(__dirname+"/login.html");
+});
+
 
 app.get('/',function(req,res){
 	res.send("Welcome!!");
@@ -104,6 +130,13 @@ app.put('/checkPwd',function(req,res){
   validatepwd.validatePassword(req,res);
 
 });
+
+app.put('/updatepasswd',function(req,res)
+{
+  console.log(req.body);
+updatepasswd.updatepassword(req,res);
+});
+
 
 app.get('/changepwd',function(req,res){
 
