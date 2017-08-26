@@ -43,7 +43,7 @@
                             <li><a href="#!exp">Expense</a></li>
                             <li><a href="#!user">User</a></li>
                             <li><a href="#!rep">Reports</a></li>
-                            <li><a href="#!chgpwd">Change Password</a></li> 
+                            <li><a href="#!chgpwd">Change Password</a></li>
                             <li><a href="#!expTbl">View Expenses</a></li>
                             <li><a href="/logout">Logout</a></li>
 
@@ -103,7 +103,7 @@
                 .when("/chgpwd", {
                     templateUrl : "/changepwd",
                     controller : 'passcontroller'
-                }) 
+                })
                 .when("/exp", {
                     templateUrl : "/addexpense",
                     controller: 'expcontroller'
@@ -129,54 +129,38 @@
 
 
             app.controller('reportcontroller', function($scope,$http) {
-              
-            // $scope.addreport = function(){
-            //       console.log($scope.date);
-            //         var data = {
-            //             date1 : $scope.date1,
-            //             date2 : $scope.date2
-            //         };
-            //         $http.post('/report',data).then(function(response) {
-            //             console.log(response.data.cname);
-            //             $scope.cname = response.data.cname;
-            //             $scope.fy = response.data.fy;
-            //             $scope.ib = response.data.ib;
-            //             $scope.rb = response.data.rb;
-            //             $scope.q1 = response.data.q1;
-            //             $scope.q2 = response.data.q2;
-            //             $scope.q3 = response.data.q3;
-            //             $scope.q4 = response.data.q4;
-
-            //         });
-            //     }
-                    $scope.addreport=function(){
-                        $http({
-                            url:"/report",
-                            method: "POST",
-                            dataType:'json',
-                            data:{
-                                date1 : $scope.date1,
-                                date2 : $scope.date2
-                            },
-                             headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-                        }
-
-                        }).then(function(response){
-                            console.log(response.data.cname);
-                            $scope.cname = response.data.cname;
-                            $scope.fy = response.data.fy;
-                            $scope.ib = response.data.ib;
-                            $scope.rb = response.data.rb;
-                            $scope.q1 = response.data.q1;
-                            $scope.q2 = response.data.q2;
-                            $scope.q3 = response.data.q3;
-                            $scope.q4 = response.data.q4;
-                        },function(response){
-                        console.log(response.data);
-                    });
-                    }
-                    
+              $http.get('/financialYear')
+                .then(function(response){
+                       $scope.years = response.data;
+          		});
+              $scope.addreport = function(){
+                $http({
+                  url:"/report",
+                  method: "POST",
+                  dataType:'json',
+                  data:{
+                    fy: $scope.year,
+                    date1 : $scope.date1,
+                    date2 : $scope.date2
+                  },
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                  }
+                }).then(function(response){
+                    $scope.cname = response.data;
+                    console.log($scope.cname);
+                    // $scope.cname = response.data.cname;
+                    // $scope.fy = response.data.fy;
+                    // $scope.ib = response.data.ib;
+                    // $scope.rb = response.data.rb;
+                    // $scope.q1 = response.data.q1;
+                    // $scope.q2 = response.data.q2;
+                    // $scope.q3 = response.data.q3;
+                    // $scope.q4 = response.data.q4;
+                  },function(response){
+                    console.log(response.data);
+                });
+              }
             });
 
 			app.controller('exptblcontroller', function($scope,$http){
@@ -189,7 +173,7 @@
 						alert('No expenses added');
 					}
 				});
-				
+
 				$scope.deleteExp = function(id){
 					console.log(id);
 					$http({
@@ -218,15 +202,14 @@
 					});
 				}
 			});
-			
+
 
             app.controller('catcontroller', function($scope,$http) {
             	$http.get('/financialYear')
                 .then(function(response){
-
                        $scope.years = response.data;
           		});
-            	
+
             	$scope.dateRange=function(fyyear){
             		console.log(fyyear);
             		var yearSplit = fyyear.split("Y");
@@ -251,7 +234,7 @@
             		myForm.q2.$setValidity('budgetVerify',budget === total);
             		myForm.q3.$setValidity('budgetVerify',budget === total);
             		myForm.q4.$setValidity('budgetVerify',budget === total);
-            			
+
             	}
 
                 $scope.addcat=function(){
@@ -270,8 +253,8 @@
                             q2: $scope.q2,
                             q3: $scope.q3,
                             q4: $scope.q4
-                           
-                            
+
+
                         },
                         headers: {
                           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
@@ -289,7 +272,7 @@
             app.controller('usercontroller', function($scope,$http) {
 
                      $scope.addus=function(){
-                    
+
                     $http({
                         url : "/newuser",
                         method : "POST",
@@ -353,9 +336,9 @@
                         dataType: 'json',
                         data : {
                             year: $scope.year,
-                           
+
                             date: $scope.date,
-                            
+
                             budget: $scope.budget
                         },
                         headers: {
@@ -373,8 +356,8 @@
                 .then(function(response){
                     $scope.years = response.data;
                 });
-                
-                
+
+
                 $scope.selectFun = function(){
                     console.log($scope.FYear);
                     var yearSplit = $scope.FYear.split("Y");
@@ -390,23 +373,6 @@
                          $scope.names = response.data;
                     });
                 }
-                // $scope.addexp = function(){
-                //   var data = {
-                //     category: $scope.category,
-                //     vendor: $scope.vendor,
-                //     date: $scope.date,
-                //     description: $scope.desc,
-                //     amount: $scope.amount
-                //   }
-                //   console.log(JSON.stringify(data));
-                //   //$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-                //   $http.post("/expenses",data)
-                //   .then(function(response){
-                //     console.log("successful");
-                //   },function(response){
-                //     console.log("failure");
-                //   });
-                // }
                 $scope.addexp=function(){
                     console.log($scope.date);
                     console.log('before calling ' + $scope.category);
