@@ -1,147 +1,110 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMG Netting Tool</title>
-    <meta name="description" content="BMG">
-    <meta name="keywords" content="BMG Netting">
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <script src="js/modernizr.js"></script>
-    <meta class="foundation-data-attribute-namespace">
-    <meta class="foundation-mq-xxlarge">
-    <meta class="foundation-mq-xlarge">
-    <meta class="foundation-mq-large">
-    <meta class="foundation-mq-medium">
-    <meta class="foundation-mq-small">
-    <meta class="foundation-mq-topbar">
-
-    <link rel="stylesheet" href="css/respond.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-	
-</head>
-<body>
-    
-    
-        <!-- Featured Section -->
-        <div class="row contentdiv">
-            <div class="small-12 columns">
-				
-                <h4><center>Welcome to Reports page</center></h4>
-                <form  ng-app="myApp" method="post" ng-controller="reportcontroller"  name="myForm" novalidate> 
-                <table align="center" width="100%">
-
-
-
-<tr>
-<th><b>From Date:</b></th>
-<td><input type="date" name="date1" ng-model="date1" placeholder="dd/mm/yyyy" required></td> <td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid"> <span ng-show="myForm.date.$error.required">Date is required.</span> </span> 
-</td>
-
-
-<th><b>To Date:</b></th>
-<td><input type="date" name="date2" ng-model="date2" placeholder="dd/mm/yyyy" required></td> <td><span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid"> <span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span> </span> 
-</td>
-
-
-<td colspan="3" style="text-align:center" align="center"> <input type="submit" ng-click="addreport()" ng-disabled ="myForm.$invalid||myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid"> 
-</td></tr></table>
-<table align="center" width="9%" border="1" style="float: left;">
-  <tr>
-  <th>Category_Name</th>
-  </tr>
-  
-  <tr ng-repeat ="x in cname track by $index"><td>{{x}}</td></tr>
-
-</table>
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Fiscal_Year</th>
-  </tr>
-  
-  <tr ng-repeat ="x in fy track by $index"><td>{{x}}</td></tr>
-
-</table>
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Category_Budget</th>
-  </tr>
-  
-  <tr ng-repeat ="x in ib track by $index"><td>{{x}}</td></tr>
-
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Q1</th>
-  </tr>
-  
-  <tr ng-repeat ="x in q1 track by $index"><td>{{x}}</td></tr>
-
-</table>
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Q2</th>
-  </tr>
-  
-  <tr ng-repeat ="x in q2 track by $index"><td>{{x}}</td></tr>
-
-</table>
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Q3</th>
-  </tr>
-  
-  <tr ng-repeat ="x in q3 track by $index"><td>{{x}}</td></tr>
-
-</table>
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Q4</th>
-  </tr>
-  
-  <tr ng-repeat ="x in q4 track by $index"><td>{{x}}</td></tr>
-
-</table>
-<table align="center" width="9%" border="1" style="float: left;"><tr>
-  <th>Overall_Remaining_Budget</th>
-  </tr>
-  
-  <tr ng-repeat ="x in rb track by $index"><td>{{x}}</td></tr>
-
-</table>
- 
-
-</form>
-            </div>
-        </div>
-       
-		<script src="js/jquery-1.8.3.js"></script>
-        <script src="js/foundation.min.js"></script>
-         <script src="js/angular.min.js"></script>
-        <script>
-          var app = angular.module('myApp', []);
-
-          app.controller('reportcontroller', function($scope,$http) {
-            
-          // $scope.report = function(){
-          //       console.log($scope.date);
-          //         var data = {
-          //             date1 : $scope.date1,
-          //             date2 : $scope.date2
-          //         };
-          //         $http.post('http://localhost:1337/report',data).then(function(response) {
-          //             console.log(response.data.cname);
-          //             $scope.cname = response.data.cname;
-          //             $scope.fy = response.data.fy;
-          //             $scope.ib = response.data.ib;
-          //             $scope.rb = response.data.rb;
-          //             $scope.q1 = response.data.q1;
-          //             $scope.q2 = response.data.q2;
-          //             $scope.q3 = response.data.q3;
-          //             $scope.q4 = response.data.q4;
-
-          //         });
-          //     }
-                  
-          });
-</script>
-
-</body>
-
+  <head>
+    <title>Report Page</title>
+  </head>
+  <body>
+    <!-- Featured Section -->
+    <div class="row contentdiv">
+      <div class="small-12 columns">
+        <h4><center>Welcome to Reports page</center></h4>
+        <form ng-app="myApp" method="post" ng-controller="reportcontroller" name="myForm" novalidate>
+          <table align="center" width="100%">
+            <tr>
+              <th colspan="2"><b>Fiscal Year:</b></th>
+              <td>
+                <select name="year" ng-model="year">
+                  <option ng-repeat="year in years" value={{year.financial_year}}>{{year.financial_year}}</option>
+                </select>
+              </td>
+              <th><b>From Date:</b></th>
+              <td>
+                <input type="date" name="date1" ng-model="date1" placeholder="dd/mm/yyyy" required>
+              </td>
+              <td>
+                <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
+                  <span ng-show="myForm.date.$error.required">Date is required.</span>
+                </span>
+              </td>
+              <th><b>To Date:</b></th>
+              <td>
+                <input type="date" name="date2" ng-model="date2" placeholder="dd/mm/yyyy" required>
+              </td>
+              <td>
+                <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
+                  <span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span>
+                </span>
+              </td>
+              <td colspan="3" style="text-align:center" align="center">
+                <input type="submit" ng-click="addreport()"
+                        ng-disabled ="myForm.$invalid||myForm.user.$dirty &&
+                                      myForm.user.$invalid || myForm.email.$dirty &&
+                                      myForm.email.$invalid">
+              </td>
+            </tr>
+          </table>
+          <table id="report" align="center" width="10%" border="1" style="float: left;" ng-init="tot={}">
+            <tr>
+              <th>Budget allocated for</th>
+              <th colspan="2">Q1</th>
+              <th colspan="2">Q2</th>
+              <th colspan="2">Q3</th>
+              <th colspan="2">Q4</th>
+              <th colspan="2">FY20</th>
+            </tr>
+            <tr>
+              <th>Category_Name</th>
+              <th>Forecast</th>
+              <th>Actual</th>
+              <th>Forecast</th>
+              <th>Actual</th>
+              <th>Forecast</th>
+              <th>Actual</th>
+              <th>Forecast</th>
+              <th>Actual</th>
+              <th>Forecast</th>
+              <th>Actual</th>
+              <th>Variance</th>
+            </tr>
+            <tr ng-repeat ="x in cname track by $index">
+              <td>{{x.category_name}}</td>
+              <td ng-init="tot.q1_ini_tot = tot.q1_ini_tot + x.q1_ini_bud">{{x.q1_ini_bud}}</td>
+              <td ng-init="tot.q1_act_tot = tot.q1_act_tot + x.q1_act_bud">{{x.q1_act_bud}}</td>
+              <td ng-init="tot.q2_ini_bud = tot.q2_ini_bud + x.q2_ini_bud">{{x.q2_ini_bud}}</td>
+              <td ng-init="tot.q2_act_bud = tot.q2_act_bud + x.q2_act_bud">{{x.q2_act_bud}}</td>
+              <td ng-init="tot.q3_ini_bud = tot.q3_ini_bud + x.q3_ini_bud">{{x.q3_ini_bud}}</td>
+              <td ng-init="tot.q3_act_bud = tot.q3_act_bud + x.q3_act_bud">{{x.q3_act_bud}}</td>
+              <td ng-init="tot.q4_ini_bud = tot.q4_ini_bud + x.q4_ini_bud">{{x.q4_ini_bud}}</td>
+              <td ng-init="tot.q4_act_bud = tot.q4_act_bud + x.q4_act_bud">{{x.q4_act_bud}}</td>
+              <td ng-init="tot.initial_budget = tot.initial_budget + x.initial_budget">
+                {{x.initial_budget}}
+              </td>
+              <td ng-init="quar_act_bud = x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud;
+                            tot.fy_act_bud = tot.fy_act_bud + quar_act_bud">
+                {{quar_act_bud}}
+              </td>
+              <td ng-init="variance = x.initial_budget - quar_act_bud;
+                          tot.variance = tot.variance + variance">
+                {{variance}}
+              </td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>{{tot.q1_ini_tot}}</td>
+              <td>{{tot.q1_act_tot}}</td>
+              <td>{{tot.q2_ini_bud}}</td>
+              <td>{{tot.q2_act_bud}}</td>
+              <td>{{tot.q3_ini_bud}}</td>
+              <td>{{tot.q3_act_bud}}</td>
+              <td>{{tot.q4_ini_bud}}</td>
+              <td>{{tot.q4_act_bud}}</td>
+              <td>{{tot.initial_budget}}</td>
+              <td>{{tot.fy_act_bud}}</td>
+              <td>{{tot.variance}}</td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
