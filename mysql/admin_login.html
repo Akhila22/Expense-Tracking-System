@@ -183,6 +183,11 @@
 				$http.get('/getexpenses')
 				.then(function(response){
 					$scope.expenses = response.data;
+					if(response.data.length === 0){
+						console.log(response.data.length)
+						//$scope.flag = true;
+						alert('No expenses added');
+					}
 				});
 				
 				$scope.deleteExp = function(id){
@@ -202,6 +207,15 @@
                     },function(response){
                         console.log(response.data);
                     });
+					$http.get('/getexpenses')
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							alert('No expenses added');
+						}
+					});
 				}
 			});
 			

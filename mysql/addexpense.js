@@ -1,31 +1,3 @@
-// var express=require('express');
-// var mysql=require('mysql');
-// var bodyParser = require('body-parser');
-// var url= require('url');
-// var app=express();
-
-// var connection=mysql.createConnection({
-
-//                host:'localhost',user:'root',password:'',database:'expensetracking'
-// });
-
-
-// connection.connect(function(error){
-//                if(!!error){
-//                               console.log('Error');
-//                }else{
-//                               console.log('Connected');
-//                }
-// });
-
-
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(function(req, res, next) {
-//      res.setHeader("Access-Control-Allow-Origin", "*");
-// res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-// next();
-// });
 
 exports.addExp = function(req, res) {
                //console.log("warning " + req.body.category);
@@ -44,7 +16,7 @@ exports.addExp = function(req, res) {
                 var amount = json.amount;
                 //var cid;
                 var vid;
-
+                var uid = req.session.user_id;
                // var catbudsql="select "
 
 
@@ -79,7 +51,7 @@ exports.addExp = function(req, res) {
                                           }
                                           else{
                                             vid=rows1[0].vendor_id;
-                                            var sql5 = "insert into expenses(user_id,category_id,amount,date,description,vendor_id) values(1,"+category_id+","+amount+",'"+date+"','"+description+"',"+vid+")";
+                                            var sql5 = "insert into expenses(user_id,category_id,amount,date,description,vendor_id) values("+uid+","+category_id+","+amount+",'"+date+"','"+description+"',"+vid+")";
 
 
                                     connection.query(sql5, function(error,rows,fields){
@@ -103,7 +75,7 @@ exports.addExp = function(req, res) {
 
                                     else{
                                       vid = (rows[0].vendor_id);
-                                      var sql1 = "insert into expenses(user_id,category_id,amount,date,description,vendor_id) values(1,"+category_id+","+amount+",'"+date+"','"+description+"',"+vid+")";
+                                      var sql1 = "insert into expenses(user_id,category_id,amount,date,description,vendor_id) values("+uid+","+category_id+","+amount+",'"+date+"','"+description+"',"+vid+")";
 
 
                                     connection.query(sql1, function(error,rows,fields){

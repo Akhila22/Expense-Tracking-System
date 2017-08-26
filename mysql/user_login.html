@@ -43,6 +43,7 @@
                         <li><a  href="#!rep">Reports</a></li>
                         <li><a href="#!exp">Expense</a></li>
                         <li><a href="#!chgpwd">Change Password</a></li> 
+                        <li><a href="#!expTbl">View Expenses</a></li>
                         <li><a href="/logout">Logout</a></li>
                         
                         
@@ -110,6 +111,10 @@
                     templateUrl : "/addexpense",
                     controller: 'expcontroller'
                 })
+                .when("/expTbl",{
+                	templateUrl : "/getexptbl",
+                	controller : 'exptblcontroller'
+                });
                 
             });
             app.controller('repcontroller', function($scope) {
@@ -203,6 +208,51 @@
                     });
                 }
               });
+           
+           app.controller('exptblcontroller', function($scope,$http){
+        	   //$scope.flag = false;
+				$http.get('/getexpenses')
+				.then(function(response){
+					$scope.expenses = response.data;
+					console.log(response.data);
+					console.log(response.data.length)
+					if(response.data.length === 0){
+						console.log(response.data.length)
+						//$scope.flag = true;
+						alert('No expenses added');
+					}
+					//myForm.$setValidity('notEmptyList', $scope.flag === true);
+					//myForm.$setValidity('emptyList', $scope.flag === false);
+				});
+				
+				$scope.deleteExp = function(id){
+					console.log(id);
+					$http({
+                      url : "/delexpense",
+                      method : "POST",
+                      dataType: 'json',
+                      data : {
+                      	expenseId : id
+                      },
+                      headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                      }
+                  }).then(function(response){
+                      console.log("successful");
+                  },function(response){
+                      console.log(response.data);
+                  });
+					$http.get('/getexpenses')
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							alert('No expenses added');
+						}
+					});
+				}
+			});
         </script>
 </body>
 </html>
