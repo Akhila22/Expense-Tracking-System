@@ -53,18 +53,18 @@ var updatepasswd = require('./updatepasswd.js');
 
 app.get('/forgotpass',function(req,res){
    res.sendFile(__dirname+"/forgotpass.html");
-   
+
 });
 
 app.get('/email',function(req,res){
-   // res.redirect('/login');  
+   // res.redirect('/login');
      res.setHeader("Content-Type", "text/html")
 
   var url_parts = url.parse(req.url,true);
  // console.log('url ' + url_parts);
   var query = url_parts.query;
     mail = req.query.recoveryemail;
-mailer.sendmail(req,res); 
+mailer.sendmail(req,res);
 return res.sendFile(__dirname+"/login.html");
 });
 
@@ -114,11 +114,11 @@ app.post('/budget',function(req,res){
 	budget.addbudget(req,res);
 
 });
-app.post('/report',function(req,res){
-  //console.log("welcome to budget");
-  report.addrep(req,res);
-
-});
+// app.post('/report',function(req,res){
+//   //console.log("welcome to budget");
+//   report.addrep(req,res);
+//
+// });
 app.post('/newuser',function(req,res){
   //console.log("welcome to budget");
   newuser.addnewuser(req,res);
