@@ -19,6 +19,8 @@
     <meta class="foundation-mq-topbar">
 
     <link rel="stylesheet" href="css/respond.css">
+    <link rel="stylesheet" href="css/angular-flash.css">
+  <script src="js/angular-flash.js" charset="utf-8"></script>
     
 </head>
 <body>
@@ -32,6 +34,7 @@
         <div class="small-12 columns">
 <form ng-app="myApp" ng-controller="usercontroller" method="post" 
 name="myForm" novalidate>
+<flash-message name="flash-fixed"></flash-message>
 <table align="center" width="50%">
 <tr>
 

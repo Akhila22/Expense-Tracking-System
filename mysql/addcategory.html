@@ -20,8 +20,11 @@
         <script src="js/angular.min.js"></script>
 
     <link rel="stylesheet" href="css/respond.css">
+    <link rel="stylesheet" href="css/angular-flash.css">
+  
      <script src="js/jquery-1.8.3.js"></script>
         <script src="js/foundation.min.js"></script>
+        <script src="js/angular-flash.js" charset="utf-8"></script>
 </head>
 <body>
     
@@ -34,6 +37,7 @@
         <div class="small-12 columns">
 <form ng-controller="catcontroller" method="post" 
 name="myForm" novalidate>
+<flash-message name="flash-fixed"></flash-message>
 <table align="center" width="75%">
 <tr>
 

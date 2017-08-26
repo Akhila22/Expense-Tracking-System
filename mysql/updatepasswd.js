@@ -1,5 +1,7 @@
 exports.updatepassword = function(req,res){
 	//var user_id = req.session.user_id;
+
+    trycatch(function(){
     var uuid = require('uuid');
 var newpassword = uuid.v1();  
 	var temp = Object.keys(req.body);
@@ -13,10 +15,15 @@ var newpassword = uuid.v1(); 
     			  console.log(sql1);
     			  if(!!error){
     				  console.log("Error in query");
+                      throw new Error("Error in the query");
     			  }
     			  else{
-    				  res.send("Password is updated");
+                    true;
     			  }
     		  });
+               },function(err){
+    //console.log(err.stack);
+    res.send(false);
+  });
     	  
-    }
+    };

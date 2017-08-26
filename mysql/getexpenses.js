@@ -13,6 +13,7 @@ exports.getExpenseTbl = function(req, res){
         throw new Error('Error in the query ' + error);
       }else{
         res.send(rows);
+        
       }
     });
   },function(err){

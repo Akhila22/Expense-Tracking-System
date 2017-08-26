@@ -19,8 +19,11 @@
         <meta class="foundation-mq-topbar">
 
         <link rel="stylesheet" href="css/respond.css">
+        <link rel="stylesheet" href="css/angular-flash.css">
+ 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+         <script src="js/angular-flash.js" charset="utf-8"></script>
 
     </head>
     <body ng-app="myApp" ng-controller="admincontroller">
@@ -90,7 +93,7 @@
             $(document).foundation();
         </script>
         <script>
-            var app = angular.module("myApp", ["ngRoute"]);
+            var app = angular.module("myApp", ["ngRoute","ngFlash"]);
             app.config(function($routeProvider) {
                 $routeProvider
                 .when("/alog", {
@@ -163,14 +166,15 @@
               }
             });
 
-			app.controller('exptblcontroller', function($scope,$http){
+			app.controller('exptblcontroller', function($scope,$http,Flash){
 				$http.get('/getexpenses')
 				.then(function(response){
 					$scope.expenses = response.data;
 					if(response.data.length === 0){
 						console.log(response.data.length)
 						//$scope.flag = true;
-						alert('No expenses added');
+						//alert('No expenses added');
+                         Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
 					}
 				});
 
@@ -188,6 +192,12 @@
                         }
                     }).then(function(response){
                         console.log("successful");
+                        if(response.data){
+                        Flash.create('success', "<center>Expense deleted successfully</center>", 2000, {container: 'flash-fixed'});
+                      }
+                      else{
+                        Flash.create('danger', "<center>Expense not deleted</center>", 2000, {container: 'flash-fixed'});
+                      }
                     },function(response){
                         console.log(response.data);
                     });
@@ -197,14 +207,15 @@
 						if(response.data.length === 0){
 							console.log(response.data.length)
 							//$scope.flag = true;
-							alert('No expenses added');
+							//alert('No expenses added');
+                             Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
 						}
 					});
 				}
 			});
 
 
-            app.controller('catcontroller', function($scope,$http) {
+            app.controller('catcontroller', function($scope,$http,Flash) {
             	$http.get('/financialYear')
                 .then(function(response){
                        $scope.years = response.data;
@@ -261,6 +272,14 @@
                         }
                     }).then(function(response){
                         console.log("successful");
+                         if(response.data){
+                             //alert("category added successfully");
+                             Flash.create('success', "<center> Category added successfully</center>", 2000, {container: 'flash-fixed'});
+                        }
+                        else{
+                            //alert("category name already exists");
+                             Flash.create('danger', "<center>Category name already exists</center>", 2000, {container: 'flash-fixed'});
+                        }
                     },function(response){
                         console.log(response.data);
                     });
@@ -269,7 +288,7 @@
 
 
             });
-            app.controller('usercontroller', function($scope,$http) {
+            app.controller('usercontroller', function($scope,$http,Flash) {
 
                      $scope.addus=function(){
 
@@ -287,6 +306,14 @@
                         }
                     }).then(function(response){
                         console.log("successful");
+                         if(response.data){
+                           // alert("User added successfully");
+                            Flash.create('success', "<center> User added successfully</center>", 2000, {container: 'flash-fixed'});
+                        }
+                        else{
+                            //alert("User already exists");
+                             Flash.create('danger', "<center>User already exists</center>", 2000, {container: 'flash-fixed'});
+                        }
                     },function(response){
                         console.log("response.data");
                     });
@@ -295,7 +322,7 @@
 
             });
 
-            app.controller('passcontroller', function($scope,$http,$window) {
+            app.controller('passcontroller', function($scope,$http,$window,Flash) {
                 $scope.validate = function(myForm){
                     var val1 = $scope.newpwd;
                     var val2 = $scope.confpwd;
@@ -315,7 +342,13 @@
                         }
                     }).then(function(response){
                             //$window.alert(response.data);
-                            alert(response.data);
+                           // alert(response.data);
+                            if(response.data){
+                                Flash.create('success', "<center>Password is updated</center>", 2000, {container: 'flash-fixed'});
+                            }
+                            else{
+                                Flash.create('danger', "<center>Old password is wrong</center>", 2000, {container: 'flash-fixed'});
+                            }
                         },function(response){
                             console.log("response.data");
                     });
@@ -326,7 +359,7 @@
                 // $scope.message="Welcome Admin";
                 window.location.href = '#!/alog';
             });
-            app.controller('validateCtrl', function($scope,$http) {
+            app.controller('validateCtrl', function($scope,$http,Flash) {
                  $scope.addbud=function(){
                     //console.log($scope.date);
                     //console.log('before calling ' + $scope.category);
@@ -346,12 +379,20 @@
                         }
                     }).then(function(response){
                         console.log("successful");
+                         if(response.data){
+                         //alert("Budget Inserted Successfully");
+                         Flash.create('success', "<center> Budget Inserted Successfully</center>", 2000, {container: 'flash-fixed'});
+                        }
+                        else{
+                            //alert("Budget Insertion Failed");
+                            Flash.create('danger', "<center>Budget for this financial year already exists </center>", 2000, {container: 'flash-fixed'});
+                        }
                     },function(response){
                         console.log("response.data");
                     });
                 }
             });
-            app.controller('expcontroller', function($scope,$http) {
+            app.controller('expcontroller', function($scope,$http,Flash) {
                 $http.get('/financialYear')
                 .then(function(response){
                     $scope.years = response.data;
@@ -392,6 +433,14 @@
                         }
                     }).then(function(response){
                         console.log("successful");
+                         if(response.data){
+                           // alert("Expenses added successfully");
+                            Flash.create('success', "<center> Expenses added successfully</center>", 2000, {container: 'flash-fixed'});
+                        }
+                        else{
+                            //alert("Expenses not added");
+                            Flash.create('danger', "<center>Expenses not added</center>", 2000, {container: 'flash-fixed'});
+                        }
                     },function(response){
                         console.log("response.data");
                     });

@@ -1,4 +1,6 @@
 exports.validatePassword = function(req,res){
+
+    trycatch(function(){
 	var user_id = req.session.user_id;
 	var temp = Object.keys(req.body);
     var json = JSON.parse(temp);
@@ -9,6 +11,7 @@ exports.validatePassword = function(req,res){
     	console.log(sql);
     	if(!!error){
     		console.log('Error in the query');
+            throw new Error("Error in the query");
     	}
     	else{
     	  if(rows[0].password === password){
@@ -18,15 +21,21 @@ exports.validatePassword = function(req,res){
     			  console.log(sql1);
     			  if(!!error){
     				  console.log("Error in query");
+                      throw new Error("Error in the query");
     			  }
     			  else{
-    				  res.send("Password is updated");
+    				  res.send(true);
     			  }
     		  });
     	  }
     	  else{
-    		  res.send("Old password is worng");
+    		  res.send(false);
     	  }
     	}
     });
+
+    },function(err){
+    //console.log(err.stack);
+    res.send(false);
+  });
 };

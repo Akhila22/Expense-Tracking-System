@@ -1,5 +1,7 @@
 
 exports.addExp = function(req, res) {
+
+     trycatch(function(){
 	var temp = Object.keys(req.body);
     var json = JSON.parse(temp)
     var category_id = json.category;
@@ -32,6 +34,7 @@ exports.addExp = function(req, res) {
     connection.query(sqlBudget,function(error,rows,fields){
     	if(!!error){
     		console.log("error in query");
+             throw new Error("Error in the query");
         }
         else{
             remaining_budget = parseInt(rows[0].remaining_budget) - amount;
@@ -44,6 +47,7 @@ exports.addExp = function(req, res) {
     	 if(!!error){
     		 console.log(sqlQuarterBudget);
     		 console.log("error in query");
+              throw new Error("Error in the query");
        	 }
        	 else{
              quarter_budget = parseInt(rows[0].quarter_budget) - amount;
@@ -55,6 +59,7 @@ exports.addExp = function(req, res) {
      connection.query(sql2, function(error,rows,fields){
     	 if(!!error){
     		 console.log('Error in the query');
+              throw new Error("Error in the query");
          }
          else{
         	 if(typeof rows[0] == "undefined"){
@@ -62,12 +67,14 @@ exports.addExp = function(req, res) {
                  connection.query(sql3, function(error,rows,fields){
                 	 if(!!error){
                 		 console.log('Error in the query');
+                          throw new Error("Error in the query");
                      }
                      else{
                     	 var sql4 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
                          connection.query(sql4, function(error,rows1,fields){
                         	 if(!!error){
                         		 console.log('Error in the query');
+                                  throw new Error("Error in the query");
                              }
                              else{
                             	 vid=rows1[0].vendor_id;
@@ -75,6 +82,7 @@ exports.addExp = function(req, res) {
                                  connection.query(sql5, function(error,rows,fields){
                                 	 if(!!error){
                                 		 console.log('Error in the query');
+                                          throw new Error("Error in the query");
                                      }
                                      else
                                      {
@@ -84,6 +92,7 @@ exports.addExp = function(req, res) {
                                     		 console.log(sqlUpdate1);
                                     		 if(!!error){
                                     			 console.log("error in query");
+                                                  throw new Error("Error in the query");
                                     		 }
                                     		 else{
                                     			 console.log('Updated');
@@ -94,9 +103,11 @@ exports.addExp = function(req, res) {
                                         	 console.log(sqlUpdate);
                                         	 if(!!error){
                                         		 console.log("error in query");
+                                                  throw new Error("Error in the query");
                                         	 }
                                         	 else{
                                         		 console.log('Updated');
+                                                  res.send(true);
                                         	 }
                                          });
                                       }
@@ -112,6 +123,7 @@ exports.addExp = function(req, res) {
                     connection.query(sql1, function(error,rows,fields){
                     	if(!!error){
                     		console.log('Error in the query');
+                             throw new Error("Error in the query");
                         }
                         else{
                         	console.log('Inserted successfully!!');
@@ -120,6 +132,7 @@ exports.addExp = function(req, res) {
                             	console.log(sqlUpdate1);
                                 if(!!error){
                                 	console.log("error in query");
+                                     throw new Error("Error in the query");
                                	}
                                 else{
                                 	console.log('Updated');
@@ -130,9 +143,11 @@ exports.addExp = function(req, res) {
                             	 console.log(sqlUpdate1);
                                  if(!!error){
                                 	 console.log("error in query");
+                                      throw new Error("Error in the query");
                                  }
                                  else{
                                       console.log('Updated');
+                                       res.send(true);
                                  }
                               });
                           }
@@ -140,4 +155,8 @@ exports.addExp = function(req, res) {
                    }
          	}
      });
+},function(err){
+    //console.log(err.stack);
+    res.send(false);
+  });
 };

@@ -2,6 +2,10 @@
 
 exports.addcategory= function(req, res) {
 
+
+  
+  trycatch(function(){
+
                 var temp = Object.keys(req.body);
               //  console.log("temp " + temp);
                 var json = JSON.parse(temp);
@@ -25,6 +29,7 @@ exports.addcategory= function(req, res) {
                               connection.query(sql1, function(error,rows,fields){
                                              if(!!error){
                                           console.log('Error in the query');
+                                           throw new Error("Error in the query");
                                              }else
                                              {
                         var sql ="select category_id from category where category_name='"+category_name+"'";
@@ -41,6 +46,7 @@ exports.addcategory= function(req, res) {
                               connection.query(sql2, function(error,rows,fields){
                                              if(!!error){
                                                             console.log('Error in the query');
+                                                             throw new Error("Error in the query");
                                              }else{
 
                                                             console.log('Category Fin year Inserted Successfully');
@@ -54,8 +60,10 @@ exports.addcategory= function(req, res) {
                                                connection.query(sql3,[values], function(error,result){
                                              if(!!error){
                                                             console.log('Error in the query');
+                                                             throw new Error("Error in the query");
                                              }else{
                                                             console.log('Inserted Successfully');
+                                                              res.send(true);
                                              }
                               });
     
@@ -69,6 +77,10 @@ exports.addcategory= function(req, res) {
                                                                            });
    // console.log(user_id);
    // res.send(user_id);
+    },function(err){
+      //console.log(err.stack);
+      res.send(false);
+    });
 };
 
 exports.getCatNames = function(req,res){
@@ -81,6 +93,7 @@ exports.getCatNames = function(req,res){
    connection.query(sql,function(error,rows,fields){
          if(!!error){
                 console.log('Error in the query');
+               //  throw new Error("Error in the query");
          }
          else{
               //  console.log(rows);

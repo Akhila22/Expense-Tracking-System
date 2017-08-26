@@ -17,6 +17,8 @@
       <meta class="foundation-mq-medium">
       <meta class="foundation-mq-small">
       <meta class="foundation-mq-topbar">
+      <link rel="stylesheet" href="css/angular-flash.css">
+  
           <script src="js/angular.min.js"></script>
 
 
@@ -25,6 +27,7 @@
        <script src="js/foundation.min.js"></script>
        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+       <script src="js/angular-flash.js" charset="utf-8"></script>
 
   </head>
   <body>
@@ -37,6 +40,7 @@
           </div>
           <div class="small-12 columns">
   <form ng-app="myApp" ng-controller="expcontroller" method="post" name="myForm" novalidate>
+  <flash-message name="flash-fixed"></flash-message>
   <table align="center" width="75%">
   <tr>
   <th><b>Fiscal Year:</b></th>

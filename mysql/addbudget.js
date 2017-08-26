@@ -3,6 +3,9 @@
 
 exports.addbudget=function(req, res) {
 
+
+trycatch(function(){
+
     var temp = Object.keys(req.body);
     var json = JSON.parse(temp);
     //console.log(json);
@@ -15,11 +18,16 @@ exports.addbudget=function(req, res) {
     //console.log('in the query');
       if(!!error){
         console.log('Error in the query');
+        throw new Error("Error in the query");
       }
       else
       {
         console.log("inserted successfully");
-        
+        res.send(true);
       }
     });
+     },function(err){
+    //console.log(err.stack);
+    res.send(false);
+  });
 };
