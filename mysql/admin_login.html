@@ -166,7 +166,7 @@
               }
             });
 
-			app.controller('exptblcontroller', function($scope,$http,Flash){
+			app.controller('exptblcontroller', function($scope,$http,Flash,$filter){
 				$http.get('/getexpenses')
 				.then(function(response){
 					$scope.expenses = response.data;
@@ -178,6 +178,23 @@
 					}
 				});
 
+				$scope.getExpByDate = function(){
+					var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
+					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
+					console.log(toDate);
+					var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate;
+					$http.get(url)
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							//alert('No expenses added');
+	                         Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
+						}
+					});
+				}
+				
 				$scope.deleteExp = function(id){
 					console.log(id);
 					$http({
