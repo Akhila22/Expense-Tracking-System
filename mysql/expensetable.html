@@ -40,28 +40,8 @@
 name="myForm" novalidate>
 <flash-message name="flash-fixed"></flash-message>
 
+
 <table align="center" width="75%">
-<tr>
-<th><b>From Date:</b></th>
-	<td>
-	<input type="date" name='date1' ng-model="date1" placeholder="dd/mm/yyyy" required>
-    </td>
-    <td>
-    <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
-    	<span ng-show="myForm.date.$error.required">Date is required.</span>
-    </span>
-    </td>
-    <th><b>To Date:</b></th>
-    <td>
-    <input type="date" name='date2' ng-model="date2" placeholder="dd/mm/yyyy" required>
-    </td>
-    <td>
-    <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
-    	<span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span>
-     </span>
-     </td>
-     <td><input type="submit" value="Get Expenses" ng-click="getExpByDate()"></td>
-</tr>
 <tr>
 	<th>Date</th>
 	<th>Category Name</th>

@@ -22,35 +22,6 @@ exports.getExpenseTbl = function(req, res){
   });
 };
 
-exports.getExpenseDateTbl = function(req, res){
-	  trycatch(function(){
-	    if(!req.session.user_id){
-	      throw new Error("User not logged in");
-	    }
-	    var url_parts = url.parse(req.url,true);
-	    var query = url_parts.query;
-	    //var year = req.qurry.year;
-	    var toDate = req.query.toDate;
-	    var fromDate = req.query.fromDate;
-	    var sql = "select expense_id,amount,e.date,description,category_name," +
-	              "vendor_name FROM expenses as e, vendor v,category c WHERE " +
-	              "e.category_id = c.category_id and e.vendor_id = v.vendor_id " +
-	              "and e.user_id = "+req.session.user_id+" and e.date between '"+fromDate+"' and '"+toDate+"'";
-	    console.log('Get Expense by date Query: \n' + sql);
-	    connection.query(sql, function(error,rows,fields){
-	      if(!!error){
-	        throw new Error('Error in the query ' + error);
-	      }else{
-	        res.send(rows);
-	        
-	      }
-	    });
-	  },function(err){
-	    console.log(err.stack);
-	    res.send(false);
-	  });
-	};
-
 exports.delExpenseTbl = function(req, res){
   trycatch(function(){
     if(!req.session.user_id){
