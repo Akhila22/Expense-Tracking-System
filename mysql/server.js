@@ -154,6 +154,10 @@ app.get('/getexpenses',function(req,res){
 	getExpenses.getExpenseTbl(req,res);
 });
 
+app.get('/getExpDate',function(req,res){
+	getExpenses.getExpenseDateTbl(req,res);
+});
+
 app.post('/delexpense',function(req,res){
 	getExpenses.delExpenseTbl(req,res);
 });
