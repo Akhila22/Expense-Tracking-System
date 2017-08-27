@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMG Netting Tool</title>
+    <title>CA Expense Tracking</title>
     <meta name="description" content="BMG">
     <meta name="keywords" content="BMG Netting">
     <link rel="stylesheet" href="css/foundation.css">
@@ -201,6 +201,7 @@
                         method : "POST",
                         dataType: 'json',
                         data : {
+                        	year: $scope.FYear,
                             category: $scope.category,
                             vendor: $scope.vendor,
                             date: $scope.date,

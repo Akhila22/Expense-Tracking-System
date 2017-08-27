@@ -1,32 +1,37 @@
 
 exports.addExp = function(req, res) {
-
+	console.log("expense node js");
      trycatch(function(){
 	var temp = Object.keys(req.body);
     var json = JSON.parse(temp)
     var category_id = json.category;
     var vendorname = json.vendor;
     var date = json.date;
-//    var dateStr = date.split(" ");
-//    var dateSplit = dateStr.split("-");
-    var quarter_number = 1;
-    /*if(dateSplit[1]>=4 || dateSplit[1]<=6){
+    var dateStr = date.split(" ");
+    console.log(dateStr[0]);
+    var dateSplit = dateStr[0].split("-");
+    console.log(dateSplit[1]);
+    var month = parseInt(dateSplit[1]);
+    var quarter_number;
+    if(month>=4 && month<=6){
     	quarter_number = 1;
     }
-    else if(dateSplit[1]>=7 || dateSplit[1]<=9){
+    else if(month>=7 && month<=9){
     	quarter_number = 2;
     }
-    else if(dateSplit[1]>=10 || dateSplit[1]<=12){
+    else if(month>=10 && month<=12){
         quarter_number = 3;
     }
-    else if(dateSplit[1]>=1 || dateSplit[1]<=3){
+    else if(month>=1 && month<=3){
         quarter_number = 4;
-    }*/	
+    }	
+    console.log(quarter_number);
     var description= json.description;
     var amount = parseInt(json.amount);
     var vid;
     var uid = req.session.user_id;
     var financial_year = json.year;
+    console.log(financial_year);
     var remaining_budget;
     var quarter_budget;
                 
@@ -156,7 +161,7 @@ exports.addExp = function(req, res) {
          	}
      });
 },function(err){
-    //console.log(err.stack);
+    console.log(err.stack);
     res.send(false);
   });
 };
