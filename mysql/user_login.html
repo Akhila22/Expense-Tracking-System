@@ -227,7 +227,7 @@
                 }
               });
            
-           app.controller('exptblcontroller', function($scope,$http,Flash){
+           app.controller('exptblcontroller', function($scope,$http,Flash,$filter){
         	   //$scope.flag = false;
 				$http.get('/getexpenses')
 				.then(function(response){
