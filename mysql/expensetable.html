@@ -62,7 +62,8 @@ name="myForm" novalidate>
     	<span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span>
      </span>
      </td>
-     <td><input type="submit" value="Get Expenses" ng-click="getExpByDate()"></td>
+     <td><input type="submit" value="Get Expenses" ng-click="getExpByDate()" ng-disabled="myForm.$invalid||myForm.date1.$dirty && myForm.date1.$invalid ||  
+myForm.date2.$dirty && myForm.date2.$invalid"></td>
 </tr>
 <tr>
 	<th>Date</th>
