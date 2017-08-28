@@ -24,6 +24,55 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
          <script src="js/angular-flash.js" charset="utf-8"></script>
+         <style type="text/css">
+            .dropbtn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            /* The container <div> - needed to position the dropdown content */
+            /*.dropdown {
+                position: relative;
+                display: inline-block;
+            }*/
+
+            /* Dropdown Content (Hidden by Default) */
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+               /* min-width: 80px;*/
+                /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+                z-index: 1;
+            }
+
+            /* Links inside the dropdown */
+            .dropdown-content a {
+                color: white;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {background-color: #f1f1f1}
+
+            /* Show the dropdown menu on hover */
+            .dropbtn:hover ~ .dropdown-content, .dropdown-content:hover {
+                display: block;
+                position: absolute;
+            }
+
+            /* Change the background color of the dropdown button when the dropdown content is shown */
+            .dropbtn:hover .dropbtn {
+                background-color: #3e8e41;
+            }
+        </style>
+
 
     </head>
     <body ng-app="myApp" ng-controller="admincontroller">
@@ -33,7 +82,7 @@
                     <ul class="title-area">
                         <li class="name">
                             <span>
-                                <h1><b><a href="#!alog"><img src="images/CA_White_transparent_logo.png" width="50" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;EXPENSE TRACKER</a></b></h1>
+                                 <h1><b><a href="#!alog"><img src="images/CA_White_transparent_logo.png" width="50" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;EXPENSE TRACKER</a></b></h1>
                             </span>
                         </li>
                         <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
@@ -43,12 +92,30 @@
                             <li class="active"><a href="#!alog"><i class="fa fa-home fa-lg"></i></a></li>
                             <li><a href="#!bud">Budget</a></li>
                             <li><a href="#!cat">Category</a></li>
-                            <li><a href="#!exp">Expense</a></li>
+                            <!-- <li><a href="#!exp">Expense</a></li> -->
+                            <li>
+                                <a class="dropbtn">Expenses</a>
+                                <div style="min-width:80px" class="dropdown-content">
+                                    <a href="#!exp">New Expense</a>
+                                    <a href="#!expTbl">View Expenses</a>
+                                    
+                                </div>
+
+                            </li>
                             <li><a href="#!user">User</a></li>
                             <li><a href="#!rep">Reports</a></li>
-                            <li><a href="#!chgpwd">Change Password</a></li>
-                            <li><a href="#!expTbl">View Expenses</a></li>
-                            <li><a href="/logout">Logout</a></li>
+                            <li>
+                                <a class="dropbtn">Settings</a>
+                                <div style="min-width:140px" class="dropdown-content">
+                                    <a href="#!chgpwd">Change Password</a>
+                                    <a href="/logout">Logout</a>
+                                    
+                                </div>
+
+                            </li>
+                            <!-- <li><a href="#!chgpwd">Change Password</a></li> -->
+                            <!-- <li><a href="#!expTbl">View Expenses</a></li> -->
+                            <!-- <li><a href="/logout">Logout</a></li> -->
 
 
                         </ul>

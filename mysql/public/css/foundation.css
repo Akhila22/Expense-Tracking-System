@@ -5021,7 +5021,7 @@ meta.foundation-mq-topbar {
     width: 100%;
     height: auto;
     display: block;
-    font-size: 16px;
+    font-size: 0.8125rem;
     margin: 0; }
   .top-bar-section .divider,
   .top-bar-section [role="separator"] {
