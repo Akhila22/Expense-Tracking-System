@@ -200,7 +200,7 @@ exports.getCatNames = function(req,res){
   var query = url_parts.query;
    var year = req.query.year;
   // console.log(year);
-   var sql = "SELECT distinct c.category_id,c.category_name FROM category c NATURAL JOIN quarterwise_budget where financial_year='"+year+"';";
+   var sql = "SELECT category_id,category_name FROM category where category_id IN (SELECT category_id from category_financial_year where financial_year='"+year+"')";
    connection.query(sql,function(error,rows,fields){
          if(!!error){
                 console.log('Error in the query');
