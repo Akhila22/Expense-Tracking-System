@@ -92,7 +92,7 @@ exports.addExp = function(req, res) {
                                      else
                                      {
                                     	 console.log('Inserted successfully!!');
-                                    	 var quarter_wise = "UPDATE quarterwise_budget SET quarter_budget ="+ quarter_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"' AND quarter_number="+quarter_number;
+                                    	 /*var quarter_wise = "UPDATE quarterwise_budget SET quarter_budget ="+ quarter_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"' AND quarter_number="+quarter_number;
                                     	 connection.query(quarter_wise,function(error,rows,fields){
                                     		 console.log(sqlUpdate1);
                                     		 if(!!error){
@@ -102,7 +102,7 @@ exports.addExp = function(req, res) {
                                     		 else{
                                     			 console.log('Updated');
                                     		 }
-                                      	 });
+                                      	 });*/
                                          var sqlUpdate = "UPDATE category_financial_year SET remaining_budget ="+ remaining_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"'";
                                          connection.query(sqlUpdate,function(error,rows,fields){
                                         	 console.log(sqlUpdate);
@@ -112,6 +112,9 @@ exports.addExp = function(req, res) {
                                         	 }
                                         	 else{
                                         		 console.log('Updated');
+                                        		 if(quarter_budget < 0){
+                                        	    	 //mail logic
+                                        	     }
                                                   res.send(true);
                                         	 }
                                          });
@@ -132,7 +135,7 @@ exports.addExp = function(req, res) {
                         }
                         else{
                         	console.log('Inserted successfully!!');
-                            var quarter_wise1 = "UPDATE quarterwise_budget SET quarter_budget ="+ quarter_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"' AND quarter_number="+quarter_number;
+                            /*var quarter_wise1 = "UPDATE quarterwise_budget SET quarter_budget ="+ quarter_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"' AND quarter_number="+quarter_number;
                             connection.query(quarter_wise1,function(error,rows,fields){
                             	console.log(sqlUpdate1);
                                 if(!!error){
@@ -142,7 +145,7 @@ exports.addExp = function(req, res) {
                                 else{
                                 	console.log('Updated');
                                	}
-                             });
+                             });*/
                              var sqlUpdate1 = "UPDATE category_financial_year SET remaining_budget ="+ remaining_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"'";
                              connection.query(sqlUpdate1,function(error,rows,fields){
                             	 console.log(sqlUpdate1);
@@ -152,6 +155,9 @@ exports.addExp = function(req, res) {
                                  }
                                  else{
                                       console.log('Updated');
+                                      if(quarter_budget < 0){
+                             	    	 //mail logic
+                             	     }
                                        res.send(true);
                                  }
                               });
@@ -160,6 +166,7 @@ exports.addExp = function(req, res) {
                    }
          	}
      });
+     
 },function(err){
     console.log(err.stack);
     res.send(false);
