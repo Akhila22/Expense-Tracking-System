@@ -6,6 +6,7 @@ post(function(req, res){
     }
     var param = JSON.parse(Object.keys(req.body));
     console.log(param);
+    var year = param.fy;
     var sql = "SELECT category_name,"+
      "MAX(IF(a.quarter_number=1,quarter_budget,0)) q1_ini_bud,"+
      "MAX(IF(a.quarter_number=1,actual_budget,0)) q1_act_bud,"+
@@ -21,7 +22,7 @@ post(function(req, res){
         "category_name,quarter_budget "+
         "from quarterwise_budget qb,category c,category_financial_year cfy "+
         "WHERE qb.category_id = c.category_id "+
-        "and cfy.category_id = c.category_id and qb.financial_year = 'FY20' "+
+        "and cfy.category_id = c.category_id and qb.financial_year = '"+year+"' "+
         "group by c.category_id,quarter_number"+
       ") as a left join"+
       "("+
@@ -32,7 +33,7 @@ post(function(req, res){
         "WHEN Month(date)>=10 && Month(date)<=12 THEN 3 "+
         "ELSE 4 END as quarter_number "+
         "from expenses "+
-        "where substring(year(date),-2) = '17' "+
+        "where financial_year='"+year+"' "+
         "group by category_id,quarter_number"+
       ") as b on a.category_id=b.category_id and a.quarter_number = b.quarter_number "+
       "group by a.category_id";
