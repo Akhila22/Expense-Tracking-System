@@ -1,9 +1,11 @@
 //var nodemailer = require('nodemailer');
 //var server = require('./start');
+var uuid =require('uuid');
 exports.sendmail = function(req,res){
 
     trycatch(function(){
-
+var newpassword = uuid.v1();
+exports.newpassword=newpassword;
 server.start();
 // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
@@ -25,7 +27,8 @@ var maillist=mail;
 // plaintext body
         text: 'It works ?',
 // rich text html body
-        html: "<p>Hello from CA education Team. </p>",
+        html: "<p>This is the dummy passowrd for your authentication. Please change your password when you login with dummy password</p>"+
+        "<b>Dummy passowrd:</b> "+newpassword,
     };
 transporter.sendMail(mailOptions, function(error, info){
     if(error){

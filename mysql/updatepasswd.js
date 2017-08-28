@@ -2,8 +2,9 @@ exports.updatepassword = function(req,res){
 	//var user_id = req.session.user_id;
 
     trycatch(function(){
-    var uuid = require('uuid');
-var newpassword = uuid.v1();  
+   // var uuid = require('uuid');
+//var newpassword = uuid.v1();  
+//exports.newpassword=newpassword;
 	var temp = Object.keys(req.body);
     var json = JSON.parse(temp);
     var user_name = json.mail;

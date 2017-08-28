@@ -10,7 +10,7 @@ url = require('url');
 nodemailer = require('nodemailer');
 server = require('./start');
 mail='';
-
+pass='';
 
 connection = mysql.createConnection({
   host : '127.0.0.1',
@@ -48,6 +48,7 @@ var report=require('./report.js');
 var getExpenses = require('./getexpenses.js')
 var mailer = require('./mailer.js');
 var start = require('./start');
+var uuid = require('uuid');
 var updatepasswd = require('./updatepasswd.js');
 
 
@@ -133,6 +134,7 @@ app.put('/checkPwd',function(req,res){
 
 app.put('/updatepasswd',function(req,res)
 {
+  newpassword = mailer.newpassword;
   console.log(req.body);
 updatepasswd.updatepassword(req,res);
 });
