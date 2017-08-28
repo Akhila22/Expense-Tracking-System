@@ -50,6 +50,8 @@ var mailer = require('./mailer.js');
 var start = require('./start');
 var uuid = require('uuid');
 var updatepasswd = require('./updatepasswd.js');
+mailernotify = require('./mailernotify.js');
+
 
 
 app.get('/forgotpass',function(req,res){
@@ -58,11 +60,8 @@ app.get('/forgotpass',function(req,res){
 });
 
 app.get('/email',function(req,res){
-   // res.redirect('/login');
      res.setHeader("Content-Type", "text/html")
-
   var url_parts = url.parse(req.url,true);
- // console.log('url ' + url_parts);
   var query = url_parts.query;
     mail = req.query.recoveryemail;
 mailer.sendmail(req,res);
@@ -70,39 +69,15 @@ return res.sendFile(__dirname+"/login.html");
 });
 
 
+//app.get('/notify',function(req,res){
+//mailernotify.sendmailnotify(req,res);
+//res.send(true);
+//});
+
+
 app.get('/',function(req,res){
 	res.send("Welcome!!");
 });
-
-// app.route('/authenticate')
-//    .post(function(req, res){
-//     var email = req.body.email;
-//     var password = req.body.user;
-//     var sql = "select role_id,user_id,username,password from user";
-//    // console.log(sql);
-//     connection.query(sql, function(error,rows,fields){
-//       if(!!error){
-//         console.log('Error in the query');
-//       }else{
-
-//         req.session.user_id = rows[0].user_id;
-//         req.session.role_id = rows[0].role_id;
-//         req.session.username= rows[0].username;
-//         //req.session.password=rows[0].password;
-//         if(email==req.session.username && password==rows[0].password){
-
-//         if( req.session.role_id ==1)
-//         	res.redirect('/adminLogin');
-//         if( req.session.role_id ==2)
-//         	res.redirect('/userLogin');
-//       }
-//       else{
-//         res.send(true);
-//         console.log("Invalid username or password");
-//       }
-//       }
-//     });
-// });
 
 app.post('/log',function(req,res){
   console.log("welcome to login");
@@ -115,11 +90,7 @@ app.post('/budget',function(req,res){
 	budget.addbudget(req,res);
 
 });
-// app.post('/report',function(req,res){
-//   //console.log("welcome to budget");
-//   report.addrep(req,res);
-//
-// });
+
 app.post('/newuser',function(req,res){
   //console.log("welcome to budget");
   newuser.addnewuser(req,res);

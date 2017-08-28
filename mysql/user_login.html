@@ -263,6 +263,13 @@
                          if(response.data){
                            // alert("Expenses added successfully");
                             Flash.create('success', "<center> Expenses added successfully</center>", 2000, {container: 'flash-fixed'});
+                             $scope.myForm.$setPristine();
+                            $scope.FYear='';
+                            $scope.category='';
+                            $scope.vendor='';
+                            $scope.date='';
+                            $scope.desc='';
+                            $scope.amount='';
                         }
                         else{
                             //alert("Expenses not added");
