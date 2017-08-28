@@ -50,7 +50,7 @@
               <th colspan="2">Q2</th>
               <th colspan="2">Q3</th>
               <th colspan="2">Q4</th>
-              <th colspan="2">FY20</th>
+              <th colspan="2">{{year}}</th>
             </tr>
             <tr>
               <th>Category_Name</th>
@@ -68,30 +68,28 @@
             </tr>
             <tr ng-repeat ="x in cname track by $index">
               <td>{{x.category_name}}</td>
-              <td ng-init="tot.q1_ini_tot = tot.q1_ini_tot + x.q1_ini_bud">{{x.q1_ini_bud}}</td>
-              <td ng-init="tot.q1_act_tot = tot.q1_act_tot + x.q1_act_bud">{{x.q1_act_bud}}</td>
-              <td ng-init="tot.q2_ini_bud = tot.q2_ini_bud + x.q2_ini_bud">{{x.q2_ini_bud}}</td>
-              <td ng-init="tot.q2_act_bud = tot.q2_act_bud + x.q2_act_bud">{{x.q2_act_bud}}</td>
-              <td ng-init="tot.q3_ini_bud = tot.q3_ini_bud + x.q3_ini_bud">{{x.q3_ini_bud}}</td>
-              <td ng-init="tot.q3_act_bud = tot.q3_act_bud + x.q3_act_bud">{{x.q3_act_bud}}</td>
-              <td ng-init="tot.q4_ini_bud = tot.q4_ini_bud + x.q4_ini_bud">{{x.q4_ini_bud}}</td>
-              <td ng-init="tot.q4_act_bud = tot.q4_act_bud + x.q4_act_bud">{{x.q4_act_bud}}</td>
-              <td ng-init="tot.initial_budget = tot.initial_budget + x.initial_budget">
+              <td>{{x.q1_ini_bud}}</td>
+              <td>{{x.q1_act_bud}}</td>
+              <td>{{x.q2_ini_bud}}</td>
+              <td>{{x.q2_act_bud}}</td>
+              <td>{{x.q3_ini_bud}}</td>
+              <td>{{x.q3_act_bud}}</td>
+              <td>{{x.q4_ini_bud}}</td>
+              <td>{{x.q4_act_bud}}</td>
+              <td>
                 {{x.initial_budget}}
               </td>
-              <td ng-init="quar_act_bud = x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud;
-                            tot.fy_act_bud = tot.fy_act_bud + quar_act_bud">
-                {{quar_act_bud}}
+              <td>
+                {{x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud}}
               </td>
-              <td ng-init="variance = x.initial_budget - quar_act_bud;
-                          tot.variance = tot.variance + variance">
-                {{variance}}
+              <td>
+                {{x.initial_budget - quar_act_bud}}
               </td>
             </tr>
             <tr>
               <td>Total</td>
-              <td>{{tot.q1_ini_tot}}</td>
-              <td>{{tot.q1_act_tot}}</td>
+              <td>{{tot.q1_ini_bud}}</td>
+              <td>{{tot.q1_act_bud}}</td>
               <td>{{tot.q2_ini_bud}}</td>
               <td>{{tot.q2_act_bud}}</td>
               <td>{{tot.q3_ini_bud}}</td>

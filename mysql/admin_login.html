@@ -152,6 +152,22 @@
                 }).then(function(response){
                     $scope.cname = response.data;
                     console.log($scope.cname);
+                    $scope.tot = {};
+                    for(var i=0;i<$scope.cname.length;i++){
+                      $scope.tot.q1_ini_bud = $scope.tot.q1_ini_bud == undefined?$scope.cname[i].q1_ini_bud : $scope.tot.q1_ini_bud + $scope.cname[i].q1_ini_bud;
+                      $scope.tot.q1_act_bud = $scope.tot.q1_act_bud == undefined?$scope.cname[i].q1_ini_bud : $scope.tot.q1_act_bud + $scope.cname[i].q2_ini_bud;
+                      $scope.tot.q2_ini_bud = $scope.tot.q2_ini_bud == undefined?$scope.cname[i].q2_ini_bud : $scope.tot.q2_ini_bud + $scope.cname[i].q2_act_bud;
+                      $scope.tot.q2_act_bud = $scope.tot.q2_act_bud == undefined?$scope.cname[i].q2_act_bud : $scope.tot.q2_act_bud + $scope.cname[i].q2_act_bud;
+                      $scope.tot.q3_ini_bud = $scope.tot.q3_ini_bud == undefined?$scope.cname[i].q3_ini_bud : $scope.tot.q3_ini_bud + $scope.cname[i].q3_ini_bud;
+                      $scope.tot.q3_act_bud = $scope.tot.q3_act_bud == undefined?$scope.cname[i].q3_act_bud : $scope.tot.q3_act_bud + $scope.cname[i].q3_act_bud;
+                      $scope.tot.q4_ini_bud = $scope.tot.q4_ini_bud == undefined?$scope.cname[i].q4_ini_bud : $scope.tot.q4_ini_bud + $scope.cname[i].q4_ini_bud;
+                      $scope.tot.q4_act_bud = $scope.tot.q4_act_bud == undefined?$scope.cname[i].q4_act_bud : $scope.tot.q4_act_bud + $scope.cname[i].q4_act_bud;
+                      $scope.tot.initial_budget = $scope.tot.initial_budget == undefined?$scope.cname[i].initial_budget : $scope.tot.initial_budget + $scope.cname[i].initial_budget;
+                      quar_act_bud = $scope.cname[i].q1_act_bud + $scope.cname[i].q2_act_bud + $scope.cname[i].q3_act_bud + $scope.cname[i].q4_act_bud;
+                      $scope.tot.fy_act_bud = $scope.tot.fy_act_bud == undefined?quar_act_bud : $scope.tot.fy_act_bud + quar_act_bud;
+                      variance = $scope.cname[i].initial_budget - quar_act_bud;
+                      $scope.tot.variance = $scope.tot.variance == undefined?variance : $scope.tot.variance + variance;
+                    }
                     // $scope.cname = response.data.cname;
                     // $scope.fy = response.data.fy;
                     // $scope.ib = response.data.ib;
