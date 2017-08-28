@@ -20,7 +20,7 @@
 
         <link rel="stylesheet" href="css/respond.css">
         <link rel="stylesheet" href="css/angular-flash.css">
- 
+
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
          <script src="js/angular-flash.js" charset="utf-8"></script>
@@ -143,8 +143,8 @@
                   dataType:'json',
                   data:{
                     fy: $scope.year,
-                    date1 : $scope.date1,
-                    date2 : $scope.date2
+                    // date1 : $scope.date1,
+                    // date2 : $scope.date2
                   },
                   headers: {
                     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
@@ -194,7 +194,7 @@
 						}
 					});
 				}
-				
+
 				$scope.deleteExp = function(id){
 					console.log(id);
 					$http({

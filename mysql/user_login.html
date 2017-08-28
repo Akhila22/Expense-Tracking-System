@@ -20,14 +20,14 @@
 
     <link rel="stylesheet" href="css/respond.css">
     <link rel="stylesheet" href="css/angular-flash.css">
-  
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
         <script src="js/angular-flash.js" charset="utf-8"></script>
-    
+
 </head>
 <body ng-app="myApp" ng-controller="ulogcontroller">
-    
+
     <div class="header">
         <div class="row">
             <nav class="top-bar foundation-bar" data-topbar>
@@ -45,11 +45,11 @@
                         <li class="active"><a href="#!ulog"><i class="fa fa-home fa-lg"></i></a></li>
                         <li><a  href="#!rep">Reports</a></li>
                         <li><a href="#!exp">Expense</a></li>
-                        <li><a href="#!chgpwd">Change Password</a></li> 
+                        <li><a href="#!chgpwd">Change Password</a></li>
                         <li><a href="#!expTbl">View Expenses</a></li>
                         <li><a href="/logout">Logout</a></li>
-                        
-                        
+
+
                     </ul>
                 </section>
             </nav>
@@ -58,7 +58,7 @@
         <!-- Featured Section -->
         <div class="row contentdiv">
             <div class="small-12 columns" >
-                
+
                 <div ng-view></h1></div>
                 <h1><center>{{message}}</center>
             </div>
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        
+
         <script src="js/jquery-1.8.3.js"></script>
         <script src="js/foundation.min.js"></script>
          <script src="js/angular.min.js"></script>
@@ -105,7 +105,7 @@
                 .when("/chgpwd", {
                     templateUrl : "/changepwd",
                     controller : 'passcontroller'
-                }) 
+                })
                 .when("/rep", {
                     templateUrl : "/newreport",
                     controller: 'reportcontroller'
@@ -118,15 +118,46 @@
                 	templateUrl : "/getexptbl",
                 	controller : 'exptblcontroller'
                 });
-                
+
             });
-            app.controller('repcontroller', function($scope) {
-           
+            app.controller('reportcontroller', function($scope,$http) {
+              $http.get('/financialYear')
+                .then(function(response){
+                       $scope.years = response.data;
+          		});
+              $scope.addreport = function(){
+                $http({
+                  url:"/report",
+                  method: "POST",
+                  dataType:'json',
+                  data:{
+                    fy: $scope.year,
+                    // date1 : $scope.date1,
+                    // date2 : $scope.date2
+                  },
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                  }
+                }).then(function(response){
+                    $scope.cname = response.data;
+                    console.log($scope.cname);
+                    // $scope.cname = response.data.cname;
+                    // $scope.fy = response.data.fy;
+                    // $scope.ib = response.data.ib;
+                    // $scope.rb = response.data.rb;
+                    // $scope.q1 = response.data.q1;
+                    // $scope.q2 = response.data.q2;
+                    // $scope.q3 = response.data.q3;
+                    // $scope.q4 = response.data.q4;
+                  },function(response){
+                    console.log(response.data);
+                });
+              }
             });
             // app.controller('expcontroller', function($scope) {
             //     $scope.selectFun = function(){
             //         if($scope.FYear==2015) {
-            //             $scope.names = ["Training", "stationary", ""]; 
+            //             $scope.names = ["Training", "stationary", ""];
             //         }
             //         else if($scope.FYear==2016){
             //             $scope.names = ["Emi", "Tobi", "Lin"];
@@ -192,7 +223,7 @@
                          $scope.names = response.data;
                     });
                 }
-                
+
                 $scope.addexp=function(){
                     console.log($scope.date);
                     console.log('before calling ' + $scope.category);
@@ -226,7 +257,7 @@
                     });
                 }
               });
-           
+
            app.controller('exptblcontroller', function($scope,$http,Flash,$filter){
         	   //$scope.flag = false;
 				$http.get('/getexpenses')
@@ -239,12 +270,12 @@
 						//$scope.flag = true;
 						//alert('No expenses added');
                         Flash.create('danger', "<center>No expesnses added</center>", 2000, {container: 'flash-fixed'});
-                        
+
 					}
 					//myForm.$setValidity('notEmptyList', $scope.flag === true);
 					//myForm.$setValidity('emptyList', $scope.flag === false);
 				});
-				
+
 				$scope.getExpByDate = function(){
 					var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
 					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
@@ -261,7 +292,7 @@
 						}
 					});
 				}
-				
+
 				$scope.deleteExp = function(id){
 					console.log(id);
 					$http({

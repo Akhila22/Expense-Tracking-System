@@ -17,7 +17,7 @@
                   <option ng-repeat="year in years" value={{year.financial_year}}>{{year.financial_year}}</option>
                 </select>
               </td>
-              <th><b>From Date:</b></th>
+              <!-- <th><b>From Date:</b></th>
               <td>
                 <input type="date" name="date1" ng-model="date1" placeholder="dd/mm/yyyy" required>
               </td>
@@ -29,7 +29,7 @@
               <th><b>To Date:</b></th>
               <td>
                 <input type="date" name="date2" ng-model="date2" placeholder="dd/mm/yyyy" required>
-              </td>
+              </td> -->
               <td>
                 <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
                   <span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span>
