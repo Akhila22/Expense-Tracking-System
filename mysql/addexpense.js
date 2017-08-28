@@ -101,6 +101,7 @@ exports.addExp = function(req, res) {
     
     var sqlExpBudget = "select amount,date from expenses where category_id="+category_id+" and financial_year='"+financial_year+"'";
     connection.query(sqlExpBudget,function(error,rows,fields){
+    	if(!!error){
     		throw new Error("Error in the query 2");
     	}
     	else{
