@@ -10,7 +10,7 @@ server.start();
         service: 'Gmail',
         auth: {
             user: 'boddupalliaditya@gmail.com',
-            pass: ''
+            pass: 'maheshbabu1'
         }
     });
 var maillist=mail;
