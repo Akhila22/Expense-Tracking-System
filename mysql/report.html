@@ -79,11 +79,11 @@
               <td>
                 {{x.initial_budget}}
               </td>
-              <td>
-                {{x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud}}
+              <td ng-init="quar_act_bud = x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud">
+                {{quar_act_bud}}
               </td>
-              <td>
-                {{x.initial_budget - quar_act_bud}}
+              <td ng-init="variance = x.initial_budget - quar_act_bud">
+                {{variance}}
               </td>
             </tr>
             <tr>
