@@ -258,11 +258,17 @@
 					}
 				});
 
+				$http.get('/allcategories')
+				.then(function(response){
+					console.log(response.data);
+					$scope.names = response.data;
+				});
+				
 				$scope.getExpByDate = function(){
 					var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
 					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
 					console.log(toDate);
-					var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate;
+					var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate+'&categoryName='+$scope.category;
 					$http.get(url)
 					.then(function(response){
 						$scope.expenses = response.data;

@@ -62,8 +62,16 @@ name="myForm" novalidate>
     	<span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span>
      </span>
      </td>
-     <td><input type="submit" value="Get Expenses" ng-click="getExpByDate()" ng-disabled="myForm.$invalid||myForm.date1.$dirty && myForm.date1.$invalid ||  
-myForm.date2.$dirty && myForm.date2.$invalid"></td>
+     </tr>
+     <tr>
+     <th>Category Name:</th>
+     <td colspan='2'>	<select ng-model="category" name="category">
+     		<option>Select Category</option>
+  			<option ng-repeat="x in names" value={{x.category_name}}>{{x.category_name}}</option>
+  		</select>
+  	</td>
+     <td colspan='3'><center><input type="submit" value="Get Expenses" ng-click="getExpByDate()" ng-disabled="myForm.$invalid||myForm.date1.$dirty && myForm.date1.$invalid ||  
+myForm.date2.$dirty && myForm.date2.$invalid"></center></td>
 </tr>
 <tr>
 	<th>Date</th>

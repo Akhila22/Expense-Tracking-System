@@ -131,6 +131,10 @@ app.get('/getExpDate',function(req,res){
 	getExpenses.getExpenseDateTbl(req,res);
 });
 
+app.get('/allcategories',function(req,res){
+	getExpenses.getAllCategories(req,res);
+});
+
 app.post('/delexpense',function(req,res){
 	getExpenses.delExpenseTbl(req,res);
 });
