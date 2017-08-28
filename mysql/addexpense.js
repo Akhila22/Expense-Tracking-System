@@ -33,11 +33,11 @@ exports.addExp = function(req, res) {
     var financial_year = json.year;
     console.log(financial_year);
     var remaining_budget;
-    var quarter_budget;
+    var quarter_budget=0;
     var user_email;
     var admin_email;
     var category_name;
-    
+    var quarter_exp=0;
     
     //values for mail
     
@@ -94,10 +94,49 @@ exports.addExp = function(req, res) {
               throw new Error("Error in the query 2");
        	 }
        	 else{
-             quarter_budget = parseInt(rows[0].quarter_budget) - amount;
+             quarter_budget = parseInt(rows[0].quarter_budget);
               console.log(quarter_budget);
          }
      });
+    
+    var sqlExpBudget = "select amount,date from expenses where category_id="+category_id+" and financial_year='"+financial_year+"'";
+    connection.query(sqlExpBudget,function(error,rows,fields){
+    		throw new Error("Error in the query 2");
+    	}
+    	else{
+    		for(var i=0;i<rows.length;i++){
+    			var dateValue = ""+rows[i].date;
+    			//console.log(dateValue);
+    			var dateString = dateValue.split(" ");
+    		    /*console.log(dateString[0]);
+    		    var dateSplitNew = dateString[0].split("-");*/
+    		    console.log(dateString[1]);
+    		    var monthVal =dateString[1];
+    		    var quarter_num;
+    		    if(monthVal=="Apr"||monthVal=="May"||monthVal=="Jun"){
+    		    	quarter_num = 1;
+    		    }
+    		    else if(monthVal=="Jul"||monthVal=="Aug"||monthVal=="Sep"){
+    		    	quarter_num = 2;
+    		    }
+    		    else if(monthVal=="Oct"||monthVal=="Nov"||monthVal=="Dec"){
+    		        quarter_num = 3;
+    		    }
+    		    else if(monthVal=="Jan"||monthVal=="Feb"||monthVal=="Mar"){
+    		        quarter_num = 4;
+    		    }	
+    		    console.log(quarter_num);
+    		    if(quarter_num == quarter_number){
+    		    	quarter_exp = parseInt(quarter_exp) + parseInt(rows[i].amount);
+    		    	console.log(quarter_budget);
+    		    }
+    		}
+    	}
+    });
+    
+    quarter_exp = quarter_exp + amount;
+    
+    console.log(quarter_budget);
 
      var sql2 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
      connection.query(sql2, function(error,rows,fields){
@@ -141,7 +180,7 @@ exports.addExp = function(req, res) {
                                         	 }
                                         	 else{
                                         		 console.log('Updated');
-                                        		 if(quarter_budget < 0){
+                                        		 if(quarter_budget < quarter_exp){
                                         	    	 //mail logic
                                                mailernotify.sendmailnotify(req,res,quarter_number,quarter_budget,user_email,admin_email,category_name,financial_year);
                                                       
@@ -176,7 +215,7 @@ exports.addExp = function(req, res) {
                                  }
                                  else{
                                       console.log('Updated');
-                                      if(quarter_budget < 0){
+                                      if(quarter_budget < quarter_exp){
                              	    	 //mail logic
                                       mailernotify.sendmailnotify(req,res,quarter_number,quarter_budget,user_email,admin_email,category_name,financial_year);
 
