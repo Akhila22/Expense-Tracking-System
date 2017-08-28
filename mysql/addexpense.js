@@ -34,6 +34,45 @@ exports.addExp = function(req, res) {
     console.log(financial_year);
     var remaining_budget;
     var quarter_budget;
+    var user_email;
+    var admin_email;
+    var category_name;
+    
+    
+    //values for mail
+    
+    var sqlUser = "Select username from user where user_id="+uid;
+    connection.query(sqlUser,function(error,rows,fields){
+        if(!!error){
+          throw new Error('Error in the query ' + error);
+        }else{
+          //res.send(rows);
+          user_email = rows[0].username;
+          console.log(rows);
+        }
+      });
+
+    var sqlAdmin = "Select username from user where user_id IN (select user_id from category where category_id="+category_id+")";
+    connection.query(sqlAdmin,function(error,rows,fields){
+        if(!!error){
+          throw new Error('Error in the query ' + error);
+        }else{
+          //res.send(rows);
+          admin_email = rows[0].username;
+        }
+      });
+
+    var sqlCat = "Select category_name from category where category_id="+category_id;
+    connection.query(sqlCat,function(error,rows,fields){
+        if(!!error){
+          throw new Error('Error in the query ' + error);
+        }else{
+          //res.send(rows);
+          cat_name = rows[0].category_name;
+        }
+      });
+    
+    
                 
     var sqlBudget = "select remaining_budget from category_financial_year where category_id="+category_id +" AND financial_year ='"+financial_year+"'"; 
     connection.query(sqlBudget,function(error,rows,fields){
@@ -104,7 +143,7 @@ exports.addExp = function(req, res) {
                                         		 console.log('Updated');
                                         		 if(quarter_budget < 0){
                                         	    	 //mail logic
-                                               mailernotify.sendmailnotify(req,res);
+                                               mailernotify.sendmailnotify(req,res,quarter_number,quarter_budget,user_email,admin_email,category_name,financial_year);
                                                       
 
                                         	     }
@@ -139,7 +178,7 @@ exports.addExp = function(req, res) {
                                       console.log('Updated');
                                       if(quarter_budget < 0){
                              	    	 //mail logic
-                                      mailernotify.sendmailnotify(req,res);
+                                      mailernotify.sendmailnotify(req,res,quarter_number,quarter_budget,user_email,admin_email,category_name,financial_year);
 
                              	     }
                                        res.send(true);
