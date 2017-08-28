@@ -292,6 +292,15 @@
                          if(response.data){
                              //alert("category added successfully");
                              Flash.create('success', "<center> Category added successfully</center>", 2000, {container: 'flash-fixed'});
+                             $scope.myForm.$setPristine();
+                             $scope.category='';
+                             $scope.budget='';
+                             $scope.year='';
+                             $scope.date='';
+                             $scope.q1='';
+                             $scope.q2='';
+                             $scope.q3='';
+                             $scope.q4='';
                         }
                         else{
                             //alert("category name already exists");
@@ -326,6 +335,12 @@
                          if(response.data){
                            // alert("User added successfully");
                             Flash.create('success', "<center> User added successfully</center>", 2000, {container: 'flash-fixed'});
+                            $scope.myForm.$setPristine();
+                             $scope.email='';
+                             $scope.user='';
+                              $scope.userrole='';
+                             
+
                         }
                         else{
                             //alert("User already exists");
@@ -399,6 +414,11 @@
                          if(response.data){
                          //alert("Budget Inserted Successfully");
                          Flash.create('success', "<center> Budget Inserted Successfully</center>", 2000, {container: 'flash-fixed'});
+                         $scope.myForm.$setPristine();
+                         $scope.year='';
+                         $scope.date='';
+                         $scope.budget='';
+
                         }
                         else{
                             //alert("Budget Insertion Failed");
@@ -454,6 +474,14 @@
                          if(response.data){
                            // alert("Expenses added successfully");
                             Flash.create('success', "<center> Expenses added successfully</center>", 2000, {container: 'flash-fixed'});
+                            $scope.myForm.$setPristine();
+                            $scope.FYear='';
+                            $scope.category='';
+                            $scope.vendor='';
+                            $scope.date='';
+                            $scope.desc='';
+                            $scope.amount='';
+
                         }
                         else{
                             //alert("Expenses not added");
