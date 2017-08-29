@@ -188,8 +188,8 @@
                     controller: 'usercontroller'
                 })
                 .when("/expTbl",{
-                    templateUrl : "/getexptbl",
-                    controller : 'exptblcontroller'
+                	templateUrl : "/getexptbl",
+                	controller : 'exptblcontroller'
                 });
             });
 
@@ -199,7 +199,7 @@
               $http.get('/financialYear')
                 .then(function(response){
                        $scope.years = response.data;
-                });
+          		});
               $scope.addreport = function(){
                 $http({
                   url:"/report",
@@ -232,55 +232,76 @@
                       variance = $scope.cname[i].initial_budget - quar_act_bud;
                       $scope.tot.variance = $scope.tot.variance == undefined?variance : $scope.tot.variance + variance;
                     }
+                    // $scope.cname = response.data.cname;
+                    // $scope.fy = response.data.fy;
+                    // $scope.ib = response.data.ib;
+                    // $scope.rb = response.data.rb;
+                    // $scope.q1 = response.data.q1;
+                    // $scope.q2 = response.data.q2;
+                    // $scope.q3 = response.data.q3;
+                    // $scope.q4 = response.data.q4;
                   },function(response){
                     console.log(response.data);
                 });
               }
             });
 
-            app.controller('exptblcontroller', function($scope,$http,Flash,$filter){
-                $http.get('/getexpenses')
-                .then(function(response){
-                    $scope.expenses = response.data;
-                    if(response.data.length === 0){
-                        console.log(response.data.length)
-                        //$scope.flag = true;
-                        //alert('No expenses added');
+			app.controller('exptblcontroller', function($scope,$http,Flash,$filter){
+				$http.get('/getexpenses')
+				.then(function(response){
+					$scope.expenses = response.data;
+					if(response.data.length === 0){
+						console.log(response.data.length)
+						//$scope.flag = true;
+						//alert('No expenses added');
                         Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
-                    }
-                });
+					}
+				});
 
-                $http.get('/allcategories')
-                .then(function(response){
-                    console.log(response.data);
-                    $scope.names = response.data;
-                });
-                
-                $scope.getExpByDate = function(){
-                    var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
-                    var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
-                    console.log(toDate);
-                    var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate+'&categoryName='+$scope.category;
-                    $http.get(url)
-                    .then(function(response){
-                        $scope.expenses = response.data;
-                        if(response.data.length === 0){
-                            console.log(response.data.length)
-                            //$scope.flag = true;
-                            //alert('No expenses added');
-                             Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
-                        }
-                    });
-                }
+				$http.get('/allcategories')
+				.then(function(response){
+					console.log(response.data);
+					$scope.names = response.data;
+				});
+				
+				$scope.getExpByDate = function(){
+					var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
+					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
+					console.log(toDate);
+					var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate+'&categoryName='+$scope.category;
+					$http.get(url)
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							//alert('No expenses added');
+	                         Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
+						}
+					});
+				}
 
-                $scope.deleteExp = function(id){
-                    console.log(id);
-                    $http({
+				$scope.deleteExp = function(expense){
+					console.log(expense);
+					var date_format = $filter('date')(expense.date, 'yy/MM/dd');
+					var dateSplit = date_format.split('/');
+					var yearNum;
+					if(parseInt(dateSplit[1])>=4)
+						yearNum = parseInt(dateSplit[0])+1;
+					else
+						yearNum = parseInt(dateSplit[0]);
+					var yearString = "FY"+yearNum; 
+					console.log(yearString);
+					console.log(yearNum);
+					$http({
                         url : "/delexpense",
                         method : "POST",
                         dataType: 'json',
                         data : {
-                            expenseId : id
+                        	expenseId : expense.expense_id,
+                        	year : yearString,
+                        	category_name : expense.category_name,
+                        	amount : expense.amount
                         },
                         headers: {
                           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
@@ -296,52 +317,52 @@
                     },function(response){
                         console.log(response.data);
                     });
-                    $http.get('/getexpenses')
-                    .then(function(response){
-                        $scope.expenses = response.data;
-                        if(response.data.length === 0){
-                            console.log(response.data.length)
-                            //$scope.flag = true;
-                            //alert('No expenses added');
+					$http.get('/getexpenses')
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							//alert('No expenses added');
                              Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
-                        }
-                    });
-                }
-            });
+						}
+					});
+				}
+			});
 
 
             app.controller('catcontroller', function($scope,$http,Flash) {
-                $http.get('/financialYear')
+            	$http.get('/financialYear')
                 .then(function(response){
                        $scope.years = response.data;
-                });
+          		});
 
-                $scope.dateRange=function(fyyear){
-                    console.log(fyyear);
-                    var yearSplit = fyyear.split("Y");
-                    var yearNumber = parseInt(yearSplit[1])-1;
-                    $scope.min = "20"+yearNumber+"-04-01";
-                    $scope.max = "20"+(yearNumber+1)+"-03-31";
-                    console.log("min:"+$scope.min);
-                    console.log("max:"+$scope.max);
-                }
+            	$scope.dateRange=function(fyyear){
+            		console.log(fyyear);
+            		var yearSplit = fyyear.split("Y");
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
+            	}
 
-                $scope.checkQ = function(myForm){
-                    var q1 = parseInt($scope.q1);
-                    var q2 = parseInt($scope.q2);
-                    var q3 = parseInt($scope.q3);
-                    var q4 = parseInt($scope.q4);
-                    var budget = $scope.budget;
-                    var total = q1+q2+q3+q4;
-                    console.log(total);
-                    console.log(budget);
-                    myForm.q1.$setValidity('budgetVerify',budget === total);
-                    //console.log("f1:"+f1);
-                    myForm.q2.$setValidity('budgetVerify',budget === total);
-                    myForm.q3.$setValidity('budgetVerify',budget === total);
-                    myForm.q4.$setValidity('budgetVerify',budget === total);
+            	$scope.checkQ = function(myForm){
+            		var q1 = parseInt($scope.q1);
+            		var q2 = parseInt($scope.q2);
+            		var q3 = parseInt($scope.q3);
+            		var q4 = parseInt($scope.q4);
+            		var budget = $scope.budget;
+            		var total = q1+q2+q3+q4;
+            		console.log(total);
+            		console.log(budget);
+            		myForm.q1.$setValidity('budgetVerify',budget === total);
+            		//console.log("f1:"+f1);
+            		myForm.q2.$setValidity('budgetVerify',budget === total);
+            		myForm.q3.$setValidity('budgetVerify',budget === total);
+            		myForm.q4.$setValidity('budgetVerify',budget === total);
 
-                }
+            	}
 
                 $scope.addcat=function(){
                     //console.log($scope.date);
@@ -517,11 +538,11 @@
                 $scope.selectFun = function(){
                     console.log($scope.FYear);
                     var yearSplit = $scope.FYear.split("Y");
-                    var yearNumber = parseInt(yearSplit[1])-1;
-                    $scope.min = "20"+yearNumber+"-04-01";
-                    $scope.max = "20"+(yearNumber+1)+"-03-31";
-                    console.log("min:"+$scope.min);
-                    console.log("max:"+$scope.max);
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
 
                     var data = {year : $scope.FYear};
                     var url = '/getcategory?year='+$scope.FYear;
@@ -537,7 +558,7 @@
                         method : "POST",
                         dataType: 'json',
                         data : {
-                            year: $scope.FYear,
+                        	year: $scope.FYear,
                             category: $scope.category,
                             vendor: $scope.vendor,
                             date: $scope.date,
@@ -576,24 +597,24 @@
         <script src="js/FileSaver.js" charset="utf-8"></script>
         <script>
           function s2ab(s) {
-            if(typeof ArrayBuffer !== 'undefined') {
-                var buf = new ArrayBuffer(s.length);
-                var view = new Uint8Array(buf);
-                for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-                return buf;
-            } else {
-                var buf = new Array(s.length);
-                for (var i=0; i!=s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
-                return buf;
-            }
+          	if(typeof ArrayBuffer !== 'undefined') {
+          		var buf = new ArrayBuffer(s.length);
+          		var view = new Uint8Array(buf);
+          		for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+          		return buf;
+          	} else {
+          		var buf = new Array(s.length);
+          		for (var i=0; i!=s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
+          		return buf;
+          	}
           }
 
           function export_table_to_excel(id, type, fn) {
           var wb = XLSX.utils.table_to_book(document.getElementById(id), {sheet:"Sheet JS"});
           var wbout = XLSX.write(wb, {bookType:type, bookSST:true, type: 'binary'});
-          var fname = fn || 'FinancialYear Budget Tracker.' + type;
+          var fname = fn || 'test.' + type;
           try {
-            saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), fname);
+          	saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), fname);
           } catch(e) { if(typeof console != 'undefined') console.log(e, wbout); }
           return wbout;
           }

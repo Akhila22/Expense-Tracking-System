@@ -2,8 +2,6 @@
 <html>
   <head>
     <title>Report Page</title>
-    <script>
-    </script>
   </head>
   <body>
     <!-- Featured Section -->
@@ -20,6 +18,19 @@
                   <option ng-repeat="year in years" value={{year.financial_year}}>{{year.financial_year}}</option>
                 </select>
               </td>
+              <!-- <th><b>From Date:</b></th>
+              <td>
+                <input type="date" name="date1" ng-model="date1" placeholder="dd/mm/yyyy" required>
+              </td>
+              <td>
+                <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
+                  <span ng-show="myForm.date.$error.required">Date is required.</span>
+                </span>
+              </td>
+              <th><b>To Date:</b></th>
+              <td>
+                <input type="date" name="date2" ng-model="date2" placeholder="dd/mm/yyyy" required>
+              </td> -->
               <td>
                 <span style="color:red" ng-show="myForm.date.$dirty && myForm.date.$invalid">
                   <span ng-show="myForm.date.$invalid && myForm.date.$error.required">Date is required.</span>
@@ -59,20 +70,20 @@
             <tr ng-repeat ="x in cname track by $index">
               <td>{{x.category_name}}</td>
               <td>{{x.q1_ini_bud}}</td>
-              <td ng-style="(x.q1_ini_bud >= x.q1_act_bud) ? {'color':'#006400'} : {'color': '#FF0000'}">{{x.q1_act_bud}}</td>
-              <td >{{x.q2_ini_bud}}</td>
-              <td ng-style="(x.q2_ini_bud >= x.q2_act_bud) ? {'color':'#006400'} : {'color': '#FF0000'}">{{x.q2_act_bud}}</td>
+              <td>{{x.q1_act_bud}}</td>
+              <td>{{x.q2_ini_bud}}</td>
+              <td>{{x.q2_act_bud}}</td>
               <td>{{x.q3_ini_bud}}</td>
-              <td ng-style="(x.q3_ini_bud >= x.q3_act_bud) ? {'color':'#006400'} : {'color': '#FF0000'}">{{x.q3_act_bud}}</td>
+              <td>{{x.q3_act_bud}}</td>
               <td>{{x.q4_ini_bud}}</td>
-              <td ng-style="(x.q4_ini_bud >= x.q4_act_bud) ? {'color':'#006400'} : {'color': '#FF0000'}">{{x.q4_act_bud}}</td>
+              <td>{{x.q4_act_bud}}</td>
               <td>
                 {{x.initial_budget}}
               </td>
-              <td ng-init="quar_act_bud = x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud" ng-style="(x.initial_budget >= quar_act_bud) ? {'color':'#006400'} : {'color': '#FF0000'}">
+              <td ng-init="quar_act_bud = x.q1_act_bud + x.q2_act_bud + x.q3_act_bud + x.q4_act_bud">
                 {{quar_act_bud}}
               </td>
-              <td ng-init="variance = x.initial_budget - quar_act_bud" ng-style="(variance >=0 ) ? {'color':'#006400'} : {'color': '#FF0000'}">
+              <td ng-init="variance = x.initial_budget - quar_act_bud">
                 {{variance}}
               </td>
             </tr>
