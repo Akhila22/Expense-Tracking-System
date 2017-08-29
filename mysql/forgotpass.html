@@ -68,7 +68,7 @@
 </tr>
 
 <tr>
-<td colspan="2" style="text-align:center" align="center"><input type="button" id="send" value="Send mail" ng-click="getmail()" ng-disabled="myForm.$invalid|| myForm.recoveryemail.$invalid ||  
+<td colspan="2" style="text-align:center" align="center"><input type="button" id="send" value="Send mail" ng-click="forgot_pass()" ng-disabled="myForm.$invalid|| myForm.recoveryemail.$invalid ||  
 myForm.recoveryemail.$dirty && myForm.recoveryemail.$invalid"">
 </td>
 </tr>
@@ -115,10 +115,29 @@ myForm.recoveryemail.$dirty && myForm.recoveryemail.$invalid"">
             $(document).foundation();
             var app = angular.module("myApp", ["ngFlash"]);
              app.controller('forgotpassword', function($scope,$http,Flash,$timeout) {
- $scope.getmail=function(req,res){
-   
-                    //console.log($scope.date);
-                   // console.log('before calling ' + $scope.category);
+            $scope.forgot_pass=function(){
+                    $http({
+                        url : '/fpass',
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                        
+                            recoveryemail:$scope.recoveryemail
+                           
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                        console.log(response.data);
+                        if(response.data === "user_not_there")
+                              {
+                                Flash.create('danger', "<center>You are not a registered user</center>", 3000, {container: 'flash-fixed'});
+                                process.exit();
+                              }
+
+                       else{
                     $http({
                     
                      data : {mail : $scope.recoveryemail},
@@ -128,12 +147,11 @@ myForm.recoveryemail.$dirty && myForm.recoveryemail.$invalid"">
                         headers: {
                           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
-                    }).
-                    then(function(response){
-          Flash.create('success', "<center>Mail sent successfully</center>", 2000, {container: 'flash-fixed'});
-           $timeout(function() {window.location.href='./login';}, 2000);
+                    }).then(function(response){
+                                                Flash.create('success', "<center>Mail sent successfully</center>", 2000, {container: 'flash-fixed'});
+                                                $timeout(function() {window.location.href='./login';}, 2000);
 
- $http({
+                    $http({
                       url : '/updatepasswd',        
                      data : {mail : $scope.recoveryemail},
                         method : "PUT",
@@ -143,15 +161,16 @@ myForm.recoveryemail.$dirty && myForm.recoveryemail.$invalid"">
                         }
                     })
 
-},function(response){
+              },function(response){
                         console.log(response.data);
                         
                     });
                 }
-                
-            });
 
-          
+
+          });
+      }
+  });
 
         </script>
         </body>

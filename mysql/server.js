@@ -51,6 +51,7 @@ var start = require('./start');
 var uuid = require('uuid');
 var updatepasswd = require('./updatepasswd.js');
 mailernotify = require('./mailernotify.js');
+var forpass=require('./forgot_password.js');
 
 
 
@@ -58,6 +59,15 @@ app.get('/forgotpass',function(req,res){
    res.sendFile(__dirname+"/forgotpass.html");
 
 });
+
+app.post('/fpass',function(req,res){
+  //alert();
+  //console.log("welcome to category");
+  //console.log("server " + req.body.category_name);
+  console.log("fpass");
+  forpass.forgotpassword(req,res);
+});
+
 
 app.get('/email',function(req,res){
      res.setHeader("Content-Type", "text/html")
