@@ -281,14 +281,27 @@
 					});
 				}
 
-				$scope.deleteExp = function(id){
-					console.log(id);
+				$scope.deleteExp = function(expense){
+					console.log(expense);
+					var date_format = $filter('date')(expense.date, 'yy/MM/dd');
+					var dateSplit = date_format.split('/');
+					var yearNum;
+					if(parseInt(dateSplit[1])>=4)
+						yearNum = parseInt(dateSplit[0])+1;
+					else
+						yearNum = parseInt(dateSplit[0]);
+					var yearString = "FY"+yearNum; 
+					console.log(yearString);
+					console.log(yearNum);
 					$http({
                         url : "/delexpense",
                         method : "POST",
                         dataType: 'json',
                         data : {
-                        	expenseId : id
+                        	expenseId : expense.expense_id,
+                        	year : yearString,
+                        	category_name : expense.category_name,
+                        	amount : expense.amount
                         },
                         headers: {
                           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"

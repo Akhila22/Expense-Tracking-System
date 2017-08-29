@@ -82,14 +82,45 @@ exports.delExpenseTbl = function(req, res){
     var param = JSON.parse(Object.keys(req.body));
     console.log(param);
     var expense_id = param.expenseId;
-    var sql = "delete from expenses where expense_id = ?";
+    var category_name = param.category_name;
+    var financial_year = param.year;
+    var amount = parseInt(param.amount);
+    console.log(param);
+    var sql = "delete from expenses where expense_id = "+expense_id;
     console.log('Delete Expense Query: \n' + sql);
-    connection.query(sql, [expense_id], function(error,result){
+    connection.query(sql, function(error,result){
       if(!!error){
         throw new Error('Error in the query ' + error);
       }
       console.log("Number of records deleted: " + result.affectedRows);
-      res.send(true);
+      var remaining_budget;
+      var sqlBudget = "select remaining_budget from category_financial_year where financial_year ='"
+    	  +financial_year+"' AND category_id IN (SELECT category_id from category where category_name='"+category_name+"')";
+      console.log(sqlBudget);
+      connection.query(sqlBudget,function(error,rows,fields){
+      	if(!!error){
+      		console.log("error in query 1");
+               throw new Error("Error in the query 1");
+          }
+          else{
+              remaining_budget = parseInt(rows[0].remaining_budget) + amount;
+              console.log(remaining_budget);
+              var sqlUpdate = "UPDATE category_financial_year SET remaining_budget ="+ remaining_budget 
+              +" WHERE financial_year = '"+financial_year+"' AND category_id IN (SELECT category_id from category where category_name='"+category_name+"')";
+              connection.query(sqlUpdate,function(error,rows,fields){
+             	 console.log(sqlUpdate);
+             	 if(!!error){
+             		 console.log("error in query 7");
+                       throw new Error("Error in the query 7");
+             	 }
+             	 else{
+             		 console.log('Updated');
+                       res.send(true);
+             	 }
+              });
+          }
+       });
+      
     });
   },function(err){
     console.log(err.stack);
