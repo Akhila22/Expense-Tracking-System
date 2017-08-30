@@ -57,7 +57,7 @@ exports.addcategory= function(req, res) {
                           console.log("budget_overflow");
                           var send = {};
                           send.rem = rem_budget;
-                          res.send(send);
+                          res.send("budget_overflow");
                         }
                         else
                         {

@@ -388,7 +388,12 @@
                         }
                     }).then(function(response){
                         console.log("successful");
-                         if(response.data){
+                        console.log(response.data.rem);
+                        if(response.data === "budget_overflow")
+                              {
+                                Flash.create('danger', "<center>You have exceeded the allocated budget</center>", 5000, {container: 'flash-fixed'});
+                              } 
+                        else if(response.data){
                              //alert("category added successfully");
                              Flash.create('success', "<center> Category added successfully</center>", 2000, {container: 'flash-fixed'});
                              $scope.myForm.$setPristine();

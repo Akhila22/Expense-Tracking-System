@@ -14,7 +14,7 @@ server.start();
             user: 'boddupalliaditya@gmail.com',
             pass: 'maheshbabu1'
         }
-    });
+    }); 
     var email_id_pat = user_email+","+admin_email;
     console.log(user_email);
     console.log(email_id_pat);

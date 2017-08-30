@@ -1,6 +1,7 @@
 //var nodemailer = require('nodemailer');
 //var server = require('./start');
 var uuid =require('uuid');
+require('ssl-root-cas').inject();
 exports.sendmail = function(req,res){
 
     trycatch(function(){
@@ -14,12 +15,12 @@ server.start();
             user: 'boddupalliaditya@gmail.com',
             pass: 'maheshbabu1'
         }
-    });
+    }); 
 var maillist=mail;
 // setup e-mail data with unicode symbols
     var mailOptions = {
 // sender address
-        from: 'boddupalliaditya@gmail.com', 
+        from: 'bodad01@ca.com', 
 // list of receivers
         to: maillist, 
 // Subject line
