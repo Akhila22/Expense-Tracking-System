@@ -146,6 +146,9 @@
                                 <li><a href="#"><i class="fa fa-pinterest fa-2x"></i></a></li>
                             </ul>
                         </div>
+                        <!-- <div class="small-12 columns">
+                            <p class="text-right">&nbsp;x</p>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -263,7 +266,7 @@
 					console.log(response.data);
 					$scope.names = response.data;
 				});
-				
+
 				$scope.getExpByDate = function(){
 					var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
 					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
@@ -290,7 +293,7 @@
 						yearNum = parseInt(dateSplit[0])+1;
 					else
 						yearNum = parseInt(dateSplit[0]);
-					var yearString = "FY"+yearNum; 
+					var yearString = "FY"+yearNum;
 					console.log(yearString);
 					console.log(yearNum);
 					$http({
@@ -392,7 +395,7 @@
                         if(response.data === "budget_overflow")
                               {
                                 Flash.create('danger', "<center>You have exceeded the allocated budget</center>", 5000, {container: 'flash-fixed'});
-                              } 
+                              }
                         else if(response.data){
                              //alert("category added successfully");
                              Flash.create('success', "<center> Category added successfully</center>", 2000, {container: 'flash-fixed'});

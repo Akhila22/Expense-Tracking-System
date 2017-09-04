@@ -99,7 +99,7 @@
                                 <div style="min-width:80px" class="dropdown-content">
                                     <a href="#!exp">New Expense</a>
                                     <a href="#!expTbl">View Expenses</a>
-                                    
+
                                 </div>
 
                             </li>
@@ -108,7 +108,7 @@
                                 <div style="min-width:140px" class="dropdown-content">
                                     <a href="#!chgpwd">Change Password</a>
                                     <a href="/logout">Logout</a>
-                                    
+
                                 </div>
 
                             </li>
@@ -148,9 +148,9 @@
                                 <li><a href="#"><i class="fa fa-pinterest fa-2x"></i></a></li>
                             </ul>
                         </div>
-                        <div class="small-12 columns">
+                        <!-- <div class="small-12 columns">
                             <p class="text-right">&nbsp;x</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -366,7 +366,7 @@
 					//myForm.$setValidity('notEmptyList', $scope.flag === true);
 					//myForm.$setValidity('emptyList', $scope.flag === false);
 				});
-				
+
 				$http.get('/allcategories')
 				.then(function(response){
 					console.log(response.data);
