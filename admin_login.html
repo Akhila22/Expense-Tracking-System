@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CA Expense Tracker</title>
+        <meta name="description" content="BMG">
+        <meta name="keywords" content="BMG Netting">
+        <link rel="stylesheet" href="css/foundation.css">
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <script src="js/modernizr.js"></script>
+        <meta class="foundation-data-attribute-namespace">
+        <meta class="foundation-mq-xxlarge">
+        <meta class="foundation-mq-xlarge">
+        <meta class="foundation-mq-large">
+        <meta class="foundation-mq-medium">
+        <meta class="foundation-mq-small">
+        <meta class="foundation-mq-topbar">
+
+        <link rel="stylesheet" href="css/respond.css">
+        <link rel="stylesheet" href="css/angular-flash.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+         <script src="js/angular-flash.js" charset="utf-8"></script>
+         <style type="text/css">
+            .dropbtn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            /* The container <div> - needed to position the dropdown content */
+            /*.dropdown {
+                position: relative;
+                display: inline-block;
+            }*/
+
+            /* Dropdown Content (Hidden by Default) */
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+               /* min-width: 80px;*/
+                /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+                z-index: 1;
+            }
+
+            /* Links inside the dropdown */
+            .dropdown-content a {
+                color: white;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {background-color: #f1f1f1}
+
+            /* Show the dropdown menu on hover */
+            .dropbtn:hover ~ .dropdown-content, .dropdown-content:hover {
+                display: block;
+                position: absolute;
+            }
+
+            /* Change the background color of the dropdown button when the dropdown content is shown */
+            .dropbtn:hover .dropbtn {
+                background-color: #3e8e41;
+            }
+        </style>
+
+
+    </head>
+    <body ng-app="myApp" ng-controller="admincontroller">
+        <div class="header">
+            <div class="row">
+                <nav class="top-bar foundation-bar" data-topbar>
+                    <ul class="title-area">
+                        <li class="name">
+                            <span>
+                                 <h1><b><a href="#!alog"><img src="images/CA_White_transparent_logo.png" width="50" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;EXPENSE TRACKER</a></b></h1>
+                            </span>
+                        </li>
+                        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+                    </ul>
+                    <section class="top-bar-section">
+                        <ul class="right">
+                            <li class="active"><a href="#!alog"><i class="fa fa-home fa-lg"></i></a></li>
+                            <li><a href="#!bud">Budget</a></li>
+                            <li><a href="#!cat">Category</a></li>
+                            <!-- <li><a href="#!exp">Expense</a></li> -->
+                            <li>
+                                <a class="dropbtn">Expenses</a>
+                                <div style="min-width:80px" class="dropdown-content">
+                                    <a href="#!exp">New Expense</a>
+                                    <a href="#!expTbl">View Expenses</a>
+
+                                </div>
+
+                            </li>
+                            <li><a href="#!user">User</a></li>
+                            <li><a href="#!rep">Reports</a></li>
+                            <li>
+                                <a class="dropbtn">Settings</a>
+                                <div style="min-width:140px" class="dropdown-content">
+                                    <a href="#!chgpwd">Change Password</a>
+                                    <a href="/logout">Logout</a>
+
+                                </div>
+
+                            </li>
+                            <!-- <li><a href="#!chgpwd">Change Password</a></li> -->
+                            <!-- <li><a href="#!expTbl">View Expenses</a></li> -->
+                            <!-- <li><a href="/logout">Logout</a></li> -->
+
+
+                        </ul>
+                    </section>
+                </nav>
+            </div>
+        </div>
+        <!-- Featured Section -->
+        <div class="row contentdiv">
+            <div class="small-12 columns" >
+                <div ng-view></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <p class="pad1">&copy; 2017 CA Technologies. All rights reserved.</p>
+                        </div>
+                        <div class="small-12 medium-6 columns">
+                            <ul class="inline-list right pad1">
+                                <li><a href="#"><i class="fa fa-rss fa-2x"></i></a></li>
+                                <li><a href="https://www.facebook.com/CATechnologies"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                <li><a href="http://twitter.com/CAInc"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                <li><a href="https://plus.google.com/+CATechnologies"><i class="fa fa-google-plus fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- <div class="small-12 columns">
+                            <p class="text-right">&nbsp;x</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/jquery-1.8.3.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+        <script>
+            var app = angular.module("myApp", ["ngRoute","ngFlash"]);
+            app.config(function($routeProvider) {
+                $routeProvider
+                .when("/alog", {
+                    templateUrl : "/adminHome",
+                })
+                .when("/cat", {
+                    templateUrl : "/addcategory",
+                    controller: 'catcontroller'
+                })
+                .when("/chgpwd", {
+                    templateUrl : "/changepwd",
+                    controller : 'passcontroller'
+                })
+                .when("/exp", {
+                    templateUrl : "/addexpense",
+                    controller: 'expcontroller'
+                })
+                .when("/bud", {
+                    templateUrl : "/addbudget",
+                    controller: 'validateCtrl'
+                })
+                .when("/rep", {
+                    templateUrl : "/newreport",
+                    controller: 'reportcontroller'
+                })
+                .when("/user", {
+                    templateUrl : "/adduser",
+                    controller: 'usercontroller'
+                })
+                .when("/expTbl",{
+                	templateUrl : "/getexptbl",
+                	controller : 'exptblcontroller'
+                });
+            });
+
+
+
+            app.controller('reportcontroller', function($scope,$http) {
+              $http.get('/financialYear')
+                .then(function(response){
+                       $scope.years = response.data;
+          		});
+              $scope.addreport = function(){
+                $http({
+                  url:"/report",
+                  method: "POST",
+                  dataType:'json',
+                  data:{
+                    fy: $scope.year,
+                    // date1 : $scope.date1,
+                    // date2 : $scope.date2
+                  },
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                  }
+                }).then(function(response){
+                    $scope.cname = response.data;
+                    console.log($scope.cname);
+                    $scope.tot = {};
+                    for(var i=0;i<$scope.cname.length;i++){
+                      $scope.tot.q1_ini_bud = $scope.tot.q1_ini_bud == undefined?$scope.cname[i].q1_ini_bud : $scope.tot.q1_ini_bud + $scope.cname[i].q1_ini_bud;
+                      $scope.tot.q1_act_bud = $scope.tot.q1_act_bud == undefined?$scope.cname[i].q1_act_bud : $scope.tot.q1_act_bud + $scope.cname[i].q1_act_bud;
+                      $scope.tot.q2_ini_bud = $scope.tot.q2_ini_bud == undefined?$scope.cname[i].q2_ini_bud : $scope.tot.q2_ini_bud + $scope.cname[i].q2_ini_bud;
+                      $scope.tot.q2_act_bud = $scope.tot.q2_act_bud == undefined?$scope.cname[i].q2_act_bud : $scope.tot.q2_act_bud + $scope.cname[i].q2_act_bud;
+                      $scope.tot.q3_ini_bud = $scope.tot.q3_ini_bud == undefined?$scope.cname[i].q3_ini_bud : $scope.tot.q3_ini_bud + $scope.cname[i].q3_ini_bud;
+                      $scope.tot.q3_act_bud = $scope.tot.q3_act_bud == undefined?$scope.cname[i].q3_act_bud : $scope.tot.q3_act_bud + $scope.cname[i].q3_act_bud;
+                      $scope.tot.q4_ini_bud = $scope.tot.q4_ini_bud == undefined?$scope.cname[i].q4_ini_bud : $scope.tot.q4_ini_bud + $scope.cname[i].q4_ini_bud;
+                      $scope.tot.q4_act_bud = $scope.tot.q4_act_bud == undefined?$scope.cname[i].q4_act_bud : $scope.tot.q4_act_bud + $scope.cname[i].q4_act_bud;
+                      $scope.tot.initial_budget = $scope.tot.initial_budget == undefined?$scope.cname[i].initial_budget : $scope.tot.initial_budget + $scope.cname[i].initial_budget;
+                      quar_act_bud = $scope.cname[i].q1_act_bud + $scope.cname[i].q2_act_bud + $scope.cname[i].q3_act_bud + $scope.cname[i].q4_act_bud;
+                      $scope.tot.fy_act_bud = $scope.tot.fy_act_bud == undefined?quar_act_bud : $scope.tot.fy_act_bud + quar_act_bud;
+                      variance = $scope.cname[i].initial_budget - quar_act_bud;
+                      $scope.tot.variance = $scope.tot.variance == undefined?variance : $scope.tot.variance + variance;
+                    }
+                    // $scope.cname = response.data.cname;
+                    // $scope.fy = response.data.fy;
+                    // $scope.ib = response.data.ib;
+                    // $scope.rb = response.data.rb;
+                    // $scope.q1 = response.data.q1;
+                    // $scope.q2 = response.data.q2;
+                    // $scope.q3 = response.data.q3;
+                    // $scope.q4 = response.data.q4;
+                  },function(response){
+                    console.log(response.data);
+                });
+              }
+            });
+
+			app.controller('exptblcontroller', function($scope,$http,Flash,$filter){
+				$http.get('/getexpenses')
+				.then(function(response){
+					$scope.expenses = response.data;
+					if(response.data.length === 0){
+						console.log(response.data.length)
+						//$scope.flag = true;
+						//alert('No expenses added');
+                        Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
+					}
+				});
+
+				$http.get('/allcategories')
+				.then(function(response){
+					console.log(response.data);
+					$scope.names = response.data;
+				});
+
+				$scope.getExpByDate = function(){
+					var fromDate = $filter('date')(new Date($scope.date1), 'yyyy-MM-dd');
+					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
+					console.log(toDate);
+					var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate+'&categoryName='+$scope.category;
+					$http.get(url)
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							//alert('No expenses added');
+	                         Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
+						}
+					});
+				}
+
+				$scope.deleteExp = function(expense){
+					console.log(expense);
+					var date_format = $filter('date')(expense.date, 'yy/MM/dd');
+					var dateSplit = date_format.split('/');
+					var yearNum;
+					if(parseInt(dateSplit[1])>=4)
+						yearNum = parseInt(dateSplit[0])+1;
+					else
+						yearNum = parseInt(dateSplit[0]);
+					var yearString = "FY"+yearNum;
+					console.log(yearString);
+					console.log(yearNum);
+					$http({
+                        url : "/delexpense",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                        	expenseId : expense.expense_id,
+                        	year : yearString,
+                        	category_name : expense.category_name,
+                        	amount : expense.amount
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                        if(response.data){
+                        Flash.create('success', "<center>Expense deleted successfully</center>", 2000, {container: 'flash-fixed'});
+                      }
+                      else{
+                        Flash.create('danger', "<center>Expense not deleted</center>", 2000, {container: 'flash-fixed'});
+                      }
+                    },function(response){
+                        console.log(response.data);
+                    });
+					$http.get('/getexpenses')
+					.then(function(response){
+						$scope.expenses = response.data;
+						if(response.data.length === 0){
+							console.log(response.data.length)
+							//$scope.flag = true;
+							//alert('No expenses added');
+                             Flash.create('danger', "<center>No expenses added</center>", 2000, {container: 'flash-fixed'});
+						}
+					});
+				}
+			});
+
+
+            app.controller('catcontroller', function($scope,$http,Flash) {
+            	$http.get('/financialYear')
+                .then(function(response){
+                       $scope.years = response.data;
+          		});
+
+            	$scope.dateRange=function(fyyear){
+            		console.log(fyyear);
+            		var yearSplit = fyyear.split("Y");
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
+            	}
+
+            	$scope.checkQ = function(myForm){
+            		var q1 = parseInt($scope.q1);
+            		var q2 = parseInt($scope.q2);
+            		var q3 = parseInt($scope.q3);
+            		var q4 = parseInt($scope.q4);
+            		var budget = $scope.budget;
+            		var total = q1+q2+q3+q4;
+            		console.log(total);
+            		console.log(budget);
+            		myForm.q1.$setValidity('budgetVerify',budget === total);
+            		//console.log("f1:"+f1);
+            		myForm.q2.$setValidity('budgetVerify',budget === total);
+            		myForm.q3.$setValidity('budgetVerify',budget === total);
+            		myForm.q4.$setValidity('budgetVerify',budget === total);
+
+            	}
+
+                $scope.addcat=function(){
+                    //console.log($scope.date);
+                   // console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/category",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            category: $scope.category,
+                            budget: $scope.budget,
+                            year: $scope.year,
+                             date: $scope.date,
+                            q1: $scope.q1,
+                            q2: $scope.q2,
+                            q3: $scope.q3,
+                            q4: $scope.q4
+
+
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                        console.log(response.data.rem);
+                        if(response.data === "budget_overflow")
+                              {
+                                Flash.create('danger', "<center>You have exceeded the allocated budget</center>", 5000, {container: 'flash-fixed'});
+                              }
+                        else if(response.data){
+                             //alert("category added successfully");
+                             Flash.create('success', "<center> Category added successfully</center>", 2000, {container: 'flash-fixed'});
+                             $scope.myForm.$setPristine();
+                             $scope.category='';
+                             $scope.budget='';
+                             $scope.year='';
+                             $scope.date='';
+                             $scope.q1='';
+                             $scope.q2='';
+                             $scope.q3='';
+                             $scope.q4='';
+                        }
+                        else{
+                            //alert("category name already exists");
+                             Flash.create('danger', "<center>Category name already exists</center>", 2000, {container: 'flash-fixed'});
+                        }
+                    },function(response){
+                        console.log(response.data);
+                    });
+                }
+
+
+
+            });
+            app.controller('usercontroller', function($scope,$http,Flash) {
+
+                     $scope.addus=function(){
+
+                    $http({
+                        url : "/newuser",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            email: $scope.email,
+                            user: $scope.user,
+                            userrole: $scope.userrole
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                         if(response.data){
+                           // alert("User added successfully");
+                            Flash.create('success', "<center> User added successfully</center>", 2000, {container: 'flash-fixed'});
+                            $scope.myForm.$setPristine();
+                             $scope.email='';
+                             $scope.user='';
+                              $scope.userrole='';
+
+
+                        }
+                        else{
+                            //alert("User already exists");
+                             Flash.create('danger', "<center>User already exists</center>", 2000, {container: 'flash-fixed'});
+                        }
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+
+
+            });
+
+            app.controller('passcontroller', function($scope,$http,$window,Flash) {
+                $scope.validate = function(myForm){
+                    var val1 = $scope.newpwd;
+                    var val2 = $scope.confpwd;
+                    myForm.confpwd.$setValidity('passwordVerify', val1 === val2);
+                }
+                $scope.pwdCheck = function(){
+                    $http({
+                        url: "/checkPwd",
+                        method: "PUT",
+                        dataType: "json",
+                        data:{
+                            password : $scope.oldpwd,
+                            newpassword : $scope.newpwd
+                        },
+                        headers:{
+                            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                            //$window.alert(response.data);
+                           // alert(response.data);
+                            if(response.data){
+                                Flash.create('success', "<center>Password is updated</center>", 2000, {container: 'flash-fixed'});
+                            }
+                            else{
+                                Flash.create('danger', "<center>Old password is wrong</center>", 2000, {container: 'flash-fixed'});
+                            }
+                        },function(response){
+                            console.log("response.data");
+                    });
+                }
+            });
+
+            app.controller('admincontroller', function($scope) {
+                // $scope.message="Welcome Admin";
+                window.location.href = '#!/alog';
+            });
+            app.controller('validateCtrl', function($scope,$http,Flash) {
+                 $scope.addbud=function(){
+                    //console.log($scope.date);
+                    //console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/budget",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                            year: $scope.year,
+
+                            date: $scope.date,
+
+                            budget: $scope.budget
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                         if(response.data){
+                         //alert("Budget Inserted Successfully");
+                         Flash.create('success', "<center> Budget Inserted Successfully</center>", 2000, {container: 'flash-fixed'});
+                         $scope.myForm.$setPristine();
+                         $scope.year='';
+                         $scope.date='';
+                         $scope.budget='';
+
+                        }
+                        else{
+                            //alert("Budget Insertion Failed");
+                            Flash.create('danger', "<center>Budget for this financial year already exists </center>", 2000, {container: 'flash-fixed'});
+                        }
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+            });
+            app.controller('expcontroller', function($scope,$http,Flash) {
+                $http.get('/financialYear')
+                .then(function(response){
+                    $scope.years = response.data;
+                });
+
+
+                $scope.selectFun = function(){
+                    console.log($scope.FYear);
+                    var yearSplit = $scope.FYear.split("Y");
+            		var yearNumber = parseInt(yearSplit[1])-1;
+            		$scope.min = "20"+yearNumber+"-04-01";
+            		$scope.max = "20"+(yearNumber+1)+"-03-31";
+            		console.log("min:"+$scope.min);
+            		console.log("max:"+$scope.max);
+
+                    var data = {year : $scope.FYear};
+                    var url = '/getcategory?year='+$scope.FYear;
+                   $http.get(url).then(function(response){
+                         $scope.names = response.data;
+                    });
+                }
+                $scope.addexp=function(){
+                    console.log($scope.date);
+                    console.log('before calling ' + $scope.category);
+                    $http({
+                        url : "/expenses",
+                        method : "POST",
+                        dataType: 'json',
+                        data : {
+                        	year: $scope.FYear,
+                            category: $scope.category,
+                            vendor: $scope.vendor,
+                            date: $scope.date,
+                            description: $scope.desc,
+                            amount: $scope.amount
+                        },
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        }
+                    }).then(function(response){
+                        console.log("successful");
+                         if(response.data){
+                           // alert("Expenses added successfully");
+                            Flash.create('success', "<center> Expenses added successfully</center>", 2000, {container: 'flash-fixed'});
+                            $scope.myForm.$setPristine();
+                            $scope.FYear='';
+                            $scope.category='';
+                            $scope.vendor='';
+                            $scope.date='';
+                            $scope.desc='';
+                            $scope.amount='';
+
+                        }
+                        else{
+                            //alert("Expenses not added");
+                            Flash.create('danger', "<center>Expenses not added</center>", 2000, {container: 'flash-fixed'});
+                        }
+                    },function(response){
+                        console.log("response.data");
+                    });
+                }
+              });
+        </script>
+        <script src="js/xlsx.full.min.js" charset="utf-8"></script>
+        <script src="js/Blob.js" charset="utf-8"></script>
+        <script src="js/FileSaver.js" charset="utf-8"></script>
+        <script>
+          function s2ab(s) {
+          	if(typeof ArrayBuffer !== 'undefined') {
+          		var buf = new ArrayBuffer(s.length);
+          		var view = new Uint8Array(buf);
+          		for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+          		return buf;
+          	} else {
+          		var buf = new Array(s.length);
+          		for (var i=0; i!=s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
+          		return buf;
+          	}
+          }
+
+          function export_table_to_excel(id, type, fn) {
+          var wb = XLSX.utils.table_to_book(document.getElementById(id), {sheet:"Sheet JS"});
+          var wbout = XLSX.write(wb, {bookType:type, bookSST:true, type: 'binary'});
+          var fname = fn || 'test.' + type;
+          try {
+          	saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), fname);
+          } catch(e) { if(typeof console != 'undefined') console.log(e, wbout); }
+          return wbout;
+          }
+
+          function doit(type, fn) { return export_table_to_excel('report', type || 'xlsx', fn); }
+        </script>
+    </body>
+</html>
