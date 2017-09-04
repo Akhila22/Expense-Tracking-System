@@ -7,7 +7,7 @@ session = require('express-session'),
 bodyParser = require('body-parser'),
 port = 1337;
 //require('ssl-root-cas').inject();
-url = require('url');
+// url = require('url');
 nodemailer = require('nodemailer');
 server = require('./start');
 mail='';
