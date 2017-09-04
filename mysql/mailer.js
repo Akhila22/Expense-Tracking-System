@@ -1,7 +1,4 @@
-//var nodemailer = require('nodemailer');
-//var server = require('./start');
 var uuid =require('uuid');
-require('ssl-root-cas').inject();
 exports.sendmail = function(req,res){
 
     trycatch(function(){
@@ -10,21 +7,27 @@ exports.newpassword=newpassword;
 server.start();
 // create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'boddupalliaditya@gmail.com',
-            pass: 'maheshbabu1'
-        }
-    }); 
+      host: 'SMTP.office365.com',
+      port: 25,
+      secure: false,
+      ignoreTLS: false,
+      auth: {
+        user: 'username@ca.com',
+        pass: 'password'
+      },
+      tls: {
+        ciphers: 'SSLv3'
+      }
+    });
 var maillist=mail;
 // setup e-mail data with unicode symbols
     var mailOptions = {
 // sender address
-        from: 'bodad01@ca.com', 
+        from: 'username@ca.com',
 // list of receivers
-        to: maillist, 
+        to: maillist,
 // Subject line
-        subject: 'Mail from CA Education Team', 
+        subject: 'Mail from CA Education Team',
 // plaintext body
         text: 'It works ?',
 // rich text html body
@@ -46,5 +49,3 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 };
-
-
