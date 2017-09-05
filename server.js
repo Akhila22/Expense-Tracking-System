@@ -34,8 +34,11 @@ app.use(function(req, res, next) {
 	  next();
 	});
 
+var helmet = require('helmet');
+app.use(helmet());
 app.use(session({secret: "Shh, its a secret!"}));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var budget=require('./addbudget.js');
