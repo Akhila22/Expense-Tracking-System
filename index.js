@@ -2,14 +2,12 @@ express = require('express');
 trycatch = require('trycatch');
 app = express();
 mysql = require('mysql');
-path = require('path'),
-session = require('express-session'),
-bodyParser = require('body-parser'),
+path = require('path');
+session = require('express-session');
+bodyParser = require('body-parser');
 port = 1337;
-//require('ssl-root-cas').inject();
-// url = require('url');
 nodemailer = require('nodemailer');
-server = require('./start');
+server = require('./controllers/start');
 mail='';
 pass='';
 
@@ -41,26 +39,26 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var budget=require('./addbudget.js');
-var category=require('./addcategory.js');
-var finYear = require('./getfinancialyears.js');
-var expense = require('./addexpense.js');
-var newuser=require('./adduser.js');
-var login=require('./login.js');
-var validatepwd = require('./validatepwd.js');
-var report=require('./report.js');
-var getExpenses = require('./getexpenses.js')
-var mailer = require('./mailer.js');
-var start = require('./start');
+var budget=require('./controllers/addbudget');
+var category=require('./controllers/addcategory');
+var finYear = require('./controllers/getfinancialyears');
+var expense = require('./controllers/addexpense');
+var newuser=require('./controllers/adduser');
+var login=require('./controllers/login');
+var validatepwd = require('./controllers/validatepwd');
+var report=require('./controllers/report');
+var getExpenses = require('./controllers/getexpenses')
+var mailer = require('./controllers/mailer');
+var start = require('./controllers/start');
 var uuid = require('uuid');
-var updatepasswd = require('./updatepasswd.js');
-mailernotify = require('./mailernotify.js');
-var forpass=require('./forgot_password.js');
+var updatepasswd = require('./controllers/updatepasswd');
+mailernotify = require('./controllers/mailernotify');
+var forpass=require('./controllers/forgot_password');
 
 
 
 app.get('/forgotpass',function(req,res){
-   res.sendFile(__dirname+"/forgotpass.html");
+   res.sendFile(path.join(__dirname, "/views/forgotpass.html"));
 
 });
 
@@ -79,7 +77,7 @@ app.get('/email',function(req,res){
   var query = url_parts.query;
     mail = req.query.recoveryemail;
 mailer.sendmail(req,res);
-return res.sendFile(__dirname+"/login.html");
+return res.sendFile(path.join(__dirname, "/views/login.html"));
 });
 
 
@@ -127,13 +125,13 @@ updatepasswd.updatepassword(req,res);
 
 app.get('/changepwd',function(req,res){
 
-      res.sendFile(__dirname+"/change_password.html");
+      res.sendFile(path.join(__dirname, "/views/change_password.html"));
 
 });
 
 app.get('/getexptbl',function(req,res){
 
-    res.sendFile(__dirname+"/expensetable.html");
+    res.sendFile(path.join(__dirname, "/views/expensetable.html"));
 
 });
 
@@ -174,30 +172,30 @@ app.get('/addexpense',function(req,res){
 	if(typeof req.session.role_id == "undefined")
     	res.redirect('/login');
     else
-    	res.sendFile(__dirname+"/addexpense.html");
+    	res.sendFile(path.join(__dirname, "/views/addexpense.html"));
  });
 
 app.get('/addcategory',function(req,res){
 	if(req.session.role_id==1)
-    	res.sendFile(__dirname+"/addcategory.html");
+    	res.sendFile(path.join(__dirname, "/views/addcategory.html"));
     else
     	res.redirect('/logout');
  });
 
 app.get('/newreport',function(req,res){
-      res.sendFile(__dirname+"/report.html");
+      res.sendFile(path.join(__dirname, "/views/report.html"));
  });
 
 app.get('/addbudget',function(req,res){
 	if(req.session.role_id==1)
-    	res.sendFile(__dirname+"/addbudget.html");
+    	res.sendFile(path.join(__dirname, "/views/addbudget.html"));
     else
     	res.redirect('/logout');
  });
 
 app.get('/adduser',function(req,res){
 	if(req.session.role_id==1)
-    	res.sendFile(__dirname+"/adduser.html");
+    	res.sendFile(path.join(__dirname, "/views/adduser.html"));
     else
     	res.redirect('/logout');
 
@@ -209,26 +207,26 @@ app.get('/logout',function(req,res){
 
 app.get('/adminLogin',function(req,res){
 	if(req.session.role_id==1)
-    	res.sendFile(__dirname+"/admin_login.html");
+    	res.sendFile(path.join(__dirname, "/views/admin_login.html"));
     else
     	res.redirect('/logout');
 
  });
 app.get('/adminHome',function(req,res){
   if(req.session.role_id==1)
-      res.sendFile(__dirname+"/admin_home.html");
+      res.sendFile(path.join(__dirname, "/views/admin_home.html"));
     else
       res.redirect('/logout');
  });
 app.get('/userLogin',function(req,res){
 	if(req.session.role_id==2)
-   		res.sendFile(__dirname+"/user_login.html");
+   		res.sendFile(path.join(__dirname, "/views/user_login.html"));
    	else
     	res.redirect('/logout');
  });
 app.get('/userHome',function(req,res){
   if(req.session.role_id==2)
-      res.sendFile(__dirname+"/user_home.html");
+      res.sendFile(path.join(__dirname, "/views/user_home.html"));
     else
       res.redirect('/logout');
  });
@@ -237,7 +235,7 @@ app.get('/login',function(req,res){
 	//console.log(req.session.user_id);
 	if(typeof req.session.user_id == "undefined"){
 	 // console.log("if loop");
-	  res.sendFile(__dirname + "/login.html")
+	  res.sendFile(path.join(__dirname, "/views/login.html"));
 	} else {
 	  //console.log("Already logged in");
 	 if( req.session.role_id ==1)
