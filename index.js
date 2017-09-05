@@ -20,17 +20,17 @@ connection = mysql.createConnection({
 
 connection.connect(function(error){
 	  if(!!error){
-	    console.log("new user\n" +error);
+	    console.log('Error Connecting to Database\n' +error);
 	  }else{
-	    console.log('Connected');
+	    console.log('Connected to Database');
 	  }
 });
 
 //app.use(cookieParser());
 app.use(function(req, res, next) {
-	  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-	  next();
-	});
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  next();
+});
 
 var helmet = require('helmet');
 app.use(helmet());
@@ -50,7 +50,6 @@ var report=require('./controllers/report');
 var getExpenses = require('./controllers/getexpenses')
 var mailer = require('./controllers/mailer');
 var start = require('./controllers/start');
-var uuid = require('uuid');
 var updatepasswd = require('./controllers/updatepasswd');
 mailernotify = require('./controllers/mailernotify');
 var forpass=require('./controllers/forgot_password');
