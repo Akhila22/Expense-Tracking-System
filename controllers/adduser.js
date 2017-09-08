@@ -1,7 +1,7 @@
 
-exports.addnewuser=function(req, res){
+exports.addnewuser = function(req, res) {
 
- trycatch(function(){
+    trycatch(function() {
 
   var temp = Object.keys(req.body);
   //  console.log("temp " + temp);
