@@ -55,6 +55,12 @@
     "node": true,
 
     "globals": {
-        "angular": false
+        "angular": false,
+        "express": false,
+        "app": false,
+        "trycatch": false,
+        "connection": false,
+        "session": false,
+        "path": false
     }
 }
