@@ -59,6 +59,7 @@
         "express": false,
         "app": false,
         "trycatch": false,
+        "mysql": false,
         "connection": false,
         "session": false,
         "path": false
