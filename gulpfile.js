@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var jsHint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 
-var jsFiles = ['controllers/adduser.js'];
+var jsFiles = ['*.js', 'controllers/*.js'];
 
 gulp.task('style', function() {
     return gulp.src(jsFiles)
