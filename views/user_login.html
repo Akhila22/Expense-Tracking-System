@@ -200,9 +200,6 @@
                     fy: $scope.year,
                     // date1 : $scope.date1,
                     // date2 : $scope.date2
-                  },
-                  headers: {
-                    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                   }
                 }).then(function(response){
                     $scope.cname = response.data;
@@ -268,9 +265,6 @@
                         data:{
                             password : $scope.oldpwd,
                             newpassword : $scope.newpwd
-                        },
-                        headers:{
-                            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                             //$window.alert(response.data);
@@ -320,9 +314,6 @@
                             date: $scope.date,
                             description: $scope.desc,
                             amount: $scope.amount
-                        },
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                         console.log("successful");
@@ -396,9 +387,6 @@
                       dataType: 'json',
                       data : {
                       	expenseId : id
-                      },
-                      headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                       }
                   }).then(function(response){
                       console.log("successful");

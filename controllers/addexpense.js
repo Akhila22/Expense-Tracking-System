@@ -1,237 +1,241 @@
 
 exports.addExp = function(req, res) {
-	console.log("expense node js");
-     trycatch(function(){
-	var temp = Object.keys(req.body);
-    var json = JSON.parse(temp)
-    var category_id = json.category;
-    var vendorname = json.vendor;
-    var date = json.date;
-    var dateStr = date.split(" ");
-    console.log(dateStr[0]);
-    var dateSplit = dateStr[0].split("-");
-    console.log(dateSplit[1]);
-    var month = parseInt(dateSplit[1]);
-    var quarter_number;
-    if(month>=4 && month<=6){
-    	quarter_number = 1;
-    }
-    else if(month>=7 && month<=9){
-    	quarter_number = 2;
-    }
-    else if(month>=10 && month<=12){
-        quarter_number = 3;
-    }
-    else if(month>=1 && month<=3){
-        quarter_number = 4;
-    }	
-    console.log(quarter_number);
-    var description= json.description;
-    var amount = parseInt(json.amount);
-    var vid;
-    var uid = req.session.user_id;
-    var financial_year = json.year;
-    console.log(financial_year);
-    var remaining_budget;
-    var quarter_budget=0;
-    var user_email;
-    var admin_email;
-    var category_name;
-    var quarter_exp=0;
-    
-    //values for mail
-    
-    var sqlUser = "Select username from user where user_id="+uid;
-    connection.query(sqlUser,function(error,rows,fields){
-        if(!!error){
-          throw new Error('Error in the query ' + error);
-        }else{
-          //res.send(rows);
-          user_email = rows[0].username;
-          console.log(rows);
+    console.log("expense node js");
+    trycatch(function() {
+        var categoryId = req.body.category;
+        var vendorname = req.body.vendor;
+        var date = req.body.date;
+        var dateStr = date.split(" ");
+        console.log(dateStr[0]);
+        var dateSplit = dateStr[0].split("-");
+        console.log(dateSplit[1]);
+        var month = parseInt(dateSplit[1]);
+        var quarterNumber;
+        if (month >= 4 && month <= 6) {
+            quarterNumber = 1;
         }
-      });
+        else if (month >= 7 && month <= 9) {
+            quarterNumber = 2;
+        }
+        else if (month >= 10 && month <= 12) {
+            quarterNumber = 3;
+        }
+        else if (month >= 1 && month <= 3) {
+            quarterNumber = 4;
+        }
+        console.log(quarterNumber);
+        var description = req.body.description;
+        var amount = parseInt(req.body.amount);
+        var vid;
+        var uid = req.session.userId;
+        var financialYear = req.body.year;
+        console.log(financialYear);
+        var remainingBudget;
+        var quarterBudget = 0;
+        var userEmail;
+        var adminEmail;
+        var categoryName;
+        var quarterExp = 0;
 
-    var sqlAdmin = "Select username from user where user_id IN (select user_id from category where category_id="+category_id+")";
-    connection.query(sqlAdmin,function(error,rows,fields){
-        if(!!error){
-          throw new Error('Error in the query ' + error);
-        }else{
-          //res.send(rows);
-          admin_email = rows[0].username;
-        }
-      });
+        var sqlUser = mysql.format("Select username from user where user_id=?", [uid]);
+        connection.query(sqlUser, function(error, rows, fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                userEmail = rows[0]["username"];
+                console.log(rows);
+            }
+        });
 
-    var sqlCat = "Select category_name from category where category_id="+category_id;
-    connection.query(sqlCat,function(error,rows,fields){
-        if(!!error){
-          throw new Error('Error in the query ' + error);
-        }else{
-          //res.send(rows);
-          cat_name = rows[0].category_name;
-        }
-      });
-    
-    
-                
-    var sqlBudget = "select remaining_budget from category_financial_year where category_id="+category_id +" AND financial_year ='"+financial_year+"'"; 
-    connection.query(sqlBudget,function(error,rows,fields){
-    	if(!!error){
-    		console.log("error in query 1");
-             throw new Error("Error in the query 1");
-        }
-        else{
-            remaining_budget = parseInt(rows[0].remaining_budget) - amount;
-            console.log(remaining_budget);
-        }
-     });
-                
-     var sqlQuarterBudget = "select quarter_budget from quarterwise_budget where category_id="+category_id +" AND financial_year ='"+financial_year+"' AND quarter_number="+quarter_number; 
-     connection.query(sqlQuarterBudget,function(error,rows,fields){
-    	 if(!!error){
-    		 console.log(sqlQuarterBudget);
-    		 console.log("error in query 2");
-              throw new Error("Error in the query 2");
-       	 }
-       	 else{
-             quarter_budget = parseInt(rows[0].quarter_budget);
-              console.log(quarter_budget);
-         }
-     });
-    
-    var sqlExpBudget = "select amount,date from expenses where category_id="+category_id+" and financial_year='"+financial_year+"'";
-    connection.query(sqlExpBudget,function(error,rows,fields){
-    	if(!!error){
-    		throw new Error("Error in the query 2");
-    	}
-    	else{
-    		for(var i=0;i<rows.length;i++){
-    			var dateValue = ""+rows[i].date;
-    			//console.log(dateValue);
-    			var dateString = dateValue.split(" ");
-    		    /*console.log(dateString[0]);
-    		    var dateSplitNew = dateString[0].split("-");*/
-    		    console.log(dateString[1]);
-    		    var monthVal =dateString[1];
-    		    var quarter_num;
-    		    if(monthVal=="Apr"||monthVal=="May"||monthVal=="Jun"){
-    		    	quarter_num = 1;
-    		    }
-    		    else if(monthVal=="Jul"||monthVal=="Aug"||monthVal=="Sep"){
-    		    	quarter_num = 2;
-    		    }
-    		    else if(monthVal=="Oct"||monthVal=="Nov"||monthVal=="Dec"){
-    		        quarter_num = 3;
-    		    }
-    		    else if(monthVal=="Jan"||monthVal=="Feb"||monthVal=="Mar"){
-    		        quarter_num = 4;
-    		    }	
-    		    console.log(quarter_num);
-    		    if(quarter_num == quarter_number){
-    		    	quarter_exp = parseInt(quarter_exp) + parseInt(rows[i].amount);
-    		    	console.log(quarter_budget);
-    		    }
-    		}
-    	}
-    });
-    
-    quarter_exp = quarter_exp + amount;
-    
-    console.log(quarter_budget);
+        var sqlAdmin = mysql.format("Select username from user " +
+                      "where user_id IN (select user_id from category " +
+                      "where category_id=?)", [categoryId]);
+        connection.query(sqlAdmin, function(error,rows,fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                adminEmail = rows[0]["username"];
+            }
+        });
 
-     var sql2 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
-     connection.query(sql2, function(error,rows,fields){
-    	 if(!!error){
-    		 console.log('Error in the query 3');
-              throw new Error("Error in the query 3");
-         }
-         else{
-        	 if(typeof rows[0] == "undefined"){
-        		 var sql3="insert into vendor(vendor_name) values('"+vendorname+"');";
-                 connection.query(sql3, function(error,rows,fields){
-                	 if(!!error){
-                		 console.log('Error in the query 4');
-                          throw new Error("Error in the query 4");
-                     }
-                     else{
-                    	 var sql4 = "select vendor_id from vendor where vendor_name = '"+vendorname+"';";
-                         connection.query(sql4, function(error,rows1,fields){
-                        	 if(!!error){
-                        		 console.log('Error in the query 5');
-                                  throw new Error("Error in the query 5");
-                             }
-                             else{
-                            	 vid=rows1[0].vendor_id;
-                                 var sql5 = "insert into expenses(user_id,category_id,amount,date,description,vendor_id,financial_year) values("+uid+","+category_id+","+amount+",'"+date+"','"+description+"',"+vid+",'"+financial_year+"')";
-                                 connection.query(sql5, function(error,rows,fields){
-                                	 if(!!error){
-                                		 console.log('Error in the query 6');
-                                          throw new Error("Error in the query 6");
-                                     }
-                                     else
-                                     {
-                                    	 console.log('Inserted successfully!!');
-                                    	
-                                         var sqlUpdate = "UPDATE category_financial_year SET remaining_budget ="+ remaining_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"'";
-                                         connection.query(sqlUpdate,function(error,rows,fields){
-                                        	 console.log(sqlUpdate);
-                                        	 if(!!error){
-                                        		 console.log("error in query 7");
-                                                  throw new Error("Error in the query 7");
-                                        	 }
-                                        	 else{
-                                        		 console.log('Updated');
-                                        		 if(quarter_budget < quarter_exp){
-                                        	    	 //mail logic
-                                               mailernotify.sendmailnotify(req,res,quarter_number,quarter_budget,user_email,admin_email,category_name,financial_year);
-                                                      
+        var sqlCat = mysql.format("Select category_name from category " +
+                      "where category_id=?", [categoryId]);
+        connection.query(sqlCat, function(error,rows,fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                var catName = rows[0]["category_name"];
+            }
+        });
 
-                                        	     }
-                                                  res.send(true);
-                                        	 }
-                                         });
-                                      }
-                                 });
-                              }
-                           });
-                       }
-                   });
-        	 	}
-        	 	else{
-        	 		vid = (rows[0].vendor_id);
-                    var sql1 = "insert into expenses(user_id,category_id,amount,date,description,vendor_id,financial_year) values("+uid+","+category_id+","+amount+",'"+date+"','"+description+"',"+vid+",'"+financial_year+"')";
-                    connection.query(sql1, function(error,rows,fields){
-                    	if(!!error){
-                    		console.log('Error in the query');
-                             throw new Error("Error in the query");
+        var sqlBudget = mysql.format("select remaining_budget from " +
+                        "category_financial_year where " +
+                        "category_id=? AND financial_year=?",
+                        [categoryId, financialYear]);
+        connection.query(sqlBudget, function(error,rows,fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                remainingBudget = parseInt(rows[0]["remaining_budget"]);
+                console.log(remainingBudget);
+            }
+        });
+
+        var sqlQuarterBudget = mysql.format("select quarter_budget from " +
+                                "quarterwise_budget where " +
+                                "category_id=? AND financial_year =? " +
+                                "AND quarter_number=?",
+                                [categoryId, financialYear, quarterNumber]);
+        connection.query(sqlQuarterBudget, function(error,rows,fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                quarterBudget = parseInt(rows[0]["quarter_budget"]);
+                console.log(quarterBudget);
+            }
+        });
+
+        var sqlExpBudget = mysql.format("select amount,date from expenses " +
+                            "where category_id=? and financial_year=?",
+                            [categoryId, financialYear]);
+        connection.query(sqlExpBudget, function(error,rows,fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                for (var i = 0;i < rows.length;i++) {
+                    var dateValue = "" + rows[i].date;
+                    // console.log(dateValue);
+                    var dateString = dateValue.split(" ");
+                    // console.log(dateString[0]);
+                    // var dateSplitNew = dateString[0].split("-");
+                    console.log(dateString[1]);
+                    var monthVal = dateString[1];
+                    var quarterNum;
+                    if (monthVal === "Apr" || monthVal === "May" || monthVal === "Jun") {
+                        quarterNum = 1;
+                    }
+                    else if (monthVal === "Jul" || monthVal === "Aug" || monthVal === "Sep") {
+                        quarterNum = 2;
+                    }
+                    else if (monthVal === "Oct" || monthVal === "Nov" || monthVal === "Dec") {
+                        quarterNum = 3;
+                    }
+                    else if (monthVal === "jan" || monthVal === "Feb" || monthVal === "Mar") {
+                        quarterNum = 4;
+                    }
+                    console.log(quarterNum);
+                    if (quarterNum === quarterNumber) {
+                        quarterExp = parseInt(quarterExp) + parseInt(rows[i]["amount"]);
+                        console.log(quarterBudget);
+                    }
+                }
+            }
+        });
+
+        quarterExp = quarterExp + amount;
+        console.log(quarterBudget);
+
+        var sql2 = mysql.format("select vendor_id from vendor " +
+                    "where vendor_name = ?", [vendorname]);
+        connection.query(sql2, function(error,rows,fields) {
+            if (error) {
+                throw new Error("Error in the query\n" + error);
+            }
+            else {
+                if (typeof rows[0] === "undefined") {
+                    var sql3 = mysql.format("insert into vendor(vendor_name) " +
+                                "values(?);", [vendorname]);
+                    connection.query(sql3, function(error,rows,fields) {
+                        if (error) {
+                            throw new Error("Error in the query\n" + error);
                         }
-                        else{
-                        	console.log('Inserted successfully!!');
-                             var sqlUpdate1 = "UPDATE category_financial_year SET remaining_budget ="+ remaining_budget +" WHERE category_id = "+category_id+" AND financial_year = '"+financial_year+"'";
-                             connection.query(sqlUpdate1,function(error,rows,fields){
-                            	 console.log(sqlUpdate1);
-                                 if(!!error){
-                                	 console.log("error in query");
-                                      throw new Error("Error in the query");
-                                 }
-                                 else{
-                                      console.log('Updated');
-                                      if(quarter_budget < quarter_exp){
-                             	    	 //mail logic
-                                      mailernotify.sendmailnotify(req,res,quarter_number,quarter_budget,user_email,admin_email,category_name,financial_year);
+                        else {
+                            var sql4 = mysql.format("select vendor_id from vendor " +
+                                        "where vendor_name=?", [vendorname]);
+                            connection.query(sql4, function(error,rows,fields) {
+                                if (error) {
+                                    throw new Error("Error in the query\n" + error);
+                                }
+                                else {
+                                    vid = rows[0]["vendor_id"];
+                                    var sql5 = mysql.format("insert into expenses(user_id," +
+                                                "category_id,amount,date,description," +
+                                                "vendor_id,financial_year) values(?,?,?,?,?,?,?)",
+                                                [uid, categoryId, amount, date, description, vid, financialYear]);
+                                    connection.query(sql5, function(error,rows,fields) {
+                                        if (error) {
+                                            throw new Error("Error in the query\n" + error);
+                                        }
+                                        else {
+                                            console.log("Inserted Successfully");
 
-                             	     }
-                                       res.send(true);
-                                 }
-                              });
-                          }
-                      });
-                   }
-         	}
-     });
-     
-},function(err){
-    console.log(err.stack);
-    res.send(false);
-  });
+                                            var sqlUpdate = mysql.format("UPDATE category_financial_year " +
+                                                            "SET remaining_budget=? WHERE category_id=? " +
+                                                            "AND financial_year=?",
+                                                            [remainingBudget, categoryId, financialYear]);
+                                            connection.query(sqlUpdate, function(error,rows,fields) {
+                                                console.log(sqlUpdate);
+                                                if (error) {
+                                                    throw new Error("Error in the query\n" + error);
+                                                }
+                                                else {
+                                                    console.log("Updated");
+                                                    if (quarterBudget < quarterExp) {
+                                                        //mail logic
+                                                        mailernotify.sendmailnotify(req,res,quarterNumber,quarterBudget,userEmail,adminEmail,categoryName,financialYear);
+                                                    }
+                                                    res.send(true);
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+                else {
+                    vid = rows[0]["vendor_id"];
+                    var sql1 = mysql.format("insert into expenses(user_id,category_id," +
+                                "amount,date,description,vendor_id,financial_year) " +
+                                "values(?,?,?,?,?,?,?)",
+                                [uid, categoryId, amount, date, description, vid, financialYear]);
+                    connection.query(sql1, function(error,rows,fields) {
+                        if (error) {
+                            throw new Error("Error in the query\n" + error);
+                        }
+                        else {
+                            console.log("Inserted Successfully!!");
+                            var sqlUpdate1 = mysql.format("UPDATE category_financial_year " +
+                                              "SET remaining_budget=? WHERE category_id=? " +
+                                              "AND financial_year=?",
+                                              [remainingBudget, categoryId, financialYear]);
+                            connection.query(sqlUpdate1, function(error,rows,fields) {
+                                if (error) {
+                                    throw new Error("Error in the query\n" + error);
+                                }
+                                else {
+                                    console.log("Updated");
+                                    if (quarterBudget < quarterExp) {
+                                        // mail logic
+                                        mailernotify.sendmailnotify(req,res,quarterNumber,quarterBudget,userEmail,adminEmail,categoryName,financialYear);
+                                    }
+                                    res.send(true);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }, function(err) {
+        console.log(err.stack);
+        res.send(false);
+    });
 };

@@ -209,12 +209,7 @@
                   method: "POST",
                   dataType:'json',
                   data:{
-                    fy: $scope.year,
-                    // date1 : $scope.date1,
-                    // date2 : $scope.date2
-                  },
-                  headers: {
-                    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                    fy: $scope.year
                   }
                 }).then(function(response){
                     $scope.cname = response.data;
@@ -272,6 +267,7 @@
 					var toDate = $filter('date')(new Date($scope.date2), 'yyyy-MM-dd');
 					console.log(toDate);
 					var url = '/getExpDate?fromDate='+fromDate+'&toDate='+toDate+'&categoryName='+$scope.category;
+          console.log(url);
 					$http.get(url)
 					.then(function(response){
 						$scope.expenses = response.data;
@@ -303,11 +299,8 @@
                         data : {
                         	expenseId : expense.expense_id,
                         	year : yearString,
-                        	category_name : expense.category_name,
+                        	categoryName : expense.category_name,
                         	amount : expense.amount
-                        },
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                         console.log("successful");
@@ -385,9 +378,6 @@
                             q4: $scope.q4
 
 
-                        },
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                         console.log("successful");
@@ -433,9 +423,6 @@
                             email: $scope.email,
                             user: $scope.user,
                             userrole: $scope.userrole
-                        },
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                         console.log("successful");
@@ -475,9 +462,6 @@
                         data:{
                             password : $scope.oldpwd,
                             newpassword : $scope.newpwd
-                        },
-                        headers:{
-                            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                             //$window.alert(response.data);
@@ -512,9 +496,6 @@
                             date: $scope.date,
 
                             budget: $scope.budget
-                        },
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                         console.log("successful");
@@ -572,9 +553,6 @@
                             date: $scope.date,
                             description: $scope.desc,
                             amount: $scope.amount
-                        },
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
                         }
                     }).then(function(response){
                         console.log("successful");
